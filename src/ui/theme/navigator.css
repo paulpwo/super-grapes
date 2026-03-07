@@ -1,16 +1,47 @@
-/* Navigator Panel */
+/* Navigator Panel — floating & draggable */
 .sg-navigator {
   position: fixed;
-  right: 0;
-  top: var(--sg-topbar-h);
-  width: 240px;
-  height: calc(100vh - var(--sg-topbar-h));
+  right: 20px;
+  bottom: 20px;
+  width: 260px;
+  height: 360px;
   background: var(--sg-bg);
-  border-left: 1px solid var(--sg-border);
-  z-index: 90;
+  border: 1px solid var(--sg-border);
+  z-index: 200;
   display: none;
   flex-direction: column;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255,255,255,0.04);
+  border-radius: var(--sg-radius);
+  overflow: hidden;
+  min-width: 200px;
+  min-height: 180px;
+  max-height: calc(100vh - 40px);
+}
+
+.sg-navigator-resize {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  cursor: ns-resize;
+  z-index: 10;
+}
+
+.sg-navigator-resize::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 3px;
+  background: var(--sg-bg-4);
+  border-radius: 2px;
+  margin: 2px auto 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sg-navigator-resize:hover::after {
+  opacity: 1;
 }
 
 .sg-navigator.open {
@@ -20,32 +51,47 @@
 .sg-navigator-header {
   display: flex;
   align-items: center;
-  height: 36px;
-  padding: 0 10px;
+  height: 42px;
+  padding: 0 12px;
   border-bottom: 1px solid var(--sg-border);
   background: var(--sg-bg-2);
   flex-shrink: 0;
+  cursor: grab;
+  user-select: none;
+  gap: 8px;
+}
+
+.sg-navigator-header:active {
+  cursor: grabbing;
+}
+
+.sg-navigator-header-icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--sg-text-dim);
 }
 
 .sg-navigator-title {
   flex: 1;
-  font-size: var(--sg-font-size);
+  font-size: 13px;
   font-weight: 600;
   color: var(--sg-text);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
 .sg-navigator-close {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: none;
   border: none;
   color: var(--sg-text-dim);
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
   border-radius: var(--sg-radius);
   padding: 0;
@@ -67,12 +113,13 @@
 .sg-layer-item {
   display: flex;
   align-items: center;
-  height: 28px;
-  padding: 0 8px;
+  height: 36px;
+  padding: 0 10px;
   cursor: pointer;
   user-select: none;
   transition: background var(--sg-transition);
-  gap: 4px;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
 }
 
 .sg-layer-item:hover {
@@ -84,23 +131,32 @@
 }
 
 .sg-layer-item.selected .sg-layer-name {
+  color: var(--sg-text);
+  font-weight: 600;
+}
+
+.sg-layer-item.selected .sg-layer-icon {
   color: var(--sg-accent);
 }
 
 .sg-layer-toggle {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: none;
   border: none;
   color: var(--sg-text-dim);
-  font-size: 8px;
+  font-size: 10px;
   cursor: pointer;
   padding: 0;
   flex-shrink: 0;
-  transition: transform var(--sg-transition);
+  transition: transform var(--sg-transition), color var(--sg-transition);
+}
+
+.sg-layer-toggle:hover {
+  color: var(--sg-text);
 }
 
 .sg-layer-toggle.collapsed {
@@ -112,16 +168,19 @@
 }
 
 .sg-layer-icon {
-  width: 16px;
-  font-size: 10px;
-  color: var(--sg-node);
+  width: 20px;
+  font-size: 14px;
+  color: var(--sg-text-dim);
   text-align: center;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sg-layer-name {
   flex: 1;
-  font-size: var(--sg-font-size-sm);
+  font-size: 13px;
   color: var(--sg-text);
   white-space: nowrap;
   overflow: hidden;
@@ -130,27 +189,27 @@
 
 .sg-layer-name-input {
   flex: 1;
-  height: 20px;
+  height: 24px;
   background: var(--sg-bg-2);
   border: 1px solid var(--sg-accent);
   border-radius: 0;
   color: var(--sg-text);
-  font-size: var(--sg-font-size-sm);
-  padding: 0 4px;
+  font-size: 13px;
+  padding: 0 6px;
   outline: none;
   font-family: var(--sg-font);
 }
 
 .sg-layer-visibility {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: none;
   border: none;
   color: var(--sg-text-dim);
-  font-size: 10px;
+  font-size: 13px;
   cursor: pointer;
   padding: 0;
   opacity: 0;
@@ -168,7 +227,7 @@
 }
 
 .sg-layer-children {
-  padding-left: 16px;
+  /* no padding — depth is handled inline */
 }
 
 .sg-layer-children.collapsed {

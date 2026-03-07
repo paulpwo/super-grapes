@@ -10,30 +10,51 @@ function esc(s: string): string {
   return d.innerHTML;
 }
 
-/** Icons for common component types */
+/** Icons for component types — outlined style like Elementor */
 const TYPE_ICONS: Record<string, string> = {
-  wrapper: 'fa-solid fa-cube',
-  default: 'fa-solid fa-cube',
-  text: 'fa-solid fa-font',
-  textnode: 'fa-solid fa-font',
-  image: 'fa-solid fa-image',
-  video: 'fa-solid fa-video',
-  link: 'fa-solid fa-link',
+  wrapper: 'fa-regular fa-square',
+  default: 'fa-regular fa-square',
+  'sg-section': 'fa-regular fa-square-full',
+  'sg-container': 'fa-solid fa-border-all',
+  'sg-column': 'fa-solid fa-table-columns',
+  'sg-heading': 'fa-solid fa-t',
+  'sg-text': 'fa-solid fa-align-left',
+  'sg-image': 'fa-regular fa-image',
+  'sg-video': 'fa-solid fa-film',
+  'sg-button': 'fa-regular fa-hand-pointer',
+  'sg-divider': 'fa-solid fa-grip-lines',
+  'sg-spacer': 'fa-solid fa-arrows-up-down',
+  'sg-icon': 'fa-regular fa-star',
+  'sg-icon-box': 'fa-regular fa-object-group',
+  'sg-accordion': 'fa-solid fa-bars-staggered',
+  'sg-tabs': 'fa-regular fa-window-maximize',
+  'sg-form': 'fa-regular fa-rectangle-list',
+  'sg-input': 'fa-regular fa-keyboard',
+  'sg-textarea': 'fa-solid fa-align-left',
+  'sg-select': 'fa-solid fa-list-dropdown',
+  'sg-checkbox': 'fa-regular fa-square-check',
+  'sg-radio': 'fa-regular fa-circle-dot',
+  'sg-submit': 'fa-regular fa-paper-plane',
+  text: 'fa-solid fa-align-left',
+  textnode: 'fa-solid fa-align-left',
+  image: 'fa-regular fa-image',
+  video: 'fa-solid fa-film',
+  link: 'fa-solid fa-arrow-up-right-from-square',
   map: 'fa-solid fa-map-location-dot',
   table: 'fa-solid fa-table',
   row: 'fa-solid fa-grip-lines',
-  cell: 'fa-solid fa-square',
-  section: 'fa-solid fa-layer-group',
-  container: 'fa-solid fa-box',
-  column: 'fa-solid fa-columns',
-  form: 'fa-solid fa-rectangle-list',
-  input: 'fa-solid fa-i-cursor',
+  cell: 'fa-regular fa-square',
+  section: 'fa-regular fa-square-full',
+  container: 'fa-solid fa-border-all',
+  column: 'fa-solid fa-table-columns',
+  form: 'fa-regular fa-rectangle-list',
+  input: 'fa-regular fa-keyboard',
   textarea: 'fa-solid fa-align-left',
   select: 'fa-solid fa-caret-down',
-  button: 'fa-solid fa-square',
+  button: 'fa-regular fa-hand-pointer',
   label: 'fa-solid fa-tag',
-  checkbox: 'fa-solid fa-square-check',
-  radio: 'fa-solid fa-circle-dot',
+  checkbox: 'fa-regular fa-square-check',
+  radio: 'fa-regular fa-circle-dot',
 };
 
 function getTypeIcon(type: string): string {
@@ -45,7 +66,8 @@ export function initNavigator(el: HTMLElement, editor: Editor): void {
   const navHeader = document.createElement('div');
   navHeader.className = 'sg-navigator-header';
   navHeader.innerHTML = `
-    <span class="sg-navigator-title">Navigator</span>
+    <span class="sg-navigator-header-icon"><i class="fa-solid fa-bars-staggered"></i></span>
+    <span class="sg-navigator-title">Structure</span>
     <button class="sg-navigator-close" title="Close">
       <i class="fa-solid fa-xmark"></i>
     </button>
@@ -58,9 +80,18 @@ export function initNavigator(el: HTMLElement, editor: Editor): void {
     navBtn?.classList.remove('active');
   });
 
+  // Drag-to-move on header
+  initDrag(navHeader, el);
+
+  // Top resize handle
+  const resizeHandle = document.createElement('div');
+  resizeHandle.className = 'sg-navigator-resize';
+  initResize(resizeHandle, el);
+
   const navBody = document.createElement('div');
   navBody.className = 'sg-navigator-body';
 
+  el.appendChild(resizeHandle);
   el.appendChild(navHeader);
   el.appendChild(navBody);
 
@@ -98,7 +129,7 @@ export function initNavigator(el: HTMLElement, editor: Editor): void {
       toggle.className = 'sg-layer-toggle';
       if (!hasChildren) toggle.classList.add('empty');
       if (isCollapsed) toggle.classList.add('collapsed');
-      toggle.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+      toggle.innerHTML = '<i class="fa-solid fa-caret-down"></i>';
       toggle.addEventListener('click', (e) => {
         e.stopPropagation();
         if (isCollapsed) {
@@ -194,4 +225,97 @@ export function initNavigator(el: HTMLElement, editor: Editor): void {
 
   // Initial render
   editor.on('load', () => renderTree());
+}
+
+/** Resize panel vertically by dragging the top edge */
+function initResize(handle: HTMLElement, panel: HTMLElement): void {
+  let startY = 0;
+  let startHeight = 0;
+  let startTop = 0;
+
+  handle.addEventListener('pointerdown', (e: PointerEvent) => {
+    e.preventDefault();
+    handle.setPointerCapture(e.pointerId);
+
+    const rect = panel.getBoundingClientRect();
+    startY = e.clientY;
+    startHeight = rect.height;
+    startTop = rect.top;
+
+    // Ensure we're using top/left positioning
+    panel.style.right = 'auto';
+    panel.style.bottom = 'auto';
+    panel.style.left = rect.left + 'px';
+    panel.style.top = startTop + 'px';
+
+    const onMove = (me: PointerEvent) => {
+      const dy = me.clientY - startY;
+      const newHeight = startHeight - dy;
+      const newTop = startTop + dy;
+
+      if (newHeight >= 180 && newTop >= 0) {
+        panel.style.height = newHeight + 'px';
+        panel.style.top = newTop + 'px';
+      }
+    };
+
+    const onUp = () => {
+      handle.removeEventListener('pointermove', onMove);
+      handle.removeEventListener('pointerup', onUp);
+    };
+
+    handle.addEventListener('pointermove', onMove);
+    handle.addEventListener('pointerup', onUp);
+  });
+}
+
+/** Make a panel draggable by its header handle */
+function initDrag(handle: HTMLElement, panel: HTMLElement): void {
+  let startX = 0;
+  let startY = 0;
+  let startLeft = 0;
+  let startTop = 0;
+
+  handle.addEventListener('pointerdown', (e: PointerEvent) => {
+    // Ignore clicks on buttons inside the header
+    if ((e.target as HTMLElement).closest('button')) return;
+
+    e.preventDefault();
+    handle.setPointerCapture(e.pointerId);
+
+    const rect = panel.getBoundingClientRect();
+    startX = e.clientX;
+    startY = e.clientY;
+    startLeft = rect.left;
+    startTop = rect.top;
+
+    // Switch to top/left positioning for dragging
+    panel.style.right = 'auto';
+    panel.style.bottom = 'auto';
+    panel.style.left = startLeft + 'px';
+    panel.style.top = startTop + 'px';
+
+    const onMove = (me: PointerEvent) => {
+      const dx = me.clientX - startX;
+      const dy = me.clientY - startY;
+
+      let newLeft = startLeft + dx;
+      let newTop = startTop + dy;
+
+      // Clamp to viewport
+      newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - 60));
+      newTop = Math.max(0, Math.min(newTop, window.innerHeight - 36));
+
+      panel.style.left = newLeft + 'px';
+      panel.style.top = newTop + 'px';
+    };
+
+    const onUp = () => {
+      handle.removeEventListener('pointermove', onMove);
+      handle.removeEventListener('pointerup', onUp);
+    };
+
+    handle.addEventListener('pointermove', onMove);
+    handle.addEventListener('pointerup', onUp);
+  });
 }
