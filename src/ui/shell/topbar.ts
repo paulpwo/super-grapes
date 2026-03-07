@@ -142,6 +142,8 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
       exitBtn.innerHTML = '<i class="fa-solid fa-xmark"></i> Exit Preview';
       exitBtn.addEventListener('click', () => previewBtn.click());
       editorRoot.appendChild(exitBtn);
+
+      document.addEventListener('keydown', onEscPreview);
     } else {
       editor.stopCommand('preview');
       editorRoot.classList.remove('sg-preview-mode');
@@ -163,8 +165,16 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
 
       const exitBtn = editorRoot.querySelector('.sg-preview-exit-btn');
       if (exitBtn) exitBtn.remove();
+
+      document.removeEventListener('keydown', onEscPreview);
     }
   });
+
+  function onEscPreview(e: KeyboardEvent) {
+    if (e.key === 'Escape' && isPreview) {
+      previewBtn.click();
+    }
+  }
 
   // Navigator toggle
   const navBtn = el.querySelector('[data-cmd="toggle-navigator"]') as HTMLButtonElement;
