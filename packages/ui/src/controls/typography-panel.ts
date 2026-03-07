@@ -77,13 +77,13 @@ export function renderTypographyPanel(container: HTMLElement, editor: Editor): v
   }
 
   // Helper to create a style property-like object for direct style manipulation
-  function makeStyleProxy(cssProp: string, opts?: { min?: number; max?: number; units?: string[]; unit?: string }) {
+  function makeStyleProxy(cssProp: string, opts?: { min?: number; max?: number; step?: number; units?: string[]; unit?: string }) {
     return {
       getValue: () => selected!.getStyle(cssProp) || '',
       get: (key: string) => {
         if (key === 'min') return opts?.min ?? 0;
         if (key === 'max') return opts?.max ?? 100;
-        if (key === 'step') return 1;
+        if (key === 'step') return opts?.step ?? 1;
         if (key === 'units') return opts?.units || [opts?.unit || 'px'];
         if (key === 'unit') return opts?.unit || 'px';
         if (key === 'value') return selected!.getStyle(cssProp) || '';
@@ -162,7 +162,7 @@ export function renderTypographyPanel(container: HTMLElement, editor: Editor): v
   body.appendChild(weightRow);
 
   // Line height
-  renderSliderRow(body, makeStyleProxy('line-height', { min: 0.5, max: 5, unit: '' }), 'Line Height');
+  renderSliderRow(body, makeStyleProxy('line-height', { min: 0.5, max: 5, step: 0.1, unit: '' }), 'Line Height');
 
   // Letter spacing
   renderSliderRow(body, makeStyleProxy('letter-spacing', { min: -5, max: 20, unit: 'px' }), 'Spacing');

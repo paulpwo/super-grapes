@@ -157,10 +157,22 @@ export function renderDimControl(container: HTMLElement, property: any, label: s
     unitPopup.style.display = unitPopup.style.display === 'none' ? 'flex' : 'none';
   }
 
-  // Close popup on outside click
-  document.addEventListener('click', () => {
-    unitPopup.style.display = 'none';
+  // Close popup on outside click (use once-bound handler to avoid leaks)
+  function closePopup(e: Event) {
+    if (!tools.contains(e.target as Node)) {
+      unitPopup.style.display = 'none';
+    }
+  }
+  document.addEventListener('click', closePopup);
+
+  // Cleanup when element is removed from DOM
+  const observer = new MutationObserver(() => {
+    if (!wrap.isConnected) {
+      document.removeEventListener('click', closePopup);
+      observer.disconnect();
+    }
   });
+  observer.observe(document.body, { childList: true, subtree: true });
 
   function updateValue(index: number, value: number) {
     inputs[index]!.value = String(value);

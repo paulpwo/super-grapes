@@ -129,9 +129,19 @@ function renderProperty(container: HTMLElement, prop: any, editor: Editor): void
       break;
     }
 
-    case 'composite':
+    case 'composite': {
+      // Only use dim-control for 4-sided spacing properties
+      const subProps = prop.getProperties?.() || [];
+      if (subProps.length === 4 && isDimensionProp(propName)) {
+        renderDimControl(container, prop, label);
+      } else {
+        renderCompositeGroup(container, prop, label, editor);
+      }
+      break;
+    }
+
     case 'stack': {
-      renderDimControl(container, prop, label);
+      renderStackGroup(container, prop, label, editor);
       break;
     }
 
@@ -225,6 +235,106 @@ function renderFileProp(container: HTMLElement, prop: any, label: string): void 
   row.appendChild(labelEl);
   row.appendChild(field);
   container.appendChild(row);
+}
+
+/** Check if a CSS property name is a 4-sided dimension (margin, padding, border-radius) */
+function isDimensionProp(name: string): boolean {
+  return ['margin', 'padding', 'border-radius'].includes(name);
+}
+
+/** Render a composite property as individual sub-property controls */
+function renderCompositeGroup(container: HTMLElement, prop: any, label: string, editor: Editor): void {
+  const section = document.createElement('div');
+  section.className = 'sg-ctrl-subsection';
+
+  const header = document.createElement('div');
+  header.className = 'sg-ctrl-row';
+  const headerLabel = document.createElement('label');
+  headerLabel.className = 'sg-ctrl-label';
+  headerLabel.style.fontWeight = '600';
+  headerLabel.textContent = label;
+  header.appendChild(headerLabel);
+  section.appendChild(header);
+
+  const subProps = prop.getProperties?.() || [];
+  subProps.forEach((sub: any) => {
+    renderProperty(section, sub, editor);
+  });
+
+  container.appendChild(section);
+}
+
+/** Render a stack property with add/remove layer support */
+function renderStackGroup(container: HTMLElement, prop: any, label: string, editor: Editor): void {
+  const section = document.createElement('div');
+  section.className = 'sg-ctrl-subsection';
+
+  const header = document.createElement('div');
+  header.className = 'sg-ctrl-row';
+  header.style.alignItems = 'center';
+
+  const headerLabel = document.createElement('label');
+  headerLabel.className = 'sg-ctrl-label';
+  headerLabel.style.fontWeight = '600';
+  headerLabel.textContent = label;
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'sg-edim-unit-btn';
+  addBtn.innerHTML = '<i class="fa-solid fa-plus"></i>';
+  addBtn.title = 'Add layer';
+  addBtn.addEventListener('click', () => {
+    prop.addLayer?.({}, { at: 0 });
+  });
+
+  header.appendChild(headerLabel);
+  header.appendChild(addBtn);
+  section.appendChild(header);
+
+  const layers = prop.getLayers?.() || [];
+  if (layers.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'sg-empty-state';
+    empty.style.padding = '8px';
+    empty.innerHTML = '<span style="font-size:11px;opacity:0.6">No layers — click + to add</span>';
+    section.appendChild(empty);
+  }
+
+  layers.forEach((layer: any, idx: number) => {
+    const layerWrap = document.createElement('div');
+    layerWrap.className = 'sg-stack-layer';
+
+    const layerHeader = document.createElement('div');
+    layerHeader.className = 'sg-ctrl-row';
+    layerHeader.style.alignItems = 'center';
+
+    const layerLabel = document.createElement('span');
+    layerLabel.className = 'sg-ctrl-label';
+    layerLabel.style.fontSize = '10px';
+    layerLabel.style.opacity = '0.7';
+    layerLabel.textContent = `Layer ${idx + 1}`;
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'sg-edim-unit-btn';
+    removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+    removeBtn.title = 'Remove layer';
+    removeBtn.style.fontSize = '10px';
+    removeBtn.addEventListener('click', () => {
+      prop.removeLayer?.(layer);
+    });
+
+    layerHeader.appendChild(layerLabel);
+    layerHeader.appendChild(removeBtn);
+    layerWrap.appendChild(layerHeader);
+
+    const layerProps = layer.getProperties?.() || [];
+    layerProps.forEach((sub: any) => {
+      renderProperty(layerWrap, sub, editor);
+    });
+
+    section.appendChild(layerWrap);
+  });
+
+  container.appendChild(section);
 }
 
 function renderTextProp(container: HTMLElement, prop: any, label: string): void {

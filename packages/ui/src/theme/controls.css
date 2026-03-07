@@ -454,6 +454,27 @@
   color: #fff;
 }
 
+/* ===== Composite/Stack Sub-sections ===== */
+.sg-ctrl-subsection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-ctrl-gap);
+  padding: 4px 0;
+  border-left: 2px solid var(--sg-border);
+  padding-left: 8px;
+  margin-left: 4px;
+}
+
+.sg-stack-layer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sg-ctrl-gap);
+  padding: 6px;
+  background: var(--sg-bg-2);
+  border: 1px solid var(--sg-border);
+  border-radius: var(--sg-radius);
+}
+
 /* ===== Slider Control ===== */
 .sg-slider-ctrl {
   display: flex;
