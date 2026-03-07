@@ -193,9 +193,9 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
     showExportModal(html, css);
   });
 
-  // Import
+  // Import — direct file picker, replaces all content
   el.querySelector('[data-cmd="import"]')!.addEventListener('click', () => {
-    showImportModal(editor);
+    importFromFile(editor);
   });
 
   // Save
@@ -315,56 +315,21 @@ ${html}
   showModal('Export HTML / CSS', wrap);
 }
 
-function showImportModal(editor: Editor): void {
-  const wrap = document.createElement('div');
-  wrap.className = 'sg-import-wrap';
+function importFromFile(editor: Editor): void {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.html,.htm';
+  input.style.display = 'none';
 
-  const label = document.createElement('label');
-  label.className = 'sg-modal-label';
-  label.textContent = 'Paste HTML below';
-
-  const textarea = document.createElement('textarea');
-  textarea.className = 'sg-modal-textarea';
-  textarea.placeholder = '<div>Your HTML here...</div>';
-  textarea.rows = 12;
-
-  const actions = document.createElement('div');
-  actions.className = 'sg-modal-actions';
-
-  const fileInput = document.createElement('input');
-  fileInput.type = 'file';
-  fileInput.accept = '.html,.htm';
-  fileInput.style.display = 'none';
-  fileInput.addEventListener('change', () => {
-    const file = fileInput.files?.[0];
-    if (file) {
-      file.text().then(text => { textarea.value = text; });
-    }
+  input.addEventListener('change', () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    file.text().then((html) => {
+      editor.setComponents(html);
+    });
   });
 
-  const uploadBtn = document.createElement('button');
-  uploadBtn.className = 'sg-modal-btn';
-  uploadBtn.textContent = 'Upload .html';
-  uploadBtn.addEventListener('click', () => fileInput.click());
-
-  const loadBtn = document.createElement('button');
-  loadBtn.className = 'sg-modal-btn sg-modal-btn-primary';
-  loadBtn.textContent = 'Load';
-
-  wrap.appendChild(label);
-  wrap.appendChild(textarea);
-  wrap.appendChild(fileInput);
-  actions.appendChild(uploadBtn);
-  actions.appendChild(loadBtn);
-  wrap.appendChild(actions);
-
-  const { close } = showModal('Import HTML', wrap);
-
-  loadBtn.addEventListener('click', () => {
-    const val = textarea.value.trim();
-    if (val) {
-      editor.setComponents(val);
-      close();
-    }
-  });
+  document.body.appendChild(input);
+  input.click();
+  input.remove();
 }
