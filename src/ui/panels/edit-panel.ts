@@ -3,6 +3,13 @@ import { renderContentTab } from './edit-content';
 import { renderStyleTab } from './edit-style';
 import { renderAdvancedTab } from './edit-advanced';
 
+// Flag to prevent re-renders while the user is dragging a slider or interacting with a control
+let _isUserInteracting = false;
+(window as any).__sgEditing = {
+  get interacting() { return _isUserInteracting; },
+  set interacting(v: boolean) { _isUserInteracting = v; },
+};
+
 export function renderEditPanel(sidebarEl: HTMLElement, editor: Editor): void {
   let currentTab = 'content';
   let editBody: HTMLElement | null = null;
@@ -52,16 +59,29 @@ export function renderEditPanel(sidebarEl: HTMLElement, editor: Editor): void {
   });
 
   // Re-render style tab when style:custom fires (if we're on style tab)
+  // Debounce + skip while user is interacting (dragging slider) to avoid killing the drag
+  let styleRenderTimer: ReturnType<typeof setTimeout> | null = null;
   editor.on('style:custom', () => {
     if (currentTab === 'style') {
-      renderCurrentTab();
+      if (_isUserInteracting) return;
+      if (styleRenderTimer) clearTimeout(styleRenderTimer);
+      styleRenderTimer = setTimeout(() => {
+        renderCurrentTab();
+        styleRenderTimer = null;
+      }, 100);
     }
   });
 
   // Re-render content tab when trait:custom fires (if we're on content tab)
+  let traitRenderTimer: ReturnType<typeof setTimeout> | null = null;
   editor.on('trait:custom', () => {
     if (currentTab === 'content') {
-      renderCurrentTab();
+      if (_isUserInteracting) return;
+      if (traitRenderTimer) clearTimeout(traitRenderTimer);
+      traitRenderTimer = setTimeout(() => {
+        renderCurrentTab();
+        traitRenderTimer = null;
+      }, 100);
     }
   });
 }

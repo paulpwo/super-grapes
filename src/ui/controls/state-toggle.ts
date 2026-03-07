@@ -28,17 +28,12 @@ export function renderStateToggle(container: HTMLElement, editor: Editor): void 
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Switch GrapesJS style manager to this pseudo-class state
-      const sm = editor.StyleManager;
       const selected = editor.getSelected();
       if (selected) {
-        // Get the current selector and toggle the state
-        const selectorManager = editor.SelectorManager;
-        if (item.state) {
-          selectorManager.setState(item.state);
-        } else {
-          selectorManager.setState('');
-        }
+        // Switch GrapesJS selector state (e.g. '' or ':hover')
+        editor.SelectorManager.setState(item.state);
+        // Force StyleManager to re-evaluate properties for the new state
+        editor.StyleManager.select(selected);
       }
     });
 

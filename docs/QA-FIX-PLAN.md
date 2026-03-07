@@ -37,10 +37,10 @@ Cambiar `data-device="Mobile portrait"` a `data-device="Mobile"`:
 ```
 
 ### Verificacion
-- [ ] Click en icono Mobile -> canvas se redimensiona a 375px de ancho
-- [ ] Click en Tablet -> canvas se redimensiona a 768px
-- [ ] Click en Desktop -> canvas vuelve a ancho completo
-- [ ] Los botones muestran estado `active` correctamente al cambiar
+- [x] Click en icono Mobile -> canvas se redimensiona a 375px de ancho
+- [x] Click en Tablet -> canvas se redimensiona a 768px
+- [x] Click en Desktop -> canvas vuelve a ancho completo
+- [x] Los botones muestran estado `active` correctamente al cambiar
 
 ---
 
@@ -108,12 +108,12 @@ editor.on('style:custom', () => {
 ```
 
 ### Verificacion
-- [ ] Arrastrar slider de font-size -> valor cambia suavemente mientras se arrastra
-- [ ] Arrastrar slider de width -> igual, cambio continuo
-- [ ] Arrastrar slider de opacity -> cambio continuo con decimales (0.01 step)
-- [ ] Soltar el slider -> el panel se actualiza con el valor final correcto
-- [ ] El input numerico al lado del slider se sincroniza durante el drag
-- [ ] Escribir un valor en el input numerico y presionar Enter -> se aplica correctamente
+- [x] Arrastrar slider de font-size -> valor cambia suavemente mientras se arrastra
+- [x] Arrastrar slider de width -> igual, cambio continuo
+- [x] Arrastrar slider de opacity -> cambio continuo con decimales (0.01 step)
+- [x] Soltar el slider -> el panel se actualiza con el valor final correcto
+- [x] El input numerico al lado del slider se sincroniza durante el drag
+- [x] Escribir un valor en el input numerico y presionar Enter -> se aplica correctamente
 
 ---
 
@@ -166,13 +166,13 @@ if (selected && !selected.getClasses().length) {
 ```
 
 ### Verificacion
-- [ ] Seleccionar un boton -> ir a Style -> cambiar a Hover
-- [ ] Cambiar background-color en modo Hover -> el valor se guarda
-- [ ] Cambiar a Normal -> el background-color muestra el valor original (no el de hover)
-- [ ] En el canvas, pasar el mouse sobre el boton -> se ve el color de hover
-- [ ] Quitar el mouse -> vuelve al color normal
-- [ ] Ejecutar `editor.getCss()` en consola -> debe incluir regla `:hover`
-- [ ] Las transiciones definidas en el sector Extra deberian animar el cambio hover
+- [x] Seleccionar un boton -> ir a Style -> cambiar a Hover
+- [x] Cambiar background-color en modo Hover -> el valor se guarda
+- [x] Cambiar a Normal -> el background-color muestra el valor original (no el de hover)
+- [x] En el canvas, pasar el mouse sobre el boton -> se ve el color de hover
+- [x] Quitar el mouse -> vuelve al color normal
+- [x] Ejecutar `editor.getCss()` en consola -> debe incluir regla `:hover`
+- [x] Las transiciones definidas en el sector Extra deberian animar el cambio hover
 
 ---
 
@@ -270,13 +270,13 @@ CSS necesario (agregar en `editor.css` o `topbar.css`):
 ```
 
 ### Verificacion
-- [ ] Click en Preview -> topbar y sidebar desaparecen, canvas ocupa todo el ancho
-- [ ] Los bordes de componentes (sw-visibility) se desactivan automaticamente
-- [ ] Aparece boton "Exit Preview" flotante en la esquina superior derecha
-- [ ] Click en "Exit Preview" -> vuelve al modo edicion normal
-- [ ] La topbar, sidebar y todos los controles funcionan correctamente despues de salir
-- [ ] Si sw-visibility estaba activo antes, se reactiva al salir
-- [ ] No hay necesidad de recargar la pagina
+- [x] Click en Preview -> topbar y sidebar desaparecen, canvas ocupa todo el ancho
+- [x] Los bordes de componentes (sw-visibility) se desactivan automaticamente
+- [x] Aparece boton "Exit Preview" flotante en la esquina superior derecha
+- [x] Click en "Exit Preview" -> vuelve al modo edicion normal
+- [x] La topbar, sidebar y todos los controles funcionan correctamente despues de salir
+- [x] Si sw-visibility estaba activo antes, se reactiva al salir
+- [x] No hay necesidad de recargar la pagina
 
 ---
 
@@ -332,12 +332,12 @@ sectors.forEach((sector: any) => {
 En cada component type definition, agregar la propiedad `unstylable` o usar `stylable` para restringir que propiedades CSS se pueden editar. Esto es mas correcto pero requiere modificar todos los component files.
 
 ### Verificacion
-- [ ] Seleccionar un Heading -> Style tab NO muestra sector Flex
-- [ ] Seleccionar un Text -> Style tab NO muestra sector Flex
-- [ ] Seleccionar una Image -> Style tab NO muestra Typography ni Flex
-- [ ] Seleccionar un Section/Container -> Style tab SI muestra Flex
-- [ ] Seleccionar un Spacer -> Solo muestra Dimension
-- [ ] Los sectores que se muestran tienen sentido logico para cada tipo de componente
+- [x] Seleccionar un Heading -> Style tab NO muestra sector Flex
+- [x] Seleccionar un Text -> Style tab NO muestra sector Flex
+- [x] Seleccionar una Image -> Style tab NO muestra Typography ni Flex
+- [x] Seleccionar un Section/Container -> Style tab SI muestra Flex
+- [x] Seleccionar un Spacer -> Solo muestra Dimension
+- [x] Los sectores que se muestran tienen sentido logico para cada tipo de componente
 
 ---
 
@@ -412,16 +412,16 @@ function showModal(title: string, content: HTMLElement, onClose?: () => void): v
 ```
 
 ### Verificacion
-- [ ] Boton Export visible en la topbar
-- [ ] Click Export -> modal con HTML y CSS del proyecto actual
-- [ ] Boton "Copy HTML" copia al clipboard
-- [ ] Boton "Copy CSS" copia al clipboard
-- [ ] Boton "Download" descarga archivo .html completo (con CSS inline o en `<style>`)
-- [ ] Boton Import visible en la topbar
-- [ ] Click Import -> modal con textarea para pegar HTML
-- [ ] Pegar HTML y click "Load" -> el contenido se carga en el canvas
-- [ ] Opcion de subir archivo .html desde disco
-- [ ] El modal se cierra con el boton X o haciendo click fuera
+- [x] Boton Export visible en la topbar
+- [x] Click Export -> modal con HTML y CSS del proyecto actual
+- [x] Boton "Copy HTML" copia al clipboard
+- [x] Boton "Copy CSS" copia al clipboard
+- [x] Boton "Download" descarga archivo .html completo (con CSS inline o en `<style>`)
+- [x] Boton Import visible en la topbar
+- [x] Click Import -> modal con textarea para pegar HTML
+- [x] Pegar HTML y click "Load" -> el contenido se carga en el canvas
+- [x] Opcion de subir archivo .html desde disco
+- [x] El modal se cierra con el boton X o haciendo click fuera
 
 ---
 

@@ -53,6 +53,16 @@ export function renderSliderRow(container: HTMLElement, property: any, label: st
   unitSpan.className = 'sg-slider-unit';
   unitSpan.textContent = unit;
 
+  // Block re-renders while dragging
+  slider.addEventListener('pointerdown', () => {
+    if ((window as any).__sgEditing) (window as any).__sgEditing.interacting = true;
+  });
+  const onPointerUp = () => {
+    if ((window as any).__sgEditing) (window as any).__sgEditing.interacting = false;
+  };
+  slider.addEventListener('pointerup', onPointerUp);
+  slider.addEventListener('pointercancel', onPointerUp);
+
   // Sync slider → input
   slider.addEventListener('input', () => {
     numInput.value = slider.value;

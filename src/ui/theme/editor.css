@@ -116,6 +116,40 @@
   background: var(--sg-text-dim);
 }
 
+/* Preview mode */
+.sg-editor.sg-preview-mode .sg-topbar,
+.sg-editor.sg-preview-mode .sg-sidebar {
+  display: none !important;
+}
+
+.sg-editor.sg-preview-mode .sg-canvas-wrap {
+  width: 100% !important;
+}
+
+.sg-preview-exit-btn {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  padding: 8px 16px;
+  background: var(--sg-bg);
+  border: 1px solid var(--sg-border);
+  color: var(--sg-text);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sg-font);
+  border-radius: 2px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.sg-preview-exit-btn:hover {
+  opacity: 1;
+}
+
 /* Placeholder / empty state */
 .sg-empty-state {
   display: flex;

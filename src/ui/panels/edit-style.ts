@@ -51,6 +51,21 @@ const FLEX_TOGGLE_MAP: Record<string, ToggleItem[]> = {
   'text-align': TEXT_ALIGN_ITEMS,
 };
 
+/** Sectors to show per component type — unlisted types get all sectors */
+const SECTOR_VISIBILITY: Record<string, string[]> = {
+  'sg-text': ['General', 'Dimension', 'Typography', 'Decorations', 'Extra'],
+  'sg-heading': ['General', 'Dimension', 'Typography', 'Decorations', 'Extra'],
+  'sg-image': ['General', 'Dimension', 'Decorations', 'Extra'],
+  'sg-video': ['General', 'Dimension', 'Decorations', 'Extra'],
+  'sg-divider': ['General', 'Dimension', 'Decorations', 'Extra'],
+  'sg-spacer': ['Dimension'],
+  'sg-icon': ['General', 'Dimension', 'Typography', 'Decorations', 'Extra'],
+  'sg-button': ['General', 'Dimension', 'Typography', 'Decorations', 'Extra'],
+  'sg-section': ['General', 'Dimension', 'Typography', 'Decorations', 'Flex', 'Extra'],
+  'sg-container': ['General', 'Dimension', 'Typography', 'Decorations', 'Flex', 'Extra'],
+  'sg-column': ['General', 'Dimension', 'Typography', 'Decorations', 'Flex', 'Extra'],
+};
+
 export function renderStyleTab(el: HTMLElement, editor: Editor): void {
   el.innerHTML = '';
 
@@ -80,8 +95,15 @@ export function renderStyleTab(el: HTMLElement, editor: Editor): void {
       return;
     }
 
+    const componentType = selected?.get('type') || '';
+    const allowedSectors = SECTOR_VISIBILITY[componentType];
+
     sectors.forEach((sector: any) => {
       const sectorName = sector.getName?.() || sector.get('name') || 'Styles';
+
+      // Filter sectors based on component type
+      if (allowedSectors && !allowedSectors.includes(sectorName)) return;
+
       const properties = sector.getProperties?.() || sector.get('properties') || [];
 
       if (properties.length === 0) return;
