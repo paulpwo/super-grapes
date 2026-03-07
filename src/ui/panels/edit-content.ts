@@ -67,9 +67,37 @@ export function renderContentTab(el: HTMLElement, editor: Editor): void {
         const field = document.createElement('div');
         field.className = 'sg-ctrl-field';
 
+        const traitName = trait.get('name') || '';
         const traitType = trait.getType?.() || trait.get('type') || 'text';
 
-        switch (traitType) {
+        // Detect datetime traits by name (e.g. countdown "startfrom")
+        const isDatetime = traitName === 'startfrom' || traitType === 'datetime-local' || traitType === 'date';
+
+        if (isDatetime) {
+          const input = document.createElement('input');
+          input.className = 'sg-input';
+          input.type = 'datetime-local';
+          const raw = trait.getValue?.() ?? trait.get('value') ?? '';
+          // Convert "YYYY/MM/DD HH:MM:SS" to "YYYY-MM-DDTHH:MM" for the picker
+          if (raw) {
+            const normalized = raw.replace(/\//g, '-').replace(' ', 'T').slice(0, 16);
+            input.value = normalized;
+          }
+          input.addEventListener('change', () => {
+            // Convert back to "YYYY/MM/DD HH:MM:SS" format for the plugin
+            const d = new Date(input.value);
+            if (!isNaN(d.getTime())) {
+              const yyyy = d.getFullYear();
+              const mm = String(d.getMonth() + 1).padStart(2, '0');
+              const dd = String(d.getDate()).padStart(2, '0');
+              const hh = String(d.getHours()).padStart(2, '0');
+              const mi = String(d.getMinutes()).padStart(2, '0');
+              const ss = '00';
+              trait.setValue(`${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`);
+            }
+          });
+          field.appendChild(input);
+        } else switch (traitType) {
           case 'text':
           case 'url': {
             const input = document.createElement('input');
