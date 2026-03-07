@@ -10,6 +10,7 @@ import { renderWidgetsPanel } from './panels/widgets-panel';
 import { renderEditPanel } from './panels/edit-panel';
 import { initNavigator } from './navigator/navigator';
 import { initContextMenu } from './context-menu/context-menu';
+import { initCanvasAddBar } from './canvas/canvas-add-bar';
 
 export class UIManager {
   private shell: EditorShellRefs;
@@ -46,6 +47,9 @@ export class UIManager {
 
     // Init context menu
     initContextMenu(this.shell.contextMenu, editor);
+
+    // Init canvas add bar (Elementor-like bottom bar)
+    initCanvasAddBar(editor);
   }
 
   getShell(): EditorShellRefs {
