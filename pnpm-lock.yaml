@@ -11,45 +11,15 @@ importers:
       grapesjs:
         specifier: ^0.21.13
         version: 0.21.13
-      grapesjs-blocks-basic:
-        specifier: ^1.0.2
-        version: 1.0.2
       grapesjs-component-countdown:
         specifier: ^1.0.2
         version: 1.0.2
       grapesjs-custom-code:
         specifier: ^1.0.2
         version: 1.0.2
-      grapesjs-navbar:
-        specifier: ^1.0.2
-        version: 1.0.2
-      grapesjs-parser-postcss:
+      grapesjs-preset-webpage:
         specifier: ^1.0.3
         version: 1.0.3
-      grapesjs-plugin-export:
-        specifier: ^1.0.12
-        version: 1.0.12
-      grapesjs-plugin-forms:
-        specifier: ^2.0.6
-        version: 2.0.6
-      grapesjs-style-gradient:
-        specifier: ^3.0.3
-        version: 3.0.3
-      grapesjs-table:
-        specifier: ^1.0.8
-        version: 1.0.8
-      grapesjs-tabs:
-        specifier: ^1.0.6
-        version: 1.0.6
-      grapesjs-tooltip:
-        specifier: ^0.1.8
-        version: 0.1.8
-      grapesjs-tui-image-editor:
-        specifier: ^1.0.2
-        version: 1.0.2
-      grapesjs-typed:
-        specifier: ^2.0.1
-        version: 2.0.1
     devDependencies:
       typescript:
         specifier: ^5.7.0
@@ -347,9 +317,6 @@ packages:
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
 
-  '@types/file-saver@2.0.7':
-    resolution: {integrity: sha512-dNKVfHd/jk0SkR/exKGj2ggkB45MAkzvWCaqLUUgkyjITkGNzH8H+yUwr+BLJUBjZOe9w8X3wgmXhZDRg1ED6A==}
-
   '@types/jquery@4.0.0':
     resolution: {integrity: sha512-Z+to+A2VkaHq1DfI2oSwsoCdhCHMpTSgjWzNcbNlRGYzksDBpPUgEcAL+RQjOBJRaLoEAOHXxqDGBVP+BblBwg==}
 
@@ -388,50 +355,17 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  grapesjs-blocks-basic@1.0.2:
-    resolution: {integrity: sha512-SsPKf/CvQkZ+kABOsN01auAPHXh/2J20g0AWYF7fHR3Gw3TZLtdIxT1mk90Qzi76u/7sUYi3CTI+i3ZaTtXHRA==}
-
   grapesjs-component-countdown@1.0.2:
     resolution: {integrity: sha512-YEDlDY8AxUvNNHojDgOFv76jqDwo49LyFf9ES/Yrda1ou0ohQfoouxRXS+3RzDDN5NEBKkM1PggZlcbiIQfr8Q==}
 
   grapesjs-custom-code@1.0.2:
     resolution: {integrity: sha512-B8IZQyB+HjLb9HkHzQ+RVHE5Q6zqX7Ry8b+kYk8Jh7vjmPawe+/kL0pXYxYQ2bSmdaUEuq8mLngiNY+l6EFEVQ==}
 
-  grapesjs-navbar@1.0.2:
-    resolution: {integrity: sha512-JYTi5LwBkjSt3Cv3DxK4OcnOrsFSXLpi2/1sobnlfZ9hjp2b286BJbC58f0RNw1yx5n/12IhEzk9Nj4sAiSSwQ==}
-
-  grapesjs-parser-postcss@1.0.3:
-    resolution: {integrity: sha512-lfiNRDGdYQT259fUudYD0Z9EKB0DeS9GdCjVqGuJo28rv0WPAdGlpFnvlYgNGurX38ZjIi8qnbEuSSDl8AXFSw==}
-
-  grapesjs-plugin-export@1.0.12:
-    resolution: {integrity: sha512-q5rn1dwUYqPwDVnL9dhMxInk2SXWbrJ7OUUjFYk2LGJoT1laN3TZSDlDn/DVp9pCQd7fyHDgLdy8mvaVVmSh6g==}
-
-  grapesjs-plugin-forms@2.0.6:
-    resolution: {integrity: sha512-4rDob01NLiJWas5JW1FCpQc/4R4oS4wc/qr7pQwjGUiDzHNPKZLix10FqUKEv7hnzPmBaR2ejBL87sMwz11Tlw==}
-
-  grapesjs-style-gradient@3.0.3:
-    resolution: {integrity: sha512-FDXPvFFg2a+2hh6IyGlPhdFVj2UYzOGd4lRsY3sb6057U0/tmLrzPAPDC2IpmaSddICOEYfJiAW/oMIci/SShQ==}
-
-  grapesjs-table@1.0.8:
-    resolution: {integrity: sha512-rFu4QatL2173bl60MnzhLEGNIfETGcvc+J1GF7CEH0AqHkNvrWcoKi67Bi5aXNSMlwHsHEDjFo/OfffXkVpzlQ==}
-
-  grapesjs-tabs@1.0.6:
-    resolution: {integrity: sha512-Xmdte7jMvmGDHIL29t8jlGWL/oSmXOEgswmlKSaYKc7z4ZJEfF0Vr+YTfF6MZq/FFYjzk+0kOad6dnS3TDgZ5Q==}
-
-  grapesjs-tooltip@0.1.8:
-    resolution: {integrity: sha512-8q8ck/Ri167fPCAtyXslyRQ88wWk3w6pXKEcd1va5hIy/YNierZQ7AbKkdmXwbd2mR65lJWRv8tjhFsEDE3ZoQ==}
-
-  grapesjs-tui-image-editor@1.0.2:
-    resolution: {integrity: sha512-cnKSYzzQV8m5mdvVGhhO9aO5tmtOZLR1O+12z2LqnBcYCvA1eN7ecEYqHT7qpRVH8Q84Nj2mmCn+2t4TvrkI8g==}
-
-  grapesjs-typed@2.0.1:
-    resolution: {integrity: sha512-3Z5hATX/Zp9PkdOv94RtIzqB/n1mMUdTO5X/ZyNUMzSmGZG4CHtTmw3bIQDIkrSTWdbcqInlbFPzvzKYr4rKaw==}
+  grapesjs-preset-webpage@1.0.3:
+    resolution: {integrity: sha512-C0VOKLAdhv0j1f81c6F2uk3JpJvxgXl5DeHUtDa5qGf/HZzaCmQxsvd8Re3Oh5Cah4uUCqoi9uB5FYx3hLND2w==}
 
   grapesjs@0.21.13:
     resolution: {integrity: sha512-Qfl2kL7DV9kX+ihUUgAM2LtzkFUmZQYrMLol6/uENCkUE2ndB/Ebtf5UUx7UXWT3txDs4UiWIojYCvmmxTv4XA==}
-
-  grapick@0.1.13:
-    resolution: {integrity: sha512-2v7DdmXKbl9+GsL2ZRl2qEMD+PeczYJBSifwx+5SGbaSh0pZ+b6GLya87cBfN953wwXsZqyzuSVPBzqRz8F12g==}
 
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
@@ -675,8 +609,6 @@ snapshots:
 
   '@types/estree@1.0.8': {}
 
-  '@types/file-saver@2.0.7': {}
-
   '@types/jquery@4.0.0': {}
 
   '@types/underscore@1.13.0': {}
@@ -730,35 +662,11 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  grapesjs-blocks-basic@1.0.2: {}
-
   grapesjs-component-countdown@1.0.2: {}
 
   grapesjs-custom-code@1.0.2: {}
 
-  grapesjs-navbar@1.0.2: {}
-
-  grapesjs-parser-postcss@1.0.3: {}
-
-  grapesjs-plugin-export@1.0.12:
-    dependencies:
-      '@types/file-saver': 2.0.7
-
-  grapesjs-plugin-forms@2.0.6: {}
-
-  grapesjs-style-gradient@3.0.3:
-    dependencies:
-      grapick: 0.1.13
-
-  grapesjs-table@1.0.8: {}
-
-  grapesjs-tabs@1.0.6: {}
-
-  grapesjs-tooltip@0.1.8: {}
-
-  grapesjs-tui-image-editor@1.0.2: {}
-
-  grapesjs-typed@2.0.1: {}
+  grapesjs-preset-webpage@1.0.3: {}
 
   grapesjs@0.21.13:
     dependencies:
@@ -769,8 +677,6 @@ snapshots:
       codemirror-formatting: 1.0.0
       promise-polyfill: 8.1.3
       underscore: 1.13.1
-
-  grapick@0.1.13: {}
 
   nanoid@3.3.11: {}
 

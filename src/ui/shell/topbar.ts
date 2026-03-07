@@ -115,13 +115,26 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
   const previewBtn = el.querySelector('[data-cmd="preview"]') as HTMLButtonElement;
   let isPreview = false;
 
+  let prevSelected: any = null;
+  let prevSwVisibility = false;
+
   previewBtn.addEventListener('click', () => {
     isPreview = !isPreview;
     const editorRoot = document.querySelector('.sg-editor') as HTMLElement;
 
     if (isPreview) {
+      // Save state before preview
+      prevSelected = editor.getSelected();
+      prevSwVisibility = swActive;
+
+      editor.select();
+      if (swActive) {
+        editor.stopCommand('sw-visibility');
+        swActive = false;
+        swBtn.classList.remove('active');
+      }
+      editor.runCommand('preview');
       editorRoot.classList.add('sg-preview-mode');
-      editor.stopCommand('sw-visibility');
       previewBtn.classList.add('active');
 
       const exitBtn = document.createElement('button');
@@ -130,8 +143,22 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
       exitBtn.addEventListener('click', () => previewBtn.click());
       editorRoot.appendChild(exitBtn);
     } else {
+      editor.stopCommand('preview');
       editorRoot.classList.remove('sg-preview-mode');
-      if (swActive) editor.runCommand('sw-visibility');
+
+      // Restore sw-visibility state
+      if (prevSwVisibility) {
+        editor.runCommand('sw-visibility');
+        swActive = true;
+        swBtn.classList.add('active');
+      }
+
+      // Restore previous selection
+      if (prevSelected) {
+        editor.select(prevSelected);
+        prevSelected = null;
+      }
+
       previewBtn.classList.remove('active');
 
       const exitBtn = editorRoot.querySelector('.sg-preview-exit-btn');

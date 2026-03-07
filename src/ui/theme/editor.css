@@ -80,6 +80,43 @@
   background: var(--sg-accent-hover);
 }
 
+/* RTE Toolbar — match component toolbar style */
+.sg-editor .gjs-rte-toolbar {
+  background-color: var(--sg-accent) !important;
+  border: none !important;
+  border-radius: 2px !important;
+  padding: 2px !important;
+  display: flex;
+  gap: 0;
+}
+
+.sg-editor .gjs-rte-toolbar .gjs-rte-actionbar {
+  display: flex;
+}
+
+.sg-editor .gjs-rte-toolbar .gjs-rte-action {
+  background: none;
+  border: none;
+  color: #fff;
+  width: 30px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+
+.sg-editor .gjs-rte-toolbar .gjs-rte-action:hover {
+  background: var(--sg-accent-hover);
+}
+
+.sg-editor .gjs-rte-toolbar .gjs-rte-active {
+  background: rgba(0, 0, 0, 0.25);
+}
+
 /* Badge — restyle GrapesJS default to match our theme */
 .sg-editor .gjs-badge,
 .sg-editor .gjs-com-badge {
@@ -148,6 +185,99 @@
 
 .sg-preview-exit-btn:hover {
   opacity: 1;
+}
+
+/* GrapesJS Modal — restyle to match our theme */
+.sg-editor .gjs-mdl-dialog {
+  background: var(--sg-bg-2) !important;
+  border: 1px solid var(--sg-border) !important;
+  border-radius: var(--sg-radius) !important;
+  color: var(--sg-text) !important;
+  font-family: var(--sg-font) !important;
+}
+
+.sg-editor .gjs-mdl-header {
+  background: var(--sg-bg-3) !important;
+  border-bottom: 1px solid var(--sg-border) !important;
+  padding: 12px 16px !important;
+}
+
+.sg-editor .gjs-mdl-title {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: var(--sg-text) !important;
+  font-family: var(--sg-font) !important;
+}
+
+.sg-editor .gjs-mdl-btn-close {
+  color: var(--sg-text-dim) !important;
+  font-size: 18px !important;
+  opacity: 1 !important;
+}
+
+.sg-editor .gjs-mdl-btn-close:hover {
+  color: var(--sg-text) !important;
+}
+
+.sg-editor .gjs-mdl-content {
+  padding: 16px !important;
+}
+
+.sg-editor .gjs-mdl-container {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Modal code editor area */
+.sg-editor .gjs-mdl-dialog .CodeMirror {
+  background: var(--sg-bg) !important;
+  color: var(--sg-text) !important;
+  border: 1px solid var(--sg-border) !important;
+  border-radius: var(--sg-radius) !important;
+  font-family: var(--sg-font-mono) !important;
+  font-size: 13px !important;
+}
+
+.sg-editor .gjs-mdl-dialog .CodeMirror-gutters {
+  background: var(--sg-bg-3) !important;
+  border-right: 1px solid var(--sg-border) !important;
+}
+
+.sg-editor .gjs-mdl-dialog .CodeMirror-linenumber {
+  color: var(--sg-text-dim) !important;
+}
+
+.sg-editor .gjs-mdl-dialog .CodeMirror-cursor {
+  border-left-color: var(--sg-text) !important;
+}
+
+/* Modal buttons (Save, Import, etc.) */
+.sg-editor .gjs-mdl-dialog .gjs-btn-prim,
+.sg-editor .gjs-mdl-dialog button {
+  background: var(--sg-accent) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--sg-radius) !important;
+  padding: 8px 20px !important;
+  font-family: var(--sg-font) !important;
+  font-size: var(--sg-font-size) !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+}
+
+.sg-editor .gjs-mdl-dialog .gjs-btn-prim:hover,
+.sg-editor .gjs-mdl-dialog button:hover {
+  background: var(--sg-accent-hover) !important;
+}
+
+/* Don't style the close X as a button */
+.sg-editor .gjs-mdl-header button {
+  background: none !important;
+  padding: 0 !important;
+}
+
+.sg-editor .gjs-mdl-header button:hover {
+  background: none !important;
 }
 
 /* Placeholder / empty state */

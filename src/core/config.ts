@@ -1,5 +1,8 @@
 import type { SuperGrapesConfig } from './types';
 import { DEFAULT_DEVICES } from './devices';
+import gjsPresetWebpage from 'grapesjs-preset-webpage';
+import gjsComponentCountdown from 'grapesjs-component-countdown';
+import gjsCustomCode from 'grapesjs-custom-code';
 
 /**
  * Build the full GrapesJS initialization config from SuperGrapesConfig.
@@ -41,6 +44,17 @@ export function buildGrapesConfig(config: SuperGrapesConfig): Record<string, unk
       styles: [
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
       ],
+    },
+
+    // Plugins
+    plugins: [gjsPresetWebpage, gjsComponentCountdown, gjsCustomCode],
+    pluginsOpts: {
+      [gjsPresetWebpage as any]: {
+        blocksBasicOpts: { flexGrid: true },
+        useCustomTheme: false,
+      },
+      [gjsComponentCountdown as any]: {},
+      [gjsCustomCode as any]: {},
     },
   };
 
