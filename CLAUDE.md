@@ -68,6 +68,10 @@ trait:custom → edit-panel re-renders content tab (if active)
 - Font Awesome 6 Free only, no emojis
 - Square aesthetic (border-radius: 0-2px)
 
+## GrapesJS Expert Reference
+
+Full GrapesJS API reference available at `.claude/skills/grapesjs-expert.md`. Covers all modules (Components, StyleManager, SelectorManager, TraitManager, BlockManager, LayerManager, AssetManager, Commands, Storage, Pages, Modal, Canvas, Symbols, RTE, Telemetry) with API methods, events, configuration, and patterns.
+
 ## Current Status
 
 See `docs/QA-FIX-PLAN.md` for the prioritized list of bugs with root causes and fixes.
