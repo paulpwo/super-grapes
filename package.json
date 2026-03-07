@@ -1,0 +1,14 @@
+{
+  "name": "super-grapes-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @super-grapes/vanilla-example dev",
+    "build": "pnpm -r --filter=./packages/* build",
+    "build:core": "pnpm --filter @super-grapes/core build",
+    "build:ui": "pnpm --filter @super-grapes/ui build",
+    "clean": "pnpm -r exec rm -rf dist"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

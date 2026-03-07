@@ -1,0 +1,154 @@
+/* Topbar */
+.sg-topbar {
+  display: flex;
+  align-items: center;
+  height: var(--sg-topbar-h);
+  background: var(--sg-black);
+  border-bottom: 1px solid var(--sg-border);
+  padding: 0;
+  flex-shrink: 0;
+  z-index: 100;
+  user-select: none;
+}
+
+.sg-topbar-left,
+.sg-topbar-center,
+.sg-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.sg-topbar-left {
+  padding-left: 0;
+}
+
+.sg-topbar-center {
+  flex: 1;
+  justify-content: center;
+}
+
+.sg-topbar-right {
+  padding-right: 8px;
+  gap: 6px;
+}
+
+/* Logo */
+.sg-topbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sg-topbar-h);
+  height: var(--sg-topbar-h);
+  background: var(--sg-accent);
+  color: #fff;
+  font-size: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background var(--sg-transition);
+}
+
+.sg-topbar-logo:hover {
+  background: var(--sg-accent-hover);
+}
+
+/* Icon Buttons */
+.sg-topbar-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  color: var(--sg-text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: var(--sg-radius);
+  transition: all var(--sg-transition);
+  padding: 0;
+}
+
+.sg-topbar-icon-btn:hover {
+  color: var(--sg-text);
+  background: var(--sg-bg-3);
+}
+
+.sg-topbar-icon-btn.active {
+  color: var(--sg-accent);
+}
+
+.sg-topbar-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Separator */
+.sg-topbar-sep {
+  width: 1px;
+  height: 24px;
+  background: var(--sg-border);
+  margin: 0 4px;
+}
+
+/* Device Switcher */
+.sg-device-group {
+  display: flex;
+  align-items: center;
+  background: var(--sg-bg-2);
+  border: 1px solid var(--sg-border);
+  border-radius: var(--sg-radius);
+  overflow: hidden;
+}
+
+.sg-device-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 30px;
+  background: none;
+  border: none;
+  color: var(--sg-text-dim);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--sg-transition);
+  padding: 0;
+}
+
+.sg-device-btn:hover {
+  color: var(--sg-text);
+}
+
+.sg-device-btn.active {
+  background: var(--sg-bg-3);
+  color: var(--sg-accent);
+}
+
+/* Save Button */
+.sg-save-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  background: var(--sg-accent);
+  border: none;
+  color: #fff;
+  font-size: var(--sg-font-size);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--sg-radius);
+  transition: background var(--sg-transition);
+  font-family: var(--sg-font);
+  white-space: nowrap;
+}
+
+.sg-save-btn:hover {
+  background: var(--sg-accent-hover);
+}
+
+.sg-save-btn i {
+  font-size: 12px;
+}

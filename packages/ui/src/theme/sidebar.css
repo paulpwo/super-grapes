@@ -1,0 +1,224 @@
+/* Sidebar */
+.sg-sidebar {
+  width: var(--sg-sidebar-w);
+  min-width: var(--sg-sidebar-w);
+  max-width: var(--sg-sidebar-w);
+  background: var(--sg-bg);
+  border-right: 1px solid var(--sg-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Sidebar Header */
+.sg-sidebar-header {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--sg-border);
+  background: var(--sg-bg-2);
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.sg-sidebar-title {
+  font-size: var(--sg-font-size);
+  font-weight: 600;
+  color: var(--sg-text);
+  flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Sidebar Search */
+.sg-sidebar-search {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--sg-border);
+  flex-shrink: 0;
+}
+
+.sg-sidebar-search input {
+  width: 100%;
+  height: var(--sg-input-h);
+  background: var(--sg-bg-2);
+  border: 1px solid var(--sg-border);
+  border-radius: var(--sg-radius);
+  color: var(--sg-text);
+  font-size: var(--sg-font-size);
+  padding: 0 8px 0 28px;
+  outline: none;
+  font-family: var(--sg-font);
+  transition: border-color var(--sg-transition);
+}
+
+.sg-sidebar-search input:focus {
+  border-color: var(--sg-accent);
+}
+
+.sg-sidebar-search-icon {
+  position: absolute;
+  left: 20px;
+  color: var(--sg-text-dim);
+  font-size: 11px;
+  pointer-events: none;
+}
+
+.sg-sidebar-search-wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* Sidebar Body */
+.sg-sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Sidebar Bottom Toolbar */
+.sg-sidebar-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-top: 1px solid var(--sg-border);
+  background: var(--sg-bg-2);
+  flex-shrink: 0;
+  gap: 2px;
+}
+
+.sg-sidebar-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  background: none;
+  border: none;
+  color: var(--sg-text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: var(--sg-radius);
+  transition: all var(--sg-transition);
+  padding: 0;
+}
+
+.sg-sidebar-toolbar-btn:hover {
+  color: var(--sg-text);
+  background: var(--sg-bg-3);
+}
+
+.sg-sidebar-toolbar-btn.active {
+  color: var(--sg-accent);
+  background: var(--sg-bg-3);
+}
+
+/* Edit Mode Header */
+.sg-edit-header {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--sg-border);
+  background: var(--sg-bg-2);
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.sg-edit-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  color: var(--sg-text-dim);
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: var(--sg-radius);
+  transition: all var(--sg-transition);
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.sg-edit-back-btn:hover {
+  color: var(--sg-text);
+  background: var(--sg-bg-3);
+}
+
+.sg-edit-title {
+  font-size: var(--sg-font-size);
+  font-weight: 600;
+  color: var(--sg-text);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sg-edit-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 6px;
+  background: var(--sg-accent);
+  color: #fff;
+  font-size: var(--sg-font-size-xs);
+  font-weight: 600;
+  border-radius: var(--sg-radius);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+/* Edit Tabs */
+.sg-edit-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--sg-border);
+  background: var(--sg-bg);
+  flex-shrink: 0;
+}
+
+.sg-edit-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--sg-text-dim);
+  font-size: var(--sg-font-size);
+  cursor: pointer;
+  transition: all var(--sg-transition);
+  font-family: var(--sg-font);
+  padding: 0;
+}
+
+.sg-edit-tab:hover {
+  color: var(--sg-text);
+  background: var(--sg-bg-2);
+}
+
+.sg-edit-tab.active {
+  color: var(--sg-accent);
+  border-bottom-color: var(--sg-accent);
+}
+
+.sg-edit-tab i {
+  font-size: 12px;
+}
+
+/* Edit Body */
+.sg-edit-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

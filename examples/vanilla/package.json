@@ -1,0 +1,19 @@
+{
+  "name": "@super-grapes/vanilla-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@super-grapes/core": "workspace:*",
+    "@super-grapes/ui": "workspace:*",
+    "grapesjs": "^0.21.13"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vite": "^6.2.0"
+  }
+}
