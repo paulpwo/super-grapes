@@ -1,5 +1,7 @@
-import { createEditor } from '@super-grapes/core';
-import { UIManager } from '@super-grapes/ui';
+import 'grapesjs/dist/css/grapes.min.css';
+import './ui/theme/index.css';
+import { createEditor } from './core/editor';
+import { UIManager } from './ui/ui-manager';
 
 const app = document.getElementById('app')!;
 

@@ -6,48 +6,12 @@ settings:
 
 importers:
 
-  .: {}
-
-  examples/vanilla:
+  .:
     dependencies:
-      '@super-grapes/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      '@super-grapes/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       grapesjs:
         specifier: ^0.21.13
         version: 0.21.13
     devDependencies:
-      typescript:
-        specifier: ^5.7.0
-        version: 5.9.3
-      vite:
-        specifier: ^6.2.0
-        version: 6.4.1
-
-  packages/core:
-    devDependencies:
-      grapesjs:
-        specifier: ^0.21.13
-        version: 0.21.13
-      typescript:
-        specifier: ^5.7.0
-        version: 5.9.3
-      vite:
-        specifier: ^6.2.0
-        version: 6.4.1
-
-  packages/ui:
-    dependencies:
-      '@super-grapes/core':
-        specifier: workspace:*
-        version: link:../core
-    devDependencies:
-      grapesjs:
-        specifier: ^0.21.13
-        version: 0.21.13
       typescript:
         specifier: ^5.7.0
         version: 5.9.3
