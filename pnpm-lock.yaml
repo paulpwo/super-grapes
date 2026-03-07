@@ -20,6 +20,9 @@ importers:
       grapesjs-preset-webpage:
         specifier: ^1.0.3
         version: 1.0.3
+      openai:
+        specifier: ^6.27.0
+        version: 6.27.0
     devDependencies:
       typescript:
         specifier: ^5.7.0
@@ -372,6 +375,18 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  openai@6.27.0:
+    resolution: {integrity: sha512-osTKySlrdYrLYTt0zjhY8yp0JUBmWDCN+Q+QxsV4xMQnnoVFpylgKGgxwN8sSdTNw0G4y+WUXs4eCMWpyDNWZQ==}
+    hasBin: true
+    peerDependencies:
+      ws: ^8.18.0
+      zod: ^3.25 || ^4.0
+    peerDependenciesMeta:
+      ws:
+        optional: true
+      zod:
+        optional: true
+
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
@@ -679,6 +694,8 @@ snapshots:
       underscore: 1.13.1
 
   nanoid@3.3.11: {}
+
+  openai@6.27.0: {}
 
   picocolors@1.1.1: {}
 

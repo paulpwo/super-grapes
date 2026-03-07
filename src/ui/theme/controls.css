@@ -479,7 +479,7 @@
 .sg-slider-ctrl {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
 }
 
@@ -488,38 +488,68 @@
   -webkit-appearance: none;
   appearance: none;
   height: 4px;
-  background: var(--sg-bg-3);
-  border-radius: 0;
+  background: transparent;
   outline: none;
   cursor: pointer;
+  border-radius: 2px;
+}
+
+.sg-slider-track::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--sg-text-dim) 0%,
+    var(--sg-text-dim) var(--sg-slider-fill, 0%),
+    var(--sg-bg-3) var(--sg-slider-fill, 0%),
+    var(--sg-bg-3) 100%
+  );
+}
+
+.sg-slider-track::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--sg-bg-3);
+  border: none;
+}
+
+.sg-slider-track::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--sg-text-dim);
 }
 
 .sg-slider-track::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  background: var(--sg-accent);
+  width: 10px;
+  height: 10px;
+  background: var(--sg-text);
   border: none;
-  border-radius: 0;
+  border-radius: 50%;
   cursor: pointer;
-  transition: background var(--sg-transition);
+  margin-top: -3px;
+  transition: box-shadow var(--sg-transition);
 }
 
-.sg-slider-track::-webkit-slider-thumb:hover {
-  background: var(--sg-accent-hover);
+.sg-slider-track:hover::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(224, 224, 224, 0.15);
+}
+
+.sg-slider-track:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 5px rgba(224, 224, 224, 0.12);
 }
 
 .sg-slider-track::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  background: var(--sg-accent);
+  width: 10px;
+  height: 10px;
+  background: var(--sg-text);
   border: none;
-  border-radius: 0;
+  border-radius: 50%;
   cursor: pointer;
 }
 
 .sg-slider-value {
-  width: 52px;
+  width: 44px;
   height: 24px;
   background: var(--sg-bg-2);
   border: 1px solid var(--sg-border);
@@ -531,6 +561,7 @@
   font-family: var(--sg-font);
   padding: 0;
   -moz-appearance: textfield;
+  transition: border-color var(--sg-transition);
 }
 
 .sg-slider-value::-webkit-inner-spin-button,

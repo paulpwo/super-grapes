@@ -202,6 +202,14 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
   el.querySelector('[data-cmd="save"]')!.addEventListener('click', () => {
     editor.store();
   });
+
+  // AI button — only if configured
+  const aiConfig = (editor as any).__sgAiConfig;
+  if (aiConfig?.apiKey) {
+    import('../ai/ai-button').then(({ initAiButton }) => {
+      initAiButton(el.querySelector('.sg-topbar-right')!, editor, aiConfig);
+    });
+  }
 }
 
 /* ---- Modal helpers ---- */

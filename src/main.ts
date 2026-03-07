@@ -26,6 +26,11 @@ const editor = createEditor({
       </section>
     `,
   },
+  ai: import.meta.env.VITE_SG_AI_API_KEY ? {
+    apiKey: import.meta.env.VITE_SG_AI_API_KEY as string,
+    model: (import.meta.env.VITE_SG_AI_MODEL as string) || 'gpt-4o',
+    baseURL: (import.meta.env.VITE_SG_AI_BASE_URL as string) || undefined,
+  } : undefined,
   onReady: (ed) => {
     console.log('Super Grapes editor ready!', ed);
   },

@@ -3,7 +3,7 @@ import { buildGrapesConfig } from './config';
 import { SG_EVENTS } from './events';
 import { configureStorage } from './storage';
 import { registerPlugins } from './plugins/index';
-import type { SuperGrapesConfig } from './types';
+import type { SuperGrapesConfig, AiConfig } from './types';
 
 import { registerSectionComponent } from './components/section';
 import { registerContainerComponent } from './components/container';
@@ -71,6 +71,21 @@ export function createEditor(config: SuperGrapesConfig): Editor {
   gjsConfig.plugins = [sgCorePlugin, ...existingPlugins];
 
   const editor = grapesjs.init(gjsConfig as Parameters<typeof grapesjs.init>[0]);
+
+  // Resolve AI config: explicit config > env vars
+  const aiConfig: AiConfig | undefined = config.ai?.apiKey
+    ? config.ai
+    : (import.meta.env.VITE_SG_AI_API_KEY
+      ? {
+          apiKey: import.meta.env.VITE_SG_AI_API_KEY as string,
+          model: (import.meta.env.VITE_SG_AI_MODEL as string) || 'gpt-4o',
+          baseURL: (import.meta.env.VITE_SG_AI_BASE_URL as string) || undefined,
+        }
+      : undefined);
+
+  if (aiConfig) {
+    (editor as any).__sgAiConfig = aiConfig;
+  }
 
   // Register user-provided plugins
   if (config.plugins && config.plugins.length > 0) {

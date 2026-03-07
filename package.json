@@ -13,7 +13,8 @@
     "grapesjs": "^0.21.13",
     "grapesjs-component-countdown": "^1.0.2",
     "grapesjs-custom-code": "^1.0.2",
-    "grapesjs-preset-webpage": "^1.0.3"
+    "grapesjs-preset-webpage": "^1.0.3",
+    "openai": "^6.27.0"
   },
   "devDependencies": {
     "typescript": "^5.7.0",

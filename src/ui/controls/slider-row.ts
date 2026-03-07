@@ -53,6 +53,16 @@ export function renderSliderRow(container: HTMLElement, property: any, label: st
   unitSpan.className = 'sg-slider-unit';
   unitSpan.textContent = unit;
 
+  // Update filled track
+  function updateFill() {
+    const v = parseFloat(slider.value);
+    const lo = parseFloat(slider.min);
+    const hi = parseFloat(slider.max);
+    const pct = hi > lo ? ((v - lo) / (hi - lo)) * 100 : 0;
+    slider.style.setProperty('--sg-slider-fill', `${pct}%`);
+  }
+  updateFill();
+
   // Block re-renders while dragging
   slider.addEventListener('pointerdown', () => {
     if ((window as any).__sgEditing) (window as any).__sgEditing.interacting = true;
@@ -66,12 +76,14 @@ export function renderSliderRow(container: HTMLElement, property: any, label: st
   // Sync slider → input
   slider.addEventListener('input', () => {
     numInput.value = slider.value;
+    updateFill();
     applyValue(slider.value);
   });
 
   // Sync input → slider
   numInput.addEventListener('change', () => {
     slider.value = numInput.value;
+    updateFill();
     applyValue(numInput.value);
   });
 

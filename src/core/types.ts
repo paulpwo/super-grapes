@@ -27,6 +27,14 @@ export interface StorageConfig {
 /** Plugin function signature */
 export type SuperGrapesPlugin = (editor: Editor, config: SuperGrapesConfig) => void;
 
+/** AI provider configuration (OpenAI-compatible) */
+export interface AiConfig {
+  apiKey: string;
+  model: string;
+  baseURL?: string;
+  systemPrompt?: string;
+}
+
 /** Main configuration for SuperGrapes editor */
 export interface SuperGrapesConfig {
   /** Container element or selector */
@@ -41,6 +49,8 @@ export interface SuperGrapesConfig {
   devices?: DeviceConfig[];
   /** Callback fired when editor is ready */
   onReady?: (editor: Editor) => void;
+  /** AI assistant configuration */
+  ai?: AiConfig;
 }
 
 export type { Editor };
