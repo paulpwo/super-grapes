@@ -6,6 +6,7 @@ import type { Editor } from 'grapesjs';
  */
 export function registerHeadingComponent(editor: Editor): void {
   editor.Components.addType('sg-heading', {
+    extend: 'text',
     model: {
       defaults: {
         tagName: 'h2',

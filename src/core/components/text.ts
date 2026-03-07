@@ -6,6 +6,7 @@ import type { Editor } from 'grapesjs';
  */
 export function registerTextComponent(editor: Editor): void {
   editor.Components.addType('sg-text', {
+    extend: 'text',
     model: {
       defaults: {
         tagName: 'p',

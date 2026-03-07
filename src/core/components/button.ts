@@ -6,6 +6,7 @@ import type { Editor } from 'grapesjs';
  */
 export function registerButtonComponent(editor: Editor): void {
   editor.Components.addType('sg-button', {
+    extend: 'text',
     model: {
       defaults: {
         tagName: 'a',
