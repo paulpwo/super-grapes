@@ -23,8 +23,10 @@ const editor = createEditor({
 
   // Optional: AI assistant (uncomment and add your key)
   // ai: {
-  //   apiKey: 'sk-your-key',
-  //   model: 'gpt-4o',
+  //   apiKey: '',
+  //   model: 'gemini-2.5-flash',
+  //   baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
+  //   systemPrompt: 'Custom system prompt to override the default one...',
   //   brandColors: {
   //     primary: '#2563eb',
   //     secondary: '#1e40af',
@@ -32,6 +34,10 @@ const editor = createEditor({
   //     background: '#ffffff',
   //     text: '#1e293b',
   //   },
+  //   skills: [
+  //     '# Skill: My Custom Skill\n\nCustom design guidelines here...',
+  //   ],
+  //   builtinSkills: true, // set to false to disable built-in frontend-design skill
   // },
 
   // Optional: callback when editor is ready
