@@ -108,7 +108,7 @@ const STYLES = `
     width: 600px;
     height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(192,57,43,0.4) 0%, rgba(231,76,60,0.15) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(192,57,43,0.35) 0%, rgba(231,76,60,0.12) 40%, transparent 70%);
     filter: blur(80px);
     animation: sg-aip-aurora-rotate 18s linear infinite, sg-aip-aurora-pulse 9s ease-in-out infinite;
     pointer-events: none;
@@ -117,7 +117,7 @@ const STYLES = `
   .sg-aip-aurora--secondary {
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(231,76,60,0.25) 0%, rgba(192,57,43,0.1) 45%, transparent 70%);
+    background: radial-gradient(circle, rgba(231,76,60,0.2) 0%, rgba(192,57,43,0.08) 45%, transparent 70%);
     filter: blur(100px);
     animation: sg-aip-aurora-rotate 25s linear infinite reverse, sg-aip-aurora-pulse 12s ease-in-out 3s infinite;
   }
@@ -140,8 +140,7 @@ const STYLES = `
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-style: italic;
-    text-shadow: 0 0 30px rgba(192,57,43,0.4);
-    filter: drop-shadow(0 0 8px rgba(192,57,43,0.3));
+    filter: drop-shadow(0 0 10px rgba(192,57,43,0.4));
   }
 
   .sg-aip-subtitle {
@@ -182,7 +181,7 @@ const STYLES = `
     inset: 0;
     border-radius: 10px;
     padding: 1.5px;
-    background: conic-gradient(from var(--sg-aip-angle), #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #ff6b6b);
+    background: conic-gradient(from var(--sg-aip-angle), #c0392b, #e74c3c, #ff8a80, #e74c3c, #a93226, #c0392b);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -193,7 +192,7 @@ const STYLES = `
   }
 
   .sg-aip-bar:focus-within {
-    box-shadow: 0 0 30px rgba(192,57,43,0.25);
+    box-shadow: 0 0 30px rgba(192,57,43,0.3);
   }
   .sg-aip-bar:focus-within::before {
     padding: 2px;
@@ -393,7 +392,7 @@ const STYLES = `
     transition: opacity 0.2s;
   }
   .sg-aip-chip:hover {
-    background: rgba(192,57,43,0.15);
+    background: rgba(192,57,43,0.12);
     border-color: rgba(192,57,43,0.4);
     color: #fff;
   }
@@ -466,7 +465,7 @@ const STYLES = `
     transition: background 0.2s, border-color 0.2s;
   }
   .sg-aip-retry-btn:hover {
-    background: rgba(192,57,43,0.15);
+    background: rgba(192,57,43,0.12);
     border-color: rgba(192,57,43,0.4);
     color: #fff;
   }
@@ -602,10 +601,10 @@ const STYLES = `
 `;
 
 const SUGGESTIONS = [
-  { label: 'Landing Page', prompt: 'A modern SaaS landing page with hero section, features grid, and pricing table', icon: 'fa-solid fa-rocket' },
-  { label: 'Portfolio Website', prompt: 'A creative portfolio page with project gallery, about section, and contact form', icon: 'fa-solid fa-briefcase' },
-  { label: 'Contact Page', prompt: 'A professional contact page with contact form, company info, and embedded map placeholder', icon: 'fa-solid fa-envelope' },
-  { label: 'Product Showcase', prompt: 'A product showcase page with hero image, feature highlights, testimonials, and call to action', icon: 'fa-solid fa-cube' },
+  { label: 'Startup Landing', prompt: 'A bold startup landing page with dark hero, feature cards with icons, pricing tiers, and a strong call to action', icon: 'fa-solid fa-bolt' },
+  { label: 'Creative Portfolio', prompt: 'A minimal portfolio with full-width project images, short bio section, and a contact form at the bottom', icon: 'fa-solid fa-palette' },
+  { label: 'Restaurant Menu', prompt: 'An elegant restaurant page with hero image, menu sections with prices, photo gallery, and reservation CTA', icon: 'fa-solid fa-utensils' },
+  { label: 'Event Invite', prompt: 'A single-page event invitation with countdown, schedule timeline, speaker cards, and RSVP form', icon: 'fa-solid fa-calendar-days' },
 ];
 
 export function initCanvasAiPrompt(editor: Editor): void {
@@ -644,11 +643,11 @@ export function initCanvasAiPrompt(editor: Editor): void {
 
     const title = iframeDoc.createElement('h1');
     title.className = 'sg-aip-title';
-    title.innerHTML = 'Build beautiful <span class="sg-aip-title-accent">pages</span> with AI';
+    title.innerHTML = 'What will you <span class="sg-aip-title-accent">create</span> today?';
 
     const subtitle = iframeDoc.createElement('p');
     subtitle.className = 'sg-aip-subtitle';
-    subtitle.textContent = 'Describe what you want and Super Grapes will generate it';
+    subtitle.textContent = 'Describe your idea and let the AI do the heavy lifting';
 
     // Input bar
     const bar = iframeDoc.createElement('div');
@@ -662,10 +661,10 @@ export function initCanvasAiPrompt(editor: Editor): void {
     const placeholder = iframeDoc.createElement('div');
     placeholder.className = 'sg-aip-placeholder';
     const placeholderTexts = [
-      "Let's create a website for your next big product launch...",
-      "Design a stunning portfolio to showcase your work...",
-      "Build a landing page that converts visitors...",
-      "Create a professional contact page with a form...",
+      "A startup landing with dark hero and pricing cards...",
+      "An online store with product grid and checkout...",
+      "A restaurant page with menu and reservations...",
+      "A personal blog with featured posts and sidebar...",
     ];
     for (const txt of placeholderTexts) {
       const span = iframeDoc.createElement('span');
