@@ -26,7 +26,14 @@ export default defineConfig(({ mode }) => {
         fileName: (format) => `super-grapes.${format === 'es' ? 'mjs' : 'cjs'}`,
       },
       rollupOptions: {
-        external: ['grapesjs', 'openai'],
+        external: (id) => {
+          // Externalize grapesjs JS but NOT its CSS
+          if (id.endsWith('.css')) return false;
+          if (id === 'grapesjs' || id === 'openai') return true;
+          if (id.startsWith('grapesjs/') && !id.endsWith('.css')) return true;
+          if (id.startsWith('openai/')) return true;
+          return false;
+        },
         output: {
           globals: {
             grapesjs: 'grapesjs',

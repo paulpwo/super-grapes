@@ -13,7 +13,7 @@
       "import": "./dist/super-grapes.mjs",
       "require": "./dist/super-grapes.cjs"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/super-grapes.css"
   },
   "files": [
     "dist",
