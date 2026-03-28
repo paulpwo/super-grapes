@@ -1,6 +1,6 @@
 /**
  * Canvas Add Bar — Renders an "add section" bar at the bottom of all
- * content inside the GrapesJS iframe canvas, similar to Elementor.
+ * content inside the GrapesJS iframe canvas.
  * Shows 3 action buttons: + (add section), folder (templates), sparkles (AI).
  */
 import type { Editor } from 'grapesjs';

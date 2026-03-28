@@ -10,7 +10,7 @@ function esc(s: string): string {
   return d.innerHTML;
 }
 
-/** Icons for component types — outlined style like Elementor */
+/** Icons for component types — outlined style */
 const TYPE_ICONS: Record<string, string> = {
   wrapper: 'fa-regular fa-square',
   default: 'fa-regular fa-square',

@@ -6,7 +6,7 @@ import gjsCustomCode from 'grapesjs-custom-code';
 
 /**
  * Build the full GrapesJS initialization config from SuperGrapesConfig.
- * Sets custom:true on all managers so we render our own Elementor-like UI.
+ * Sets custom:true on all managers so we render our own custom UI.
  */
 export function buildGrapesConfig(config: SuperGrapesConfig): Record<string, unknown> {
   const devices = (config.devices ?? DEFAULT_DEVICES).map((d) => ({

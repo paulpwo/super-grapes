@@ -101,7 +101,7 @@ All types use `data-gjs-type` for resolution (no `isComponent` overrides).
 #### Theme (CSS)
 | File | Purpose |
 |------|---------|
-| `variables.css` | CSS custom properties (`--sg-*` prefix, dark Elementor theme) |
+| `variables.css` | CSS custom properties (`--sg-*` prefix, dark theme) |
 | `editor.css` | GrapesJS canvas overrides, toolbar/badge/highlighter theming |
 | `topbar.css` | Topbar layout and buttons |
 | `sidebar.css` | Sidebar zones, edit header, tabs |

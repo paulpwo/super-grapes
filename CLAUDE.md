@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Super-Grapes is an Elementor-like page builder built on GrapesJS. It's a single Vite project with source organized in `src/core` and `src/ui` folders (NOT a monorepo). All editor UI is custom vanilla TypeScript + CSS — GrapesJS only provides the canvas, component model, and undo/redo.
+Super-Grapes is a visual page builder built on GrapesJS. It's a single Vite project with source organized in `src/core` and `src/ui` folders (NOT a monorepo). All editor UI is custom vanilla TypeScript + CSS — GrapesJS only provides the canvas, component model, and undo/redo.
 
 ## Commands
 

@@ -48,7 +48,7 @@ export class UIManager {
     // Init context menu
     initContextMenu(this.shell.contextMenu, editor);
 
-    // Init canvas add bar (Elementor-like bottom bar)
+    // Init canvas add bar (bottom bar for adding sections)
     initCanvasAddBar(editor);
   }
 
