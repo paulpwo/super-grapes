@@ -1,0 +1,41 @@
+Third-Party Software Licenses
+==============================
+
+Super Grapes uses the following open-source software:
+
+
+GrapesJS
+--------
+License: BSD-3-Clause
+Copyright (c) 2017-present, Artur Arseniev
+https://github.com/GrapesJS/grapesjs
+
+GrapesJS Preset Webpage
+------------------------
+License: BSD-3-Clause
+Copyright (c) Artur Arseniev
+https://github.com/GrapesJS/preset-webpage
+
+GrapesJS Component Countdown
+------------------------------
+License: BSD-3-Clause
+Copyright (c) Artur Arseniev
+https://github.com/GrapesJS/components-countdown
+
+GrapesJS Custom Code
+---------------------
+License: BSD-3-Clause
+Copyright (c) Artur Arseniev
+https://github.com/GrapesJS/components-custom-code
+
+OpenAI Node SDK
+----------------
+License: Apache-2.0
+Copyright (c) OpenAI
+https://github.com/openai/openai-node
+
+TypeScript
+----------
+License: Apache-2.0
+Copyright (c) Microsoft Corporation
+https://github.com/microsoft/TypeScript
