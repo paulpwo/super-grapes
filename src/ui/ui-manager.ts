@@ -13,6 +13,7 @@ import { initContextMenu } from './context-menu/context-menu';
 import { initCanvasAddBar } from './canvas/canvas-add-bar';
 import { initCanvasAiPrompt } from './canvas/canvas-ai-prompt';
 import { registerKeymaps } from './keymaps';
+import { initAiToolbarButton } from './ai/ai-toolbar';
 
 export class UIManager {
   private shell: EditorShellRefs;
@@ -58,6 +59,9 @@ export class UIManager {
 
     // Register keyboard shortcuts
     registerKeymaps(editor);
+
+    // Init AI toolbar button (edit with AI on selected component)
+    initAiToolbarButton(editor);
   }
 
   getShell(): EditorShellRefs {

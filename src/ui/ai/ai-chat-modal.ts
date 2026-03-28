@@ -3,9 +3,18 @@ import type { AiConfig } from '../../core/types';
 import { AiClient, extractHtmlFromResponse, validateHtml } from '../../core/ai';
 import type { ChatMessage, ContentPart } from '../../core/ai';
 
-export type AiModalMode = 'replace' | 'append';
+export type AiModalMode = 'replace' | 'append' | 'edit';
 
-export function openAiChatModal(editor: Editor, config: AiConfig, mode: AiModalMode = 'replace'): void {
+export interface AiModalOptions {
+  mode?: AiModalMode;
+  /** Component to edit (required for 'edit' mode) */
+  targetComponent?: any;
+}
+
+export function openAiChatModal(editor: Editor, config: AiConfig, modeOrOpts: AiModalMode | AiModalOptions = 'replace'): void {
+  const opts: AiModalOptions = typeof modeOrOpts === 'string' ? { mode: modeOrOpts } : modeOrOpts;
+  const mode = opts.mode || 'replace';
+  const targetComponent = opts.targetComponent || null;
   const client = new AiClient(config);
   const history: ChatMessage[] = [];
   let attachedImage: string | null = null;
@@ -44,21 +53,37 @@ export function openAiChatModal(editor: Editor, config: AiConfig, mode: AiModalM
   const emptyState = document.createElement('div');
   emptyState.className = 'sg-ai-empty';
   const isAppend = mode === 'append';
-  emptyState.innerHTML = `
-    <div class="sg-ai-empty-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-    <div class="sg-ai-empty-title">${isAppend ? 'Add a new section' : 'What do you want to build?'}</div>
-    <div class="sg-ai-empty-hint">${isAppend ? 'Describe a section to add to your page. It will be appended below existing content.' : 'Describe a page, section, or layout and AI will generate it for you.'}</div>
-    <div class="sg-ai-empty-examples">
-      ${isAppend ? `
+  const isEdit = mode === 'edit';
+  const targetName = targetComponent?.getName?.() || 'component';
+
+  let emptyTitle = 'What do you want to build?';
+  let emptyHint = 'Describe a page, section, or layout and AI will generate it for you.';
+  let emptyExamples = `
+    <button class="sg-ai-example" data-prompt="A modern SaaS landing page with hero, features, and pricing">Landing page</button>
+    <button class="sg-ai-example" data-prompt="A professional contact page with form, map, and company info">Contact page</button>
+    <button class="sg-ai-example" data-prompt="A portfolio gallery with filterable project cards and about section">Portfolio</button>`;
+
+  if (isAppend) {
+    emptyTitle = 'Add a new section';
+    emptyHint = 'Describe a section to add to your page. It will be appended below existing content.';
+    emptyExamples = `
       <button class="sg-ai-example" data-prompt="A testimonials section with 3 customer quotes and star ratings">Testimonials</button>
       <button class="sg-ai-example" data-prompt="A pricing table with 3 tiers: Basic, Pro, and Enterprise">Pricing</button>
-      <button class="sg-ai-example" data-prompt="A contact section with form, phone, email, and address">Contact</button>
-      ` : `
-      <button class="sg-ai-example" data-prompt="A modern SaaS landing page with hero, features, and pricing">Landing page</button>
-      <button class="sg-ai-example" data-prompt="A professional contact page with form, map, and company info">Contact page</button>
-      <button class="sg-ai-example" data-prompt="A portfolio gallery with filterable project cards and about section">Portfolio</button>
-      `}
-    </div>`;
+      <button class="sg-ai-example" data-prompt="A contact section with form, phone, email, and address">Contact</button>`;
+  } else if (isEdit) {
+    emptyTitle = `Edit "${targetName}" with AI`;
+    emptyHint = 'Describe the changes you want. The AI will modify only this component.';
+    emptyExamples = `
+      <button class="sg-ai-example" data-prompt="Make it more visually appealing with better colors and spacing">Improve design</button>
+      <button class="sg-ai-example" data-prompt="Rewrite the text to be more professional and compelling">Better copy</button>
+      <button class="sg-ai-example" data-prompt="Reorganize the layout to be more modern and clean">New layout</button>`;
+  }
+
+  emptyState.innerHTML = `
+    <div class="sg-ai-empty-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+    <div class="sg-ai-empty-title">${emptyTitle}</div>
+    <div class="sg-ai-empty-hint">${emptyHint}</div>
+    <div class="sg-ai-empty-examples">${emptyExamples}</div>`;
   messagesEl.appendChild(emptyState);
 
   // Hidden file input
@@ -86,7 +111,9 @@ export function openAiChatModal(editor: Editor, config: AiConfig, mode: AiModalM
   attachBtn.innerHTML = '<i class="fa-solid fa-image"></i>';
 
   const textarea = document.createElement('textarea');
-  textarea.placeholder = 'Describe what you want to build...';
+  textarea.placeholder = isEdit
+    ? `Describe changes for "${targetName}"...`
+    : 'Describe what you want to build...';
   textarea.rows = 1;
 
   const sendBtn = document.createElement('button');
@@ -113,7 +140,9 @@ export function openAiChatModal(editor: Editor, config: AiConfig, mode: AiModalM
   shortcut.className = 'sg-ai-shortcut-hint';
   shortcut.textContent = 'Enter to send, Shift+Enter for new line';
 
-  inputFooter.appendChild(contextLabel);
+  if (!isEdit) {
+    inputFooter.appendChild(contextLabel);
+  }
   inputFooter.appendChild(shortcut);
 
   inputArea.appendChild(imgPreviewContainer);
@@ -190,7 +219,10 @@ export function openAiChatModal(editor: Editor, config: AiConfig, mode: AiModalM
 
     // Build context
     let contextPrefix = '';
-    if (contextCheckbox.checked) {
+    if (isEdit && targetComponent) {
+      const compHtml = targetComponent.toHTML();
+      contextPrefix = `[Component to edit — "${targetName}"]\n${compHtml}\n\n[User request]\nModify the component above based on this instruction. Return ONLY the modified HTML for this component, not a full page:\n`;
+    } else if (contextCheckbox.checked) {
       contextPrefix = `[Current template HTML]\n${editor.getHtml()}\n\n[Current template CSS]\n${editor.getCss()}\n\n[User request]\n`;
     }
     const fullText = contextPrefix + text;
@@ -250,11 +282,15 @@ export function openAiChatModal(editor: Editor, config: AiConfig, mode: AiModalM
 
         const applyBtn = document.createElement('button');
         applyBtn.className = 'sg-ai-apply-btn';
-        applyBtn.innerHTML = mode === 'append'
-          ? '<i class="fa-solid fa-plus"></i> Add to Page'
-          : '<i class="fa-solid fa-check"></i> Apply to Canvas';
+        applyBtn.innerHTML = isEdit
+          ? '<i class="fa-solid fa-pen"></i> Apply Changes'
+          : isAppend
+            ? '<i class="fa-solid fa-plus"></i> Add to Page'
+            : '<i class="fa-solid fa-check"></i> Apply to Canvas';
         applyBtn.addEventListener('click', () => {
-          if (mode === 'append') {
+          if (isEdit && targetComponent) {
+            targetComponent.components(extracted);
+          } else if (isAppend) {
             const wrapper = editor.getWrapper();
             if (wrapper) wrapper.append(extracted);
           } else {
