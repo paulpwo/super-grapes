@@ -115,10 +115,28 @@ export function renderWidgetsPanel(sidebarEl: HTMLElement, editor: Editor): void
   if (!widgetsZone.querySelector('.sg-widgets-search')) {
     const searchWrap = document.createElement('div');
     searchWrap.className = 'sg-widgets-search';
-    searchWrap.style.padding = '8px 12px';
-    searchWrap.innerHTML = `<input type="text" class="sg-sidebar-search" placeholder="Search widgets..." />`;
+    searchWrap.innerHTML = `
+      <div class="sg-sidebar-search-wrap">
+        <i class="fa-solid fa-magnifying-glass sg-sidebar-search-icon"></i>
+        <input type="text" class="sg-sidebar-search" placeholder="Search widgets..." />
+        <button type="button" class="sg-sidebar-search-clear" aria-label="Clear search">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    `;
     widgetsZone.insertBefore(searchWrap, widgetsBody);
     searchInput = searchWrap.querySelector('input')!;
+
+    const clearBtn = searchWrap.querySelector('.sg-sidebar-search-clear') as HTMLButtonElement;
+    searchInput.addEventListener('input', () => {
+      clearBtn.style.display = searchInput.value.length > 0 ? 'flex' : 'none';
+    });
+    clearBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      clearBtn.style.display = 'none';
+      renderBlocks();
+      searchInput.focus();
+    });
   } else {
     searchInput = widgetsZone.querySelector('.sg-widgets-search input')!;
   }

@@ -11,6 +11,7 @@ import { renderEditPanel } from './panels/edit-panel';
 import { initNavigator } from './navigator/navigator';
 import { initContextMenu } from './context-menu/context-menu';
 import { initCanvasAddBar } from './canvas/canvas-add-bar';
+import { initCanvasAiPrompt } from './canvas/canvas-ai-prompt';
 import { registerKeymaps } from './keymaps';
 
 export class UIManager {
@@ -48,6 +49,9 @@ export class UIManager {
 
     // Init context menu
     initContextMenu(this.shell.contextMenu, editor);
+
+    // Init canvas AI prompt (inline prompt when canvas empty + AI configured)
+    initCanvasAiPrompt(editor);
 
     // Init canvas add bar (bottom bar for adding sections)
     initCanvasAddBar(editor);

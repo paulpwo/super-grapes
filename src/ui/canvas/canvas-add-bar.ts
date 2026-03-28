@@ -5,6 +5,7 @@
  */
 import type { Editor } from 'grapesjs';
 import { openTemplateModal, type SGTemplate } from './template-modal';
+import { shouldShowAiPrompt } from './canvas-ai-prompt';
 
 /** External API: allow host apps to register templates */
 let externalTemplates: SGTemplate[] = [];
@@ -19,6 +20,9 @@ export function getExternalTemplates(): SGTemplate[] {
 
 export function initCanvasAddBar(editor: Editor): void {
   const inject = () => {
+    // When canvas is empty and AI config exists, the AI prompt handles this
+    if (shouldShowAiPrompt(editor)) return;
+
     const iframe = document.querySelector('.gjs-frame') as HTMLIFrameElement | null;
     if (!iframe?.contentDocument?.body) return;
 
