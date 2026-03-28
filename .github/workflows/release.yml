@@ -2,8 +2,7 @@ name: Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [main]
 
 permissions:
   contents: write
@@ -12,9 +11,14 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    # Skip release commits to avoid infinite loop
+    if: "!startsWith(github.event.head_commit.message, 'chore(release):')"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -34,25 +38,150 @@ jobs:
       - name: Type check
         run: pnpm exec tsc --noEmit
 
-      - name: Build library
-        run: pnpm run build:lib
-
-      - name: Set package version from tag
+      - name: Determine version bump
+        id: bump
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          CURRENT=$(node -p "require('./package.json').version")
-          if [ "$VERSION" != "$CURRENT" ]; then
-            pnpm version $VERSION --no-git-tag-version
+          # Get commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            COMMITS=$(git log --oneline --pretty=format:"%s")
+          else
+            COMMITS=$(git log ${LAST_TAG}..HEAD --oneline --pretty=format:"%s")
           fi
 
+          # No commits since last tag = no release needed
+          if [ -z "$COMMITS" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # Determine bump type from conventional commits
+          BUMP="patch"
+          if echo "$COMMITS" | grep -qiE "^feat(\(.*\))?!:|BREAKING CHANGE"; then
+            BUMP="major"
+          elif echo "$COMMITS" | grep -qiE "^feat(\(.*\))?:"; then
+            BUMP="minor"
+          fi
+
+          echo "bump=$BUMP" >> $GITHUB_OUTPUT
+          echo "skip=false" >> $GITHUB_OUTPUT
+          echo "Detected bump: $BUMP"
+
+      - name: Bump version
+        if: steps.bump.outputs.skip != 'true'
+        id: version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          NEW_VERSION=$(pnpm version ${{ steps.bump.outputs.bump }} --no-git-tag-version | tr -d 'v')
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+
+      - name: Generate changelog
+        if: steps.bump.outputs.skip != 'true'
+        id: changelog
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          VERSION=${{ steps.version.outputs.version }}
+          DATE=$(date +%Y-%m-%d)
+
+          # Build changelog from conventional commits
+          {
+            echo "## [${VERSION}] - ${DATE}"
+            echo ""
+
+            if [ -z "$LAST_TAG" ]; then
+              RANGE="HEAD"
+            else
+              RANGE="${LAST_TAG}..HEAD"
+            fi
+
+            # Features
+            FEATS=$(git log $RANGE --oneline --pretty=format:"%s" | grep -iE "^feat(\(.*\))?:" | sed 's/^feat\(([^)]*)\)\?: /- **\1**: /;s/^feat: /- /' || true)
+            if [ -n "$FEATS" ]; then
+              echo "### Features"
+              echo "$FEATS"
+              echo ""
+            fi
+
+            # Fixes
+            FIXES=$(git log $RANGE --oneline --pretty=format:"%s" | grep -iE "^fix(\(.*\))?:" | sed 's/^fix\(([^)]*)\)\?: /- **\1**: /;s/^fix: /- /' || true)
+            if [ -n "$FIXES" ]; then
+              echo "### Bug Fixes"
+              echo "$FIXES"
+              echo ""
+            fi
+
+            # Other changes
+            OTHERS=$(git log $RANGE --oneline --pretty=format:"%s" | grep -viE "^(feat|fix|chore|docs|style|refactor|test|ci)(\(.*\))?:" || true)
+            if [ -n "$OTHERS" ]; then
+              echo "### Other Changes"
+              echo "$OTHERS" | sed 's/^/- /'
+              echo ""
+            fi
+          } > /tmp/release_notes.md
+
+          # Prepend to CHANGELOG.md
+          if [ -f CHANGELOG.md ]; then
+            echo "" >> /tmp/release_notes.md
+            cat CHANGELOG.md >> /tmp/release_notes.md
+          else
+            echo "# Changelog" > /tmp/header.md
+            echo "" >> /tmp/header.md
+            cat /tmp/release_notes.md >> /tmp/header.md
+            mv /tmp/header.md /tmp/release_notes.md
+          fi
+          mv /tmp/release_notes.md CHANGELOG.md
+
+          # Save release notes for GitHub Release (only current version)
+          {
+            LAST_TAG_OR_EMPTY=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+            if [ -z "$LAST_TAG_OR_EMPTY" ]; then
+              RANGE="HEAD"
+            else
+              RANGE="${LAST_TAG_OR_EMPTY}..HEAD"
+            fi
+
+            FEATS=$(git log $RANGE --oneline --pretty=format:"%s" | grep -iE "^feat(\(.*\))?:" | sed 's/^feat\(([^)]*)\)\?: /- **\1**: /;s/^feat: /- /' || true)
+            FIXES=$(git log $RANGE --oneline --pretty=format:"%s" | grep -iE "^fix(\(.*\))?:" | sed 's/^fix\(([^)]*)\)\?: /- **\1**: /;s/^fix: /- /' || true)
+
+            if [ -n "$FEATS" ]; then
+              echo "### Features"
+              echo "$FEATS"
+              echo ""
+            fi
+            if [ -n "$FIXES" ]; then
+              echo "### Bug Fixes"
+              echo "$FIXES"
+              echo ""
+            fi
+          } > /tmp/gh_release_notes.md
+
+      - name: Build library
+        if: steps.bump.outputs.skip != 'true'
+        run: pnpm run build:lib
+
+      - name: Commit release
+        if: steps.bump.outputs.skip != 'true'
+        run: |
+          git add package.json CHANGELOG.md
+          git commit -m "chore(release): v${{ steps.version.outputs.version }}"
+          git tag "v${{ steps.version.outputs.version }}"
+          git push origin main --tags
+
       - name: Publish to GitHub Packages
+        if: steps.bump.outputs.skip != 'true'
         run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
+        if: steps.bump.outputs.skip != 'true'
         uses: softprops/action-gh-release@v2
         with:
-          generate_release_notes: true
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          body_path: /tmp/gh_release_notes.md
           files: |
             dist/*
