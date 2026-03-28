@@ -76,6 +76,20 @@ const MENU_ITEMS: MenuItem[] = [
   },
   { label: '', icon: '', separator: true },
   {
+    label: 'Edit with AI',
+    icon: 'fa-solid fa-wand-magic-sparkles',
+    action: (editor, comp) => {
+      const aiConfig = (editor as any).__sgAiConfig;
+      if (!aiConfig) return;
+      editor.select(comp);
+      import('../ai/ai-chat-modal').then(({ openAiChatModal }) => {
+        openAiChatModal(editor, aiConfig, { mode: 'edit', targetComponent: comp });
+      });
+    },
+    disabled: false,
+  },
+  { label: '', icon: '', separator: true },
+  {
     label: 'Delete',
     icon: 'fa-solid fa-trash',
     shortcut: 'Del',
@@ -94,7 +108,11 @@ export function initContextMenu(el: HTMLElement, editor: Editor): void {
     targetComponent = component;
     el.innerHTML = '';
 
+    const hasAi = !!(editor as any).__sgAiConfig;
+
     MENU_ITEMS.forEach(item => {
+      // Hide AI option when no AI config
+      if (item.label === 'Edit with AI' && !hasAi) return;
       if (item.separator) {
         const sep = document.createElement('div');
         sep.className = 'sg-context-menu-sep';
