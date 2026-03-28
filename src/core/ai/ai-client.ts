@@ -2,6 +2,40 @@ import OpenAI from 'openai';
 import type { AiConfig } from '../types';
 import type { ChatMessage } from './ai-types';
 import { DEFAULT_SYSTEM_PROMPT } from './system-prompt';
+import { builtinSkills } from './skills';
+
+function buildSystemPrompt(config: AiConfig): string {
+  let prompt = config.systemPrompt || DEFAULT_SYSTEM_PROMPT;
+
+  // Append skills: built-in + user-provided
+  const skills: string[] = [];
+
+  if (config.builtinSkills !== false) {
+    skills.push(...builtinSkills);
+  }
+
+  if (config.skills?.length) {
+    skills.push(...config.skills);
+  }
+
+  if (skills.length > 0) {
+    prompt += '\n\n' + skills.map(s => s.trim()).join('\n\n---\n\n');
+  }
+
+  // Append brand colors
+  if (config.brandColors) {
+    const colors = config.brandColors;
+    const lines: string[] = [];
+    for (const [key, value] of Object.entries(colors)) {
+      if (value) lines.push(`- ${key}: ${value}`);
+    }
+    if (lines.length > 0) {
+      prompt += `\n\n## Brand Color Palette\nUse these colors by default when generating pages. Only deviate if the user explicitly requests different colors.\n${lines.join('\n')}`;
+    }
+  }
+
+  return prompt;
+}
 
 export class AiClient {
   private client: OpenAI;
@@ -22,7 +56,7 @@ export class AiClient {
       dangerouslyAllowBrowser: true,
     });
     this.model = config.model;
-    this.systemPrompt = config.systemPrompt || DEFAULT_SYSTEM_PROMPT;
+    this.systemPrompt = buildSystemPrompt(config);
   }
 
   async chat(messages: ChatMessage[]): Promise<string> {

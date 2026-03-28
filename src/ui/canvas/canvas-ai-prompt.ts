@@ -666,7 +666,7 @@ export function initCanvasAiPrompt(editor: Editor): void {
     const styleEl = iframe.contentDocument.getElementById('sg-canvas-ai-prompt-styles');
     if (styleEl) styleEl.remove();
     // Remove file input from parent document
-    document.querySelectorAll('input[type="file"][accept="image/*"]').forEach(inp => {
+    document.querySelectorAll<HTMLInputElement>('input[type="file"][accept="image/*"]').forEach(inp => {
       if (inp.style.display === 'none' && !inp.closest('.sg-modal')) inp.remove();
     });
   }

@@ -3,7 +3,6 @@ import './ui/theme/index.css';
 import { createEditor } from './core/editor';
 import { UIManager } from './ui/ui-manager';
 import { setExternalTemplates } from './ui/canvas/canvas-add-bar';
-import type { SGTemplate } from './ui/canvas/template-modal';
 
 const app = document.getElementById('app')!;
 
