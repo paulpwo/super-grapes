@@ -67,10 +67,6 @@ export function initCanvasAddBar(editor: Editor): void {
       .sg-add-bar-btn:active {
         transform: scale(0.95);
       }
-      .sg-add-bar-btn--add {
-        background: #d5d0ca;
-        color: #444;
-      }
       .sg-add-bar-btn--templates {
         background: #c4bfb9;
         color: #222;
@@ -94,9 +90,6 @@ export function initCanvasAddBar(editor: Editor): void {
 
     bar.innerHTML = `
       <div class="sg-add-bar-actions">
-        <button class="sg-add-bar-btn sg-add-bar-btn--add" data-action="add" title="Add Section">
-          <i class="fa-solid fa-plus"></i>
-        </button>
         <button class="sg-add-bar-btn sg-add-bar-btn--templates" data-action="templates" title="Templates">
           <i class="fa-solid fa-folder"></i>
         </button>
@@ -119,15 +112,13 @@ export function initCanvasAddBar(editor: Editor): void {
 
       const action = btn.dataset.action;
 
-      if (action === 'add') {
-        addEmptySection(editor);
-      } else if (action === 'templates') {
+      if (action === 'templates') {
         openTemplateModal(editor, externalTemplates);
       } else if (action === 'ai') {
         const aiConfig = (editor as any).__sgAiConfig;
         if (aiConfig) {
           import('../ai/ai-chat-modal').then(({ openAiChatModal }) => {
-            openAiChatModal(editor, aiConfig);
+            openAiChatModal(editor, aiConfig, 'append');
           });
         } else {
           addEmptySection(editor);

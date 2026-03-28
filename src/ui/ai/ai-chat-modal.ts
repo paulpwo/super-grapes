@@ -3,7 +3,9 @@ import type { AiConfig } from '../../core/types';
 import { AiClient, extractHtmlFromResponse, validateHtml } from '../../core/ai';
 import type { ChatMessage, ContentPart } from '../../core/ai';
 
-export function openAiChatModal(editor: Editor, config: AiConfig): void {
+export type AiModalMode = 'replace' | 'append';
+
+export function openAiChatModal(editor: Editor, config: AiConfig, mode: AiModalMode = 'replace'): void {
   const client = new AiClient(config);
   const history: ChatMessage[] = [];
   let attachedImage: string | null = null;
@@ -41,14 +43,21 @@ export function openAiChatModal(editor: Editor, config: AiConfig): void {
   // Empty state (centered prompt)
   const emptyState = document.createElement('div');
   emptyState.className = 'sg-ai-empty';
+  const isAppend = mode === 'append';
   emptyState.innerHTML = `
     <div class="sg-ai-empty-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-    <div class="sg-ai-empty-title">What do you want to build?</div>
-    <div class="sg-ai-empty-hint">Describe a page, section, or layout and AI will generate it for you.</div>
+    <div class="sg-ai-empty-title">${isAppend ? 'Add a new section' : 'What do you want to build?'}</div>
+    <div class="sg-ai-empty-hint">${isAppend ? 'Describe a section to add to your page. It will be appended below existing content.' : 'Describe a page, section, or layout and AI will generate it for you.'}</div>
     <div class="sg-ai-empty-examples">
+      ${isAppend ? `
+      <button class="sg-ai-example" data-prompt="A testimonials section with 3 customer quotes and star ratings">Testimonials</button>
+      <button class="sg-ai-example" data-prompt="A pricing table with 3 tiers: Basic, Pro, and Enterprise">Pricing</button>
+      <button class="sg-ai-example" data-prompt="A contact section with form, phone, email, and address">Contact</button>
+      ` : `
       <button class="sg-ai-example" data-prompt="A modern SaaS landing page with hero, features, and pricing">Landing page</button>
       <button class="sg-ai-example" data-prompt="A professional contact page with form, map, and company info">Contact page</button>
       <button class="sg-ai-example" data-prompt="A portfolio gallery with filterable project cards and about section">Portfolio</button>
+      `}
     </div>`;
   messagesEl.appendChild(emptyState);
 
@@ -241,8 +250,18 @@ export function openAiChatModal(editor: Editor, config: AiConfig): void {
 
         const applyBtn = document.createElement('button');
         applyBtn.className = 'sg-ai-apply-btn';
-        applyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Apply to Canvas';
-        applyBtn.addEventListener('click', () => { editor.setComponents(extracted); close(); });
+        applyBtn.innerHTML = mode === 'append'
+          ? '<i class="fa-solid fa-plus"></i> Add to Page'
+          : '<i class="fa-solid fa-check"></i> Apply to Canvas';
+        applyBtn.addEventListener('click', () => {
+          if (mode === 'append') {
+            const wrapper = editor.getWrapper();
+            if (wrapper) wrapper.append(extracted);
+          } else {
+            editor.setComponents(extracted);
+          }
+          close();
+        });
 
         const retryBtn = document.createElement('button');
         retryBtn.className = 'sg-ai-retry-btn';
