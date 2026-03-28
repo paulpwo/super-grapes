@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@paulpwo/super-grapes':
-        specifier: latest
-        version: 0.2.0(grapesjs@0.21.13)
+        specifier: file:..
+        version: file:..(grapesjs@0.21.13)
       grapesjs:
         specifier: ^0.21.13
         version: 0.21.13
@@ -180,8 +180,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@paulpwo/super-grapes@0.2.0':
-    resolution: {integrity: sha512-RTq/Lf0qYWED+5gMYMXu1fyCxM+Ju5kQr90s56M1FtNVKfLAAJbdJGH2Da/aQg3RtmQampg3aNGXUsF4iGk3mA==, tarball: https://npm.pkg.github.com/download/@paulpwo/super-grapes/0.2.0/8fa2ccff71fca21f489f0af9834641c61581e259}
+  '@paulpwo/super-grapes@file:..':
+    resolution: {directory: .., type: directory}
     engines: {node: '>=18'}
     peerDependencies:
       grapesjs: ^0.21.0
@@ -539,7 +539,7 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@paulpwo/super-grapes@0.2.0(grapesjs@0.21.13)':
+  '@paulpwo/super-grapes@file:..(grapesjs@0.21.13)':
     dependencies:
       grapesjs: 0.21.13
       grapesjs-component-countdown: 1.0.2
