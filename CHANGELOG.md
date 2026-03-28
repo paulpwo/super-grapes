@@ -1,3 +1,9 @@
+## [0.5.0] - 2026-03-28
+
+### Features
+- **(theme)**: rebrand AI prompt to Super Grapes identity and add project skills
+
+
 ## [0.4.0] - 2026-03-28
 
 ### Features
