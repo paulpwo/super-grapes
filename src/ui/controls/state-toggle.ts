@@ -10,7 +10,7 @@ export function renderStateToggle(container: HTMLElement, editor: Editor): void 
 
   const states = [
     { label: 'Normal', state: '' },
-    { label: 'Hover', state: ':hover' },
+    { label: 'Hover', state: 'hover' },
   ];
 
   const buttons: HTMLButtonElement[] = [];

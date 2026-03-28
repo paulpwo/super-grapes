@@ -14,7 +14,7 @@ Plan de correcciones con causa raiz, archivos involucrados y solucion propuesta 
 - Config de estilos en `src/core/config.ts` funcion `getStyleSectors()`
 - Los sliders usan `property.upValue(value)` para aplicar estilos via GrapesJS StyleManager
 - Evento `style:custom` dispara re-render completo del style tab (ver `edit-panel.ts:55-58`)
-- Comandos: `pnpm dev` (localhost:5173), `pnpm build` (build all)
+- Comandos: `pnpm dev` (localhost:5173), `pnpm build` (build)
 
 ---
 
@@ -428,24 +428,23 @@ function showModal(title: string, content: HTMLElement, onClose?: () => void): v
 ## BUG-07: Controles avanzados existen pero nunca se integran
 
 **Prioridad**: P2 — Mejora
-**Sintoma**: Existen 5 archivos de controles que nunca se importan ni usan en ningun panel.
-**Archivos muertos**:
-- `src/ui/controls/typography-panel.ts` — Panel de tipografia completo
+**Sintoma**: Existen archivos de controles que nunca se importan ni usan en ningun panel.
+**Estado**: Parcialmente resuelto — 3 de 5 controles ahora se importan en `edit-style.ts`.
+**Archivos integrados** (importados en `src/ui/panels/edit-style.ts`):
 - `src/ui/controls/bg-type-group.ts` — Selector de tipo de fondo
 - `src/ui/controls/gradient-picker.ts` — Editor de gradientes
 - `src/ui/controls/box-shadow.ts` — Editor de box-shadow
+
+**Archivos aun no integrados**:
+- `src/ui/controls/typography-panel.ts` — Panel de tipografia completo
 - `src/ui/controls/spacing-box.ts` — Control visual de margin/padding
 
 ### Solucion
-Decidir si integrarlos o eliminarlos. **Recomendacion**: Integrar los mas utiles en la UI:
+Decidir si integrar los 2 restantes o eliminarlos:
 
-1. **gradient-picker + bg-type-group**: Integrar en el sector "Decorations" como reemplazo del input de texto para `background-image`. Cuando el usuario selecciona tipo "Gradient", mostrar el gradient picker en vez de un text input.
+1. **typography-panel**: Evaluar si es mejor usarlo como reemplazo del sector "Typography" del StyleManager, o eliminarlo si el sector generico ya cubre todo.
 
-2. **box-shadow**: Integrar como control especializado para la propiedad `box-shadow` en el sector "Decorations", reemplazando el stack generico.
-
-3. **typography-panel**: Evaluar si es mejor usarlo como reemplazo del sector "Typography" del StyleManager, o eliminarlo si el sector generico ya cubre todo.
-
-4. **spacing-box**: Integrar como visualizacion alternativa en el Advanced tab, debajo o en vez de los dim-controls de margin/padding.
+2. **spacing-box**: Integrar como visualizacion alternativa en el Advanced tab, debajo o en vez de los dim-controls de margin/padding.
 
 ### Verificacion
 - [ ] Cada control integrado se renderiza correctamente
@@ -490,13 +489,13 @@ Decidir si integrarlos o eliminarlos. **Recomendacion**: Integrar los mas utiles
 
 ## Orden de ejecucion recomendado
 
-1. **BUG-01** (Mobile button) — 1 linea, fix trivial
-2. **BUG-02** (Slider drag) — Fix critico, afecta toda la experiencia de edicion
-3. **BUG-04** (Preview) — Crear preview custom, eliminar uso del comando nativo
-4. **BUG-03** (Hover) — Requiere debugging en vivo para confirmar causa exacta
-5. **BUG-05** (Sector filtering) — Mejora significativa de UX
-6. **BUG-06** (Import/Export) — Feature nueva, mas trabajo
-7. **BUG-07** (Integrar controles muertos) — Opcional, mejora la calidad
+1. ~~**BUG-01** (Mobile button)~~ — COMPLETADO
+2. ~~**BUG-02** (Slider drag)~~ — COMPLETADO
+3. ~~**BUG-04** (Preview)~~ — COMPLETADO
+4. ~~**BUG-03** (Hover)~~ — COMPLETADO
+5. ~~**BUG-05** (Sector filtering)~~ — COMPLETADO
+6. ~~**BUG-06** (Import/Export)~~ — COMPLETADO
+7. **BUG-07** (Integrar controles muertos) — Parcialmente resuelto, faltan typography-panel y spacing-box
 8. **BUG-08** (Memory leak) — Verificar fix existente
 9. **BUG-09** (Slider ranges) — Verificar fix existente
 

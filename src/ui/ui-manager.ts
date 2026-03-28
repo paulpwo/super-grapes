@@ -11,6 +11,7 @@ import { renderEditPanel } from './panels/edit-panel';
 import { initNavigator } from './navigator/navigator';
 import { initContextMenu } from './context-menu/context-menu';
 import { initCanvasAddBar } from './canvas/canvas-add-bar';
+import { registerKeymaps } from './keymaps';
 
 export class UIManager {
   private shell: EditorShellRefs;
@@ -50,6 +51,9 @@ export class UIManager {
 
     // Init canvas add bar (bottom bar for adding sections)
     initCanvasAddBar(editor);
+
+    // Register keyboard shortcuts
+    registerKeymaps(editor);
   }
 
   getShell(): EditorShellRefs {

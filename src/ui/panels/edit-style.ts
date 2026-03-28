@@ -4,6 +4,9 @@ import { renderSliderRow } from '../controls/slider-row';
 import { renderColorPicker } from '../controls/color-picker';
 import { renderIconToggle, type ToggleItem } from '../controls/icon-toggle';
 import { renderStateToggle } from '../controls/state-toggle';
+import { renderBoxShadow } from '../controls/box-shadow';
+import { renderBgTypeGroup, type BgType } from '../controls/bg-type-group';
+import { renderGradientPicker } from '../controls/gradient-picker';
 
 function esc(s: string): string {
   const d = document.createElement('div');
@@ -143,6 +146,16 @@ function renderProperty(container: HTMLElement, prop: any, editor: Editor): void
   const propName = prop.getName?.() || prop.get('property') || '';
   const label = prop.getLabel?.() || prop.get('label') || propName;
 
+  if (propName === 'box-shadow') {
+    renderBoxShadow(container, editor);
+    return;
+  }
+
+  if (propName === 'background-image') {
+    renderBgControls(container, editor);
+    return;
+  }
+
   switch (propType) {
     case 'number':
     case 'integer':
@@ -193,6 +206,42 @@ function renderProperty(container: HTMLElement, prop: any, editor: Editor): void
       renderTextProp(container, prop, label);
     }
   }
+}
+
+function renderBgControls(container: HTMLElement, editor: Editor): void {
+  const bgWrap = document.createElement('div');
+  bgWrap.className = 'sg-ctrl-subsection';
+
+  const gradientWrap = document.createElement('div');
+
+  renderBgTypeGroup(bgWrap, editor, (type: BgType) => {
+    gradientWrap.innerHTML = '';
+    if (type === 'gradient') {
+      renderGradientPicker(gradientWrap, editor);
+    } else if (type === 'classic') {
+      renderFileProp(gradientWrap, {
+        getValue: () => {
+          const sel = editor.getSelected();
+          return sel ? String(sel.getStyle('background-image') || '') : '';
+        },
+        upValue: (val: string) => {
+          const sel = editor.getSelected();
+          if (sel) sel.addStyle({ 'background-image': val });
+        },
+      }, 'Image URL');
+    }
+  });
+
+  const selected = editor.getSelected();
+  if (selected) {
+    const bgImage = String(selected.getStyle('background-image') || '');
+    if (bgImage.includes('gradient')) {
+      renderGradientPicker(gradientWrap, editor);
+    }
+  }
+
+  bgWrap.appendChild(gradientWrap);
+  container.appendChild(bgWrap);
 }
 
 function renderSelectProp(container: HTMLElement, prop: any, label: string): void {

@@ -2,15 +2,14 @@
 
 ## Architecture
 
-pnpm monorepo with two main packages + vanilla example:
+Single Vite project with source organized under `src/`:
 
 ```
 super-grapes/
-├── packages/
-│   ├── core/    @super-grapes/core   — GrapesJS init, components, blocks
-│   └── ui/      @super-grapes/ui     — Shell, panels, controls, theme
-└── examples/
-    └── vanilla/ — Working demo at localhost:5173
+├── src/
+│   ├── core/    — GrapesJS init, components, blocks, AI client, storage, plugins, events
+│   ├── ui/      — Shell, panels, controls, canvas add bar, AI modal, keymaps, theme
+│   └── main.ts  — Entry point (UI shell + editor init + connect)
 ```
 
 **Core design**: GrapesJS with `custom: true` on BlockManager, StyleManager, TraitManager, and LayerManager. All UI is custom vanilla TS + CSS. GrapesJS handles the canvas, component model, undo/redo, and storage.
@@ -19,7 +18,7 @@ super-grapes/
 
 ## Implemented Features
 
-### Core Package (`@super-grapes/core`)
+### Core (`src/core/`)
 
 #### Component Types (14 total)
 | Type | File | Status |
@@ -54,9 +53,30 @@ All types use `data-gjs-type` for resolution (no `isComponent` overrides).
 - 6 style sectors: General, Dimension, Typography, Decorations, Flex, Extra
 - Font Awesome 6 Free injected into canvas iframe
 - No default GrapesJS panels
-- 3 devices: Desktop (100%), Tablet (768px), Mobile (320px)
+- 3 devices: Desktop (100%), Tablet (768px), Mobile (375px)
+- 3 GrapesJS plugins: `grapesjs-preset-webpage`, `grapesjs-component-countdown`, `grapesjs-custom-code`
 
-### UI Package (`@super-grapes/ui`)
+#### Storage (`storage.ts`)
+- Configurable storage: `local`, `remote`, or `none`
+- Autosave on change (configurable `stepsBeforeSave`)
+- Autoload on editor init
+- Uses `localStorage` with key `super-grapes-project`
+
+#### Plugin System (`plugins/index.ts`)
+- Accepts user-provided plugins via `SuperGrapesConfig.plugins`
+- Each plugin is a function `(editor, config) => void`
+
+#### Events (`events.ts`)
+- Custom event constants: `sg:ui:ready`, `sg:component:selected`, `sg:component:deselected`, `sg:panel:change`, `sg:device:change`, `sg:save`, `sg:load`
+
+#### AI Client (`ai/`)
+- OpenAI-compatible API client (`ai-client.ts`)
+- System prompt for HTML generation (`system-prompt.ts`)
+- HTML extraction and validation from AI responses (`html-parser.ts`)
+- Configurable via `AiConfig` (apiKey, model, baseURL)
+- Types: `ChatMessage`, `ContentPart`, `TextContentPart`, `ImageContentPart`
+
+### UI (`src/ui/`)
 
 #### Shell
 | Component | File | Status |
@@ -77,16 +97,16 @@ All types use `data-gjs-type` for resolution (no `isComponent` overrides).
 #### Controls
 | Control | File | Status | Notes |
 |---------|------|--------|-------|
-| Slider Row | `controls/slider-row.ts` | PARTIAL | Slider + number input. Bug: only steps by 1 per drag, no smooth continuous dragging |
+| Slider Row | `controls/slider-row.ts` | OK | Slider + number input. Debounced re-render + interaction flag prevents drag interruption |
 | Dim Control | `controls/dim-control.ts` | OK | 4 inputs (T/R/B/L) + incrementers + unit selector + link button |
 | Color Picker | `controls/color-picker.ts` | OK | Native color input + hex text input + clear button |
 | Icon Toggle | `controls/icon-toggle.ts` | OK | Button group for flex-direction, justify-content, align-items, text-align |
-| State Toggle | `controls/state-toggle.ts` | BASIC | Normal/Hover toggle — needs verification with pseudo-class styling |
-| Typography Panel | `controls/typography-panel.ts` | EXISTS | Font family/size/weight — needs testing |
-| Spacing Box | `controls/spacing-box.ts` | EXISTS | Visual margin/padding box — needs testing |
-| BG Type Group | `controls/bg-type-group.ts` | EXISTS | Background type selector — needs testing |
-| Gradient Picker | `controls/gradient-picker.ts` | EXISTS | Gradient editor — needs testing |
-| Box Shadow | `controls/box-shadow.ts` | EXISTS | Box shadow editor — needs testing |
+| State Toggle | `controls/state-toggle.ts` | OK | Normal/Hover toggle for pseudo-class styling |
+| Typography Panel | `controls/typography-panel.ts` | EXISTS | Font family/size/weight — not integrated |
+| Spacing Box | `controls/spacing-box.ts` | EXISTS | Visual margin/padding box — not integrated |
+| BG Type Group | `controls/bg-type-group.ts` | OK | Background type selector — imported in edit-style.ts |
+| Gradient Picker | `controls/gradient-picker.ts` | OK | Gradient editor — imported in edit-style.ts |
+| Box Shadow | `controls/box-shadow.ts` | OK | Box shadow editor — imported in edit-style.ts |
 
 #### Navigator
 | Component | File | Status |
@@ -97,6 +117,23 @@ All types use `data-gjs-type` for resolution (no `isComponent` overrides).
 | Component | File | Status |
 |-----------|------|--------|
 | Context Menu | `context-menu/context-menu.ts` | EXISTS — needs testing |
+
+#### AI Assistant
+| Component | File | Status |
+|-----------|------|--------|
+| AI Button | `ai/ai-button.ts` | OK — topbar button, only shown when AI apiKey is configured |
+| AI Chat Modal | `ai/ai-chat-modal.ts` | OK — chat interface with example prompts, image attachment, canvas context toggle, iframe preview, apply-to-canvas |
+
+#### Canvas Add Bar
+| Component | File | Status |
+|-----------|------|--------|
+| Canvas Add Bar | `canvas/canvas-add-bar.ts` | OK — injected at bottom of iframe, 3 buttons: add section, templates, AI generate |
+| Template Modal | `canvas/template-modal.ts` | OK — browse/upload/insert HTML templates, uses GrapesJS Modal |
+
+#### Keymaps
+| Component | File | Status |
+|-----------|------|--------|
+| Keymaps | `keymaps.ts` | OK — Backspace/Delete (delete), Cmd+D (duplicate), Cmd+C/V (copy/paste), Cmd+Z (undo), Cmd+Shift+Z (redo) |
 
 #### Theme (CSS)
 | File | Purpose |
@@ -109,6 +146,7 @@ All types use `data-gjs-type` for resolution (no `isComponent` overrides).
 | `navigator.css` | Layer tree styling |
 | `context-menu.css` | Right-click menu styling |
 | `widgets.css` | Widget card grid styling |
+| `ai.css` | AI button and chat modal styling |
 | `index.css` | Imports all CSS files |
 
 GrapesJS base CSS (`grapesjs/dist/css/grapes.min.css`) is imported before theme CSS so GrapesJS defaults (toolbar sizing, badge positioning, tools overlay) are preserved.
@@ -117,9 +155,12 @@ GrapesJS base CSS (`grapesjs/dist/css/grapes.min.css`) is imported before theme 
 - Undo/Redo buttons (with disabled state tracking)
 - Device switcher (Desktop/Tablet/Mobile)
 - **Component Borders toggle** (`sw-visibility`) — active by default, shows dashed outlines on all components
-- Preview button
+- Preview button (custom implementation — hides topbar/sidebar, adds floating exit button, Escape to exit)
 - Navigator toggle
+- Import HTML button (file picker, replaces canvas content)
+- Export HTML/CSS button (modal with copy + download)
 - Save button
+- AI Assistant button (only if `ai.apiKey` configured)
 
 ### Drag & Drop (Widgets → Canvas)
 | Feature | Status |
@@ -154,11 +195,11 @@ sg:tab-change   → edit-panel.ts (tab switching, bubbles from sidebar)
 
 ## Known Issues
 
-1. **Slider drag is steppy** — `slider-row.ts` slider only moves in discrete steps (1 unit per drag increment) instead of smooth continuous values. The `step` attribute is set to `1` from GrapesJS property config, but the UX should feel smoother.
+1. ~~**Slider drag is steppy**~~ — **FIXED.** Debounced re-render (100ms) + `_isUserInteracting` flag prevents DOM destruction during drag.
 
 2. **Drag & drop needs real-user testing** — Synthetic `PointerEvent` dispatched to iframe may not trigger GrapesJS sorter the same way as real browser events. The ghost and drop indicator are implemented but the actual component drop flow hasn't been verified with real mouse interaction.
 
-3. **Style tab re-render** — When switching between components, the style tab re-renders all sectors. With many properties this can feel slow.
+3. **Style tab re-render** — When switching between components, the style tab re-renders all sectors. With many properties this can feel slow. Partially mitigated by debounce.
 
 4. **Color picker is basic** — Uses native HTML `<input type="color">` popup. No support for opacity/alpha, gradients inline, or eyedropper.
 
@@ -168,4 +209,4 @@ sg:tab-change   → edit-panel.ts (tab switching, bubbles from sidebar)
 
 7. **Context menu** — Exists but needs verification of all actions (copy, paste, duplicate, delete, move up/down).
 
-8. **Typography panel, spacing box, gradient picker, box shadow** — Files exist but haven't been verified to render correctly with real GrapesJS style properties.
+8. **Typography panel, spacing box** — Files exist but are not imported or integrated into any panel.

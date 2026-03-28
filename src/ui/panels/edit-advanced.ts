@@ -2,6 +2,7 @@ import type { Editor } from 'grapesjs';
 import { renderDimControl } from '../controls/dim-control';
 import { renderSliderRow } from '../controls/slider-row';
 import { renderIconToggle, type ToggleItem } from '../controls/icon-toggle';
+import { renderSpacingBox } from '../controls/spacing-box';
 
 function esc(s: string): string {
   const d = document.createElement('div');
@@ -64,7 +65,8 @@ function renderLayoutSection(el: HTMLElement, editor: Editor, selected: any): vo
   const body = document.createElement('div');
   body.className = 'sg-ctrl-section-body';
 
-  // Margin as dim control
+  renderSpacingBox(body, editor);
+
   const sm = editor.StyleManager;
   const marginProp = sm.getProperty('General', 'margin') || sm.getProperty('general', 'margin');
   if (marginProp) {
