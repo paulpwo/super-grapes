@@ -120,8 +120,14 @@ export function initCanvasAddBar(editor: Editor): void {
       } else if (action === 'templates') {
         openTemplateModal(editor, externalTemplates);
       } else if (action === 'ai') {
-        // Placeholder for AI — just add section for now
-        addEmptySection(editor);
+        const aiConfig = (editor as any).__sgAiConfig;
+        if (aiConfig) {
+          import('../ai/ai-chat-modal').then(({ openAiChatModal }) => {
+            openAiChatModal(editor, aiConfig);
+          });
+        } else {
+          addEmptySection(editor);
+        }
       }
     });
   };
