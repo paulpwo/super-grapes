@@ -40,7 +40,10 @@ jobs:
       - name: Set package version from tag
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
-          pnpm version $VERSION --no-git-tag-version
+          CURRENT=$(node -p "require('./package.json').version")
+          if [ "$VERSION" != "$CURRENT" ]; then
+            pnpm version $VERSION --no-git-tag-version
+          fi
 
       - name: Publish to GitHub Packages
         run: pnpm publish --no-git-checks
