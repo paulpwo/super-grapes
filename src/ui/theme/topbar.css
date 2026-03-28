@@ -38,18 +38,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--sg-topbar-h);
   height: var(--sg-topbar-h);
-  background: var(--sg-accent);
-  color: #fff;
-  font-size: 18px;
+  padding: 0 8px;
   flex-shrink: 0;
   cursor: pointer;
-  transition: background var(--sg-transition);
+  transition: opacity var(--sg-transition);
 }
 
 .sg-topbar-logo:hover {
-  background: var(--sg-accent-hover);
+  opacity: 0.8;
+}
+
+.sg-topbar-logo-img {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 /* Icon Buttons */

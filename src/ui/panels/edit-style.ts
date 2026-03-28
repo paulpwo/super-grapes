@@ -212,36 +212,221 @@ function renderBgControls(container: HTMLElement, editor: Editor): void {
   const bgWrap = document.createElement('div');
   bgWrap.className = 'sg-ctrl-subsection';
 
-  const gradientWrap = document.createElement('div');
+  const controlsWrap = document.createElement('div');
 
-  renderBgTypeGroup(bgWrap, editor, (type: BgType) => {
-    gradientWrap.innerHTML = '';
+  /** Extract plain URL from a CSS background-image value like `url("...")` */
+  function extractUrl(raw: string): string {
+    const m = raw.match(/url\(["']?([^"')]+)["']?\)/);
+    return m ? m[1]! : '';
+  }
+
+  /** Find and remove existing bg-video child component */
+  function removeBgVideo(comp: any) {
+    const children = comp.components();
+    const existing = children.filter((c: any) => c.get('attributes')?.['data-bg-video-el'] === '1');
+    existing.forEach((c: any) => c.remove());
+  }
+
+  /** Add or update a <video> child component for background video */
+  function applyBgVideo(comp: any, url: string) {
+    removeBgVideo(comp);
+
+    if (!url.trim()) {
+      // Clear video-related attrs/styles when URL is empty
+      comp.removeAttributes('data-bg-video');
+      return;
+    }
+
+    // Store URL for persistence
+    comp.addAttributes({ 'data-bg-video': url.trim() });
+
+    // Parent needs relative + overflow hidden so video stays contained
+    comp.addStyle({ position: 'relative', overflow: 'hidden' });
+
+    // Add the <video> element as first child
+    comp.components().add({
+      tagName: 'video',
+      type: 'video',
+      attributes: {
+        src: url.trim(),
+        autoplay: true,
+        muted: true,
+        loop: true,
+        playsinline: '',
+        'data-bg-video-el': '1',
+      },
+      style: {
+        position: 'absolute',
+        inset: '0',
+        width: '100%',
+        height: '100%',
+        'object-fit': 'cover',
+        'z-index': '0',
+        'pointer-events': 'none',
+      },
+      draggable: false,
+      droppable: false,
+      selectable: false,
+      hoverable: false,
+      badgable: false,
+      layerable: false,
+    }, { at: 0 });
+  }
+
+  /** Render the sub-controls for the given background type */
+  function renderTypeControls(type: BgType) {
+    controlsWrap.innerHTML = '';
+
+    // When switching AWAY from video, clean up the video element
+    const sel = editor.getSelected();
+    if (type !== 'video' && sel) {
+      const hasVideo = sel.get('attributes')?.['data-bg-video'];
+      if (hasVideo) {
+        removeBgVideo(sel);
+        sel.removeAttributes('data-bg-video');
+      }
+    }
+
     if (type === 'gradient') {
-      renderGradientPicker(gradientWrap, editor);
+      renderGradientPicker(controlsWrap, editor);
     } else if (type === 'classic') {
-      renderFileProp(gradientWrap, {
+      renderFileProp(controlsWrap, {
         getValue: () => {
           const sel = editor.getSelected();
-          return sel ? String(sel.getStyle('background-image') || '') : '';
+          if (!sel) return '';
+          return extractUrl(String(sel.getStyle('background-image') || ''));
         },
         upValue: (val: string) => {
           const sel = editor.getSelected();
-          if (sel) sel.addStyle({ 'background-image': val });
+          if (!sel) return;
+          const css = val.trim() ? `url("${val.trim()}")` : 'none';
+          sel.addStyle({ 'background-image': css });
         },
       }, 'Image URL');
+    } else if (type === 'video') {
+      renderFileProp(controlsWrap, {
+        getValue: () => {
+          const sel = editor.getSelected();
+          if (!sel) return '';
+          return sel.get('attributes')?.['data-bg-video'] || '';
+        },
+        upValue: (val: string) => {
+          const sel = editor.getSelected();
+          if (!sel) return;
+          applyBgVideo(sel, val);
+        },
+      }, 'Video URL');
+    } else if (type === 'slideshow') {
+      renderSlideshowInputs(controlsWrap, editor);
     }
-  });
+  }
 
+  // Detect initial type
+  let initialType: BgType = 'classic';
   const selected = editor.getSelected();
   if (selected) {
     const bgImage = String(selected.getStyle('background-image') || '');
     if (bgImage.includes('gradient')) {
-      renderGradientPicker(gradientWrap, editor);
+      initialType = 'gradient';
+    }
+    if (selected.get('attributes')?.['data-bg-video']) {
+      initialType = 'video';
     }
   }
 
-  bgWrap.appendChild(gradientWrap);
+  renderBgTypeGroup(bgWrap, editor, (type: BgType) => {
+    renderTypeControls(type);
+  }, initialType);
+
+  // Render controls for the initially detected type
+  renderTypeControls(initialType);
+
+  bgWrap.appendChild(controlsWrap);
   container.appendChild(bgWrap);
+}
+
+/** Render slideshow inputs — multiple image URL fields with add/remove */
+function renderSlideshowInputs(container: HTMLElement, editor: Editor): void {
+  const selected = editor.getSelected();
+  if (!selected) return;
+
+  // Read existing slides from data attribute (JSON array of URLs)
+  let slides: string[] = [];
+  try {
+    const raw = selected.get('attributes')?.['data-bg-slides'];
+    if (raw) slides = JSON.parse(raw);
+  } catch { /* ignore parse errors */ }
+
+  if (slides.length === 0) slides = [''];
+
+  const wrap = document.createElement('div');
+  wrap.className = 'sg-ctrl-subsection';
+
+  function persist() {
+    const urls = slides.filter(s => s.trim());
+    selected!.addAttributes({ 'data-bg-slides': JSON.stringify(urls) });
+  }
+
+  function rebuild() {
+    wrap.innerHTML = '';
+
+    slides.forEach((url, idx) => {
+      const row = document.createElement('div');
+      row.className = 'sg-ctrl-row';
+
+      const label = document.createElement('label');
+      label.className = 'sg-ctrl-label';
+      label.textContent = `Slide ${idx + 1}`;
+
+      const field = document.createElement('div');
+      field.className = 'sg-ctrl-field';
+      field.style.gap = '4px';
+
+      const input = document.createElement('input');
+      input.className = 'sg-input';
+      input.type = 'text';
+      input.placeholder = 'Image URL...';
+      input.value = url;
+      input.addEventListener('change', () => {
+        slides[idx] = input.value;
+        persist();
+      });
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'sg-edim-unit-btn';
+      removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+      removeBtn.title = 'Remove slide';
+      removeBtn.addEventListener('click', () => {
+        slides.splice(idx, 1);
+        if (slides.length === 0) slides = [''];
+        persist();
+        rebuild();
+      });
+
+      field.appendChild(input);
+      field.appendChild(removeBtn);
+      row.appendChild(label);
+      row.appendChild(field);
+      wrap.appendChild(row);
+    });
+
+    // Add slide button
+    const addRow = document.createElement('div');
+    addRow.className = 'sg-ctrl-row';
+    const addBtn = document.createElement('button');
+    addBtn.className = 'sg-edim-unit-btn';
+    addBtn.style.marginLeft = 'auto';
+    addBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Add Slide';
+    addBtn.addEventListener('click', () => {
+      slides.push('');
+      rebuild();
+    });
+    addRow.appendChild(addBtn);
+    wrap.appendChild(addRow);
+  }
+
+  rebuild();
+  container.appendChild(wrap);
 }
 
 function renderSelectProp(container: HTMLElement, prop: any, label: string): void {

@@ -205,13 +205,14 @@ export function renderWidgetsPanel(sidebarEl: HTMLElement, editor: Editor): void
 
           // Get iframe element for forwarding events
           const iframe = document.querySelector('.gjs-frame') as HTMLIFrameElement | null;
+          let enteredCanvas = false;
+          let lastLocalX = 0;
+          let lastLocalY = 0;
 
           const onMove = (moveEv: PointerEvent) => {
-            // Move ghost
             ghost.style.left = moveEv.clientX + 'px';
             ghost.style.top = moveEv.clientY + 'px';
 
-            // Check if pointer is over the iframe/canvas area
             if (iframe) {
               const iframeRect = iframe.getBoundingClientRect();
               const isOverCanvas = (
@@ -221,45 +222,76 @@ export function renderWidgetsPanel(sidebarEl: HTMLElement, editor: Editor): void
                 moveEv.clientY <= iframeRect.bottom
               );
 
+              const localX = moveEv.clientX - iframeRect.left;
+              const localY = moveEv.clientY - iframeRect.top;
+
               if (isOverCanvas) {
-                // Dispatch pointermove on the iframe element so GrapesJS droppable picks it up
+                lastLocalX = localX;
+                lastLocalY = localY;
+
+                if (!enteredCanvas) {
+                  const enterEvent = new PointerEvent('pointerenter', {
+                    clientX: localX,
+                    clientY: localY,
+                    bubbles: false,
+                    cancelable: false,
+                    pointerId: 1,
+                    pointerType: 'mouse',
+                  });
+                  iframe.dispatchEvent(enterEvent);
+                  enteredCanvas = true;
+                }
+
                 const iframeEvent = new PointerEvent('pointermove', {
-                  clientX: moveEv.clientX,
-                  clientY: moveEv.clientY,
-                  screenX: moveEv.screenX,
-                  screenY: moveEv.screenY,
+                  clientX: localX,
+                  clientY: localY,
                   bubbles: true,
                   cancelable: true,
+                  pointerId: 1,
+                  pointerType: 'mouse',
                 });
                 iframe.dispatchEvent(iframeEvent);
 
-                // Find GrapesJS placeholder inside the iframe to position our drop indicator
                 updateDropIndicator(iframe, iframeRect);
               } else {
+                if (enteredCanvas) {
+                  const leaveEvent = new PointerEvent('pointerleave', {
+                    clientX: localX,
+                    clientY: localY,
+                    bubbles: false,
+                    cancelable: false,
+                    pointerId: 1,
+                    pointerType: 'mouse',
+                  });
+                  iframe.dispatchEvent(leaveEvent);
+                  enteredCanvas = false;
+                }
                 dropIndicator.style.display = 'none';
               }
             }
           };
 
           const onUp = () => {
-            // Hide ghost and drop indicator
             ghost.style.display = 'none';
             dropIndicator.style.display = 'none';
 
-            // Check if we're over the canvas — if so, dispatch pointerup on iframe
             if (iframe) {
               const upEvent = new PointerEvent('pointerup', {
+                clientX: lastLocalX,
+                clientY: lastLocalY,
                 bubbles: true,
                 cancelable: true,
+                pointerId: 1,
+                pointerType: 'mouse',
               });
-              // GrapesJS droppable listens for pointerup on document (already fine)
+              iframe.dispatchEvent(upEvent);
             }
 
-            // Tell GrapesJS to finish the drop
             editor.Blocks.endDrag(false);
 
             card.classList.remove('dragging');
             isDragging = false;
+            enteredCanvas = false;
             document.removeEventListener('pointermove', onMove);
             document.removeEventListener('pointerup', onUp);
           };

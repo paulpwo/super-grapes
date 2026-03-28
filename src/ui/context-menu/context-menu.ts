@@ -46,7 +46,7 @@ const MENU_ITEMS: MenuItem[] = [
     icon: 'fa-regular fa-copy',
     shortcut: 'Ctrl+C',
     action: (editor, comp) => {
-      editor.runCommand('tlb-clone');
+      editor.runCommand('sg:copy');
     },
   },
   { label: '', icon: '', separator: true },

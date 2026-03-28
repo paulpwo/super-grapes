@@ -1,4 +1,5 @@
 import type { Editor } from 'grapesjs';
+import logoSrc from '../../assets/logo-small.png';
 
 function esc(s: string): string {
   const d = document.createElement('div');
@@ -10,7 +11,7 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
   el.innerHTML = `
     <div class="sg-topbar-left">
       <div class="sg-topbar-logo" title="Menu">
-        <i class="fa-solid fa-cubes"></i>
+        <img src="${logoSrc}" alt="Super Grapes" class="sg-topbar-logo-img">
       </div>
       <div class="sg-topbar-sep"></div>
       <button class="sg-topbar-icon-btn" data-cmd="undo" title="Undo">
@@ -189,7 +190,7 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
   // Export
   el.querySelector('[data-cmd="export"]')!.addEventListener('click', () => {
     const html = editor.getHtml();
-    const css = editor.getCss();
+    const css = editor.getCss() ?? '';
     showExportModal(html, css);
   });
 

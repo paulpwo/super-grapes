@@ -22,6 +22,7 @@ export function renderBgTypeGroup(
   container: HTMLElement,
   editor: Editor,
   onChange?: (type: BgType) => void,
+  initialType?: BgType,
 ): void {
   const row = document.createElement('div');
   row.className = 'sg-ctrl-row';
@@ -36,14 +37,19 @@ export function renderBgTypeGroup(
   const group = document.createElement('div');
   group.className = 'sg-bg-type-group';
 
-  let activeType: BgType = 'classic';
+  let activeType: BgType = initialType || 'classic';
 
-  // Detect current type from component styles
-  const selected = editor.getSelected();
-  if (selected) {
-    const bgImage = String(selected.getStyle('background-image') || '');
-    if (bgImage.includes('gradient')) {
-      activeType = 'gradient';
+  // Auto-detect if no initial type provided
+  if (!initialType) {
+    const selected = editor.getSelected();
+    if (selected) {
+      const bgImage = String(selected.getStyle('background-image') || '');
+      if (bgImage.includes('gradient')) {
+        activeType = 'gradient';
+      }
+      if (selected.get('attributes')?.['data-bg-video']) {
+        activeType = 'video';
+      }
     }
   }
 

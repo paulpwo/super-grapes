@@ -33,7 +33,7 @@ export function renderStateToggle(container: HTMLElement, editor: Editor): void 
         // Switch GrapesJS selector state (e.g. '' or ':hover')
         editor.SelectorManager.setState(item.state);
         // Force StyleManager to re-evaluate properties for the new state
-        editor.StyleManager.select(selected);
+        editor.StyleManager.select(selected as any);
       }
     });
 
