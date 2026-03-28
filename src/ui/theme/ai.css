@@ -33,7 +33,7 @@
   inset: 0;
   border-radius: 2px;
   padding: 2px;
-  background: conic-gradient(from var(--sg-ai-angle), #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #ff6b6b);
+  background: conic-gradient(from var(--sg-ai-angle), #c0392b, #e74c3c, #ff8a80, #e74c3c, #a93226, #c0392b);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);

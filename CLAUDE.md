@@ -68,9 +68,13 @@ trait:custom → edit-panel re-renders content tab (if active)
 - Font Awesome 6 Free only, no emojis
 - Square aesthetic (border-radius: 0-2px)
 
-## GrapesJS Expert Reference
+## Skills
 
-Full GrapesJS API reference available at `.claude/skills/grapesjs-expert.md`. Covers all modules (Components, StyleManager, SelectorManager, TraitManager, BlockManager, LayerManager, AssetManager, Commands, Storage, Pages, Modal, Canvas, Symbols, RTE, Telemetry) with API methods, events, configuration, and patterns.
+| Skill | Path | When to read |
+|-------|------|-------------|
+| Brand Guide | `.claude/skills/super-grapes-brand/SKILL.md` | Before modifying any UI element — colors, borders, animations, typography |
+| Git Workflow | `.claude/skills/git-workflow/SKILL.md` | Before commits, PRs, branch creation, or release-related work |
+| GrapesJS Expert | `.claude/skills/grapesjs-expert/SKILL.md` | When working with GrapesJS API, events, components, or configuration |
 
 ## Current Status
 
