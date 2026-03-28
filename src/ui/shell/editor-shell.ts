@@ -47,9 +47,16 @@ export function createEditorShell(container: HTMLElement): EditorShellRefs {
   const contextMenu = document.createElement('div');
   contextMenu.className = 'sg-context-menu';
 
+  // Disclaimer footer
+  const disclaimer = document.createElement('div');
+  disclaimer.className = 'sg-disclaimer';
+  disclaimer.innerHTML =
+    '<i class="fa-solid fa-circle-info"></i> Super-Grapes is a design tool. Users are solely responsible for all content created, edited, or generated. See TERMS.md';
+
   // Assemble
   root.appendChild(topbar);
   root.appendChild(main);
+  root.appendChild(disclaimer);
   root.appendChild(navigator);
   root.appendChild(contextMenu);
 

@@ -14,7 +14,7 @@
 .sg-main {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - var(--sg-topbar-h));
+  height: calc(100vh - var(--sg-topbar-h) - 25px);
   overflow: hidden;
 }
 
@@ -295,4 +295,31 @@
 .sg-empty-state i {
   font-size: 24px;
   opacity: 0.5;
+}
+
+/* Disclaimer footer */
+.sg-disclaimer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 12px;
+  background: var(--sg-bg);
+  border-top: 1px solid var(--sg-border);
+  color: var(--sg-text-dim);
+  font-size: var(--sg-font-size-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.sg-disclaimer i {
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.sg-editor.sg-preview-mode .sg-disclaimer {
+  display: none !important;
 }

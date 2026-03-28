@@ -35,6 +35,54 @@ function ensureFontAwesome(doc: Document): void {
 }
 
 const STYLES = `
+  /* --- Registered custom property for border spin --- */
+  @property --sg-aip-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  /* --- Keyframes --- */
+  @keyframes sg-aip-aurora-rotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  @keyframes sg-aip-aurora-pulse {
+    0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.55; transform: translate(-50%, -50%) scale(1.2); }
+  }
+  @keyframes sg-aip-border-spin {
+    to { --sg-aip-angle: 360deg; }
+  }
+  @keyframes sg-aip-fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes sg-aip-placeholder-cycle {
+    0%, 20% { opacity: 1; }
+    25%, 45% { opacity: 0; }
+    50%, 70% { opacity: 0; }
+    75%, 95% { opacity: 0; }
+  }
+  @keyframes sg-aip-placeholder-cycle-2 {
+    0%, 20% { opacity: 0; }
+    25%, 45% { opacity: 1; }
+    50%, 70% { opacity: 0; }
+    75%, 95% { opacity: 0; }
+  }
+  @keyframes sg-aip-placeholder-cycle-3 {
+    0%, 20% { opacity: 0; }
+    25%, 45% { opacity: 0; }
+    50%, 70% { opacity: 1; }
+    75%, 95% { opacity: 0; }
+  }
+  @keyframes sg-aip-placeholder-cycle-4 {
+    0%, 20% { opacity: 0; }
+    25%, 45% { opacity: 0; }
+    50%, 70% { opacity: 0; }
+    75%, 95% { opacity: 1; }
+  }
+
   #${PROMPT_ID} {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -48,16 +96,43 @@ const STYLES = `
     pointer-events: auto;
     user-select: none;
     z-index: 100;
+    background: #0d0d15;
+    overflow: hidden;
+  }
+
+  /* --- Aurora glow layers --- */
+  .sg-aip-aurora {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(192,57,43,0.4) 0%, rgba(231,76,60,0.15) 40%, transparent 70%);
+    filter: blur(80px);
+    animation: sg-aip-aurora-rotate 18s linear infinite, sg-aip-aurora-pulse 9s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .sg-aip-aurora--secondary {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(231,76,60,0.25) 0%, rgba(192,57,43,0.1) 45%, transparent 70%);
+    filter: blur(100px);
+    animation: sg-aip-aurora-rotate 25s linear infinite reverse, sg-aip-aurora-pulse 12s ease-in-out 3s infinite;
   }
 
   .sg-aip-title {
     font-size: 36px;
     font-weight: 800;
-    color: #1a1a2e;
+    color: #f5f5f5;
     margin: 0 0 10px;
     text-align: center;
     letter-spacing: -0.5px;
     line-height: 1.2;
+    position: relative;
+    z-index: 1;
+    animation: sg-aip-fade-in 0.6s ease-out both;
   }
   .sg-aip-title-accent {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
@@ -65,29 +140,96 @@ const STYLES = `
     -webkit-text-fill-color: transparent;
     background-clip: text;
     font-style: italic;
+    text-shadow: 0 0 30px rgba(192,57,43,0.4);
+    filter: drop-shadow(0 0 8px rgba(192,57,43,0.3));
   }
 
   .sg-aip-subtitle {
     font-size: 15px;
-    color: #6b7280;
+    color: rgba(255,255,255,0.5);
     margin: 0 0 32px;
     text-align: center;
     max-width: 440px;
     line-height: 1.5;
+    position: relative;
+    z-index: 1;
+    animation: sg-aip-fade-in 0.6s ease-out 0.1s both;
   }
 
   /* --- Input bar --- */
   .sg-aip-bar {
     width: 100%;
     max-width: 580px;
-    background: #1e1e2e;
+    background: rgba(13, 13, 21, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
     border-radius: 10px;
     padding: 12px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    animation: sg-aip-fade-in 0.6s ease-out 0.2s both;
   }
+
+  /* Spinning conic-gradient border — same technique as AI topbar button */
+  .sg-aip-bar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    padding: 1.5px;
+    background: conic-gradient(from var(--sg-aip-angle), #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #ff6b6b);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    animation: sg-aip-border-spin 3s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .sg-aip-bar:focus-within {
+    box-shadow: 0 0 30px rgba(192,57,43,0.25);
+  }
+  .sg-aip-bar:focus-within::before {
+    padding: 2px;
+    filter: brightness(1.3);
+  }
+
+  /* --- Animated placeholder --- */
+  .sg-aip-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 12px;
+    padding-top: 16px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .sg-aip-placeholder span {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    color: rgba(255,255,255,0.3);
+    font-size: 15px;
+    font-family: inherit;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .sg-aip-placeholder span:nth-child(1) { animation: sg-aip-placeholder-cycle 16s ease-in-out infinite; }
+  .sg-aip-placeholder span:nth-child(2) { animation: sg-aip-placeholder-cycle-2 16s ease-in-out infinite; }
+  .sg-aip-placeholder span:nth-child(3) { animation: sg-aip-placeholder-cycle-3 16s ease-in-out infinite; }
+  .sg-aip-placeholder span:nth-child(4) { animation: sg-aip-placeholder-cycle-4 16s ease-in-out infinite; }
 
   .sg-aip-textarea {
     width: 100%;
@@ -103,15 +245,19 @@ const STYLES = `
     max-height: 120px;
     padding: 4px 4px 0;
     box-sizing: border-box;
+    position: relative;
+    z-index: 3;
   }
   .sg-aip-textarea::placeholder {
-    color: #6b7280;
+    color: transparent;
   }
 
   .sg-aip-bar-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    z-index: 3;
   }
 
   .sg-aip-bar-left {
@@ -127,7 +273,7 @@ const STYLES = `
     border: none;
     border-radius: 6px;
     background: transparent;
-    color: #6b7280;
+    color: rgba(255,255,255,0.4);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -161,11 +307,12 @@ const STYLES = `
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    transition: background 0.15s, transform 0.1s;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.2s;
     padding: 0;
   }
   .sg-aip-send-btn:hover {
     background: #e74c3c;
+    box-shadow: 0 0 20px rgba(192,57,43,0.4);
   }
   .sg-aip-send-btn:active {
     transform: scale(0.93);
@@ -173,12 +320,15 @@ const STYLES = `
   .sg-aip-send-btn:disabled {
     opacity: 0.5;
     cursor: default;
+    box-shadow: none;
   }
 
   /* --- Image preview --- */
   .sg-aip-img-preview {
     display: none;
     padding: 0 4px;
+    position: relative;
+    z-index: 3;
   }
   .sg-aip-img-preview--visible {
     display: flex;
@@ -218,23 +368,37 @@ const STYLES = `
     margin-top: 20px;
     justify-content: center;
     max-width: 580px;
+    position: relative;
+    z-index: 1;
+    animation: sg-aip-fade-in 0.6s ease-out 0.3s both;
   }
   .sg-aip-chip {
     padding: 8px 16px;
-    border: 1px solid #d1d5db;
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 2px;
-    background: #fff;
-    color: #374151;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
     font-size: 13px;
     font-family: inherit;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sg-aip-chip i {
+    font-size: 12px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
   }
   .sg-aip-chip:hover {
-    background: #fef2f2;
-    border-color: #e8a59a;
-    color: #c0392b;
+    background: rgba(192,57,43,0.15);
+    border-color: rgba(192,57,43,0.4);
+    color: #fff;
+  }
+  .sg-aip-chip:hover i {
+    opacity: 1;
   }
 
   /* --- Loading state --- */
@@ -243,13 +407,15 @@ const STYLES = `
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    position: relative;
+    z-index: 1;
   }
   .sg-aip-loading--visible {
     display: flex;
   }
   .sg-aip-loading-text {
     font-size: 16px;
-    color: #1a1a2e;
+    color: rgba(255,255,255,0.8);
     font-weight: 500;
   }
   .sg-aip-loading-dots span {
@@ -260,6 +426,7 @@ const STYLES = `
     background: #c0392b;
     margin: 0 3px;
     animation: sg-aip-dot 1.2s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(192,57,43,0.5);
   }
   .sg-aip-loading-dots span:nth-child(2) { animation-delay: 0.15s; }
   .sg-aip-loading-dots span:nth-child(3) { animation-delay: 0.3s; }
@@ -276,29 +443,130 @@ const STYLES = `
     gap: 12px;
     max-width: 480px;
     text-align: center;
+    position: relative;
+    z-index: 1;
   }
   .sg-aip-error--visible {
     display: flex;
   }
   .sg-aip-error-text {
     font-size: 14px;
-    color: #dc2626;
+    color: #f87171;
     line-height: 1.5;
   }
   .sg-aip-retry-btn {
     padding: 8px 20px;
-    border: 1px solid #d1d5db;
+    border: 1px solid rgba(255,255,255,0.15);
     border-radius: 2px;
-    background: #fff;
-    color: #374151;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.7);
     font-size: 13px;
     font-family: inherit;
     cursor: pointer;
-    transition: background 0.15s;
+    transition: background 0.2s, border-color 0.2s;
   }
   .sg-aip-retry-btn:hover {
-    background: #fef2f2;
-    border-color: #e8a59a;
+    background: rgba(192,57,43,0.15);
+    border-color: rgba(192,57,43,0.4);
+    color: #fff;
+  }
+
+  /* --- Manual CTA --- */
+  .sg-aip-manual-cta {
+    margin-top: 28px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    position: relative;
+    z-index: 1;
+    animation: sg-aip-fade-in 0.6s ease-out 0.5s both;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sg-aip-manual-cta a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 1px;
+  }
+  .sg-aip-manual-cta a:hover {
+    color: #fff;
+    border-bottom-color: rgba(255,255,255,0.4);
+  }
+
+  /* --- Confirm modal (drag interception) --- */
+  .sg-aip-confirm-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: sg-aip-fade-in 0.2s ease-out both;
+  }
+  .sg-aip-confirm-modal {
+    background: #1a1a2e;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 28px 32px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+  .sg-aip-confirm-icon {
+    font-size: 28px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 16px;
+  }
+  .sg-aip-confirm-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f5f5f5;
+    margin: 0 0 8px;
+  }
+  .sg-aip-confirm-text {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+  .sg-aip-confirm-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  .sg-aip-confirm-btn {
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sg-aip-confirm-btn--secondary {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+  }
+  .sg-aip-confirm-btn--secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.25);
+    color: #fff;
+  }
+  .sg-aip-confirm-btn--primary {
+    background: #c0392b;
+    border: 1px solid #c0392b;
+    color: #fff;
+  }
+  .sg-aip-confirm-btn--primary:hover {
+    background: #e74c3c;
+    border-color: #e74c3c;
   }
 
   /* --- Tooltip (unsupported model feedback) --- */
@@ -306,7 +574,7 @@ const STYLES = `
     position: absolute;
     bottom: calc(100% + 8px);
     left: 0;
-    background: #1e1e2e;
+    background: rgba(30,30,46,0.95);
     color: #fbbf24;
     font-size: 12px;
     padding: 8px 12px;
@@ -316,7 +584,8 @@ const STYLES = `
     opacity: 0;
     transform: translateY(4px);
     transition: opacity 0.2s, transform 0.2s;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
   }
   .sg-aip-tooltip::after {
     content: '';
@@ -324,7 +593,7 @@ const STYLES = `
     top: 100%;
     left: 16px;
     border: 5px solid transparent;
-    border-top-color: #1e1e2e;
+    border-top-color: rgba(30,30,46,0.95);
   }
   .sg-aip-tooltip--visible {
     opacity: 1;
@@ -333,10 +602,10 @@ const STYLES = `
 `;
 
 const SUGGESTIONS = [
-  { label: 'Landing Page', prompt: 'A modern SaaS landing page with hero section, features grid, and pricing table' },
-  { label: 'Portfolio Website', prompt: 'A creative portfolio page with project gallery, about section, and contact form' },
-  { label: 'Contact Page', prompt: 'A professional contact page with contact form, company info, and embedded map placeholder' },
-  { label: 'Product Showcase', prompt: 'A product showcase page with hero image, feature highlights, testimonials, and call to action' },
+  { label: 'Landing Page', prompt: 'A modern SaaS landing page with hero section, features grid, and pricing table', icon: 'fa-solid fa-rocket' },
+  { label: 'Portfolio Website', prompt: 'A creative portfolio page with project gallery, about section, and contact form', icon: 'fa-solid fa-briefcase' },
+  { label: 'Contact Page', prompt: 'A professional contact page with contact form, company info, and embedded map placeholder', icon: 'fa-solid fa-envelope' },
+  { label: 'Product Showcase', prompt: 'A product showcase page with hero image, feature highlights, testimonials, and call to action', icon: 'fa-solid fa-cube' },
 ];
 
 export function initCanvasAiPrompt(editor: Editor): void {
@@ -389,16 +658,32 @@ export function initCanvasAiPrompt(editor: Editor): void {
     const imgPreview = iframeDoc.createElement('div');
     imgPreview.className = 'sg-aip-img-preview';
 
+    // Animated placeholder overlay
+    const placeholder = iframeDoc.createElement('div');
+    placeholder.className = 'sg-aip-placeholder';
+    const placeholderTexts = [
+      "Let's create a website for your next big product launch...",
+      "Design a stunning portfolio to showcase your work...",
+      "Build a landing page that converts visitors...",
+      "Create a professional contact page with a form...",
+    ];
+    for (const txt of placeholderTexts) {
+      const span = iframeDoc.createElement('span');
+      span.textContent = txt;
+      placeholder.appendChild(span);
+    }
+
     // Textarea
     const textarea = iframeDoc.createElement('textarea');
     textarea.className = 'sg-aip-textarea';
-    textarea.placeholder = 'Describe the page you want to build...';
+    textarea.placeholder = '';
     textarea.rows = 1;
 
-    // Auto-grow
+    // Auto-grow + placeholder visibility
     textarea.addEventListener('input', () => {
       textarea.style.height = 'auto';
       textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+      placeholder.style.display = textarea.value ? 'none' : '';
     });
 
     // Bar footer
@@ -541,6 +826,7 @@ export function initCanvasAiPrompt(editor: Editor): void {
     barFooter.appendChild(sendBtn);
 
     bar.appendChild(imgPreview);
+    bar.appendChild(placeholder);
     bar.appendChild(textarea);
     bar.appendChild(barFooter);
 
@@ -550,7 +836,7 @@ export function initCanvasAiPrompt(editor: Editor): void {
     for (const s of SUGGESTIONS) {
       const chip = iframeDoc.createElement('button');
       chip.className = 'sg-aip-chip';
-      chip.textContent = s.label;
+      chip.innerHTML = '<i class="' + s.icon + '"></i> ' + s.label;
       chip.addEventListener('click', () => {
         textarea.value = s.prompt;
         textarea.dispatchEvent(new Event('input'));
@@ -559,10 +845,20 @@ export function initCanvasAiPrompt(editor: Editor): void {
       chips.appendChild(chip);
     }
 
+    // Manual CTA
+    const manualCta = iframeDoc.createElement('div');
+    manualCta.className = 'sg-aip-manual-cta';
+    manualCta.innerHTML = 'or <a>start from scratch</a> by dragging widgets';
+    const manualLink = manualCta.querySelector('a')!;
+    manualLink.addEventListener('click', () => {
+      removePrompt();
+    });
+
     promptView.appendChild(title);
     promptView.appendChild(subtitle);
     promptView.appendChild(bar);
     promptView.appendChild(chips);
+    promptView.appendChild(manualCta);
 
     // --- Loading view ---
     const loadingView = iframeDoc.createElement('div');
@@ -590,6 +886,15 @@ export function initCanvasAiPrompt(editor: Editor): void {
 
     errorView.appendChild(errorText);
     errorView.appendChild(retryBtn);
+
+    // Aurora glow layers
+    const aurora = iframeDoc.createElement('div');
+    aurora.className = 'sg-aip-aurora';
+    root.appendChild(aurora);
+
+    const aurora2 = iframeDoc.createElement('div');
+    aurora2.className = 'sg-aip-aurora sg-aip-aurora--secondary';
+    root.appendChild(aurora2);
 
     root.appendChild(promptView);
     root.appendChild(loadingView);
@@ -671,9 +976,66 @@ export function initCanvasAiPrompt(editor: Editor): void {
     });
   }
 
+  /** Show a confirmation modal inside the iframe asking the user to confirm manual build */
+  function showManualConfirm(): Promise<boolean> {
+    return new Promise((resolve) => {
+      const iframe = document.querySelector('.gjs-frame') as HTMLIFrameElement | null;
+      const iframeDoc = iframe?.contentDocument;
+      if (!iframeDoc) { resolve(false); return; }
+
+      const backdrop = iframeDoc.createElement('div');
+      backdrop.className = 'sg-aip-confirm-backdrop';
+      backdrop.innerHTML = `
+        <div class="sg-aip-confirm-modal">
+          <div class="sg-aip-confirm-icon"><i class="fa-solid fa-hand-pointer"></i></div>
+          <p class="sg-aip-confirm-title">Start building manually?</p>
+          <p class="sg-aip-confirm-text">You'll skip the AI assistant and build your page by dragging widgets onto the canvas.</p>
+          <div class="sg-aip-confirm-actions">
+            <button class="sg-aip-confirm-btn sg-aip-confirm-btn--secondary" data-action="cancel">Back to AI</button>
+            <button class="sg-aip-confirm-btn sg-aip-confirm-btn--primary" data-action="confirm">Yes, start manually</button>
+          </div>
+        </div>
+      `;
+
+      const close = (confirmed: boolean) => {
+        backdrop.remove();
+        resolve(confirmed);
+      };
+
+      backdrop.querySelector('[data-action="cancel"]')!.addEventListener('click', () => close(false));
+      backdrop.querySelector('[data-action="confirm"]')!.addEventListener('click', () => close(true));
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) close(false);
+      });
+
+      iframeDoc.body.appendChild(backdrop);
+    });
+  }
+
+  // Track whether user confirmed manual mode
+  let manualModeConfirmed = false;
+
   // Inject after editor loads
   editor.on('load', () => {
     setTimeout(inject, 300);
+  });
+
+  // Intercept drag when AI prompt is visible
+  editor.on('block:drag:start', async () => {
+    if (manualModeConfirmed) return;
+
+    const iframe = document.querySelector('.gjs-frame') as HTMLIFrameElement | null;
+    const promptEl = iframe?.contentDocument?.getElementById(PROMPT_ID);
+    if (!promptEl) return; // AI prompt not visible, allow drag
+
+    // Stop the current drag
+    editor.Blocks.endDrag();
+
+    const confirmed = await showManualConfirm();
+    if (confirmed) {
+      manualModeConfirmed = true;
+      removePrompt();
+    }
   });
 
   // Auto-remove when content is added
@@ -692,6 +1054,7 @@ export function initCanvasAiPrompt(editor: Editor): void {
       if (shouldShowAiPrompt(editor)) {
         const iframe = document.querySelector('.gjs-frame') as HTMLIFrameElement | null;
         if (iframe?.contentDocument && !iframe.contentDocument.getElementById(PROMPT_ID)) {
+          manualModeConfirmed = false;
           inject();
         }
       }
