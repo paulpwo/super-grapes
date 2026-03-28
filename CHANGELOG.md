@@ -1,3 +1,9 @@
+## [0.4.0] - 2026-03-28
+
+### Features
+- ****: modernize AI prompt UI with animated border, aurora glow, and manual mode CTA
+
+
 ## [0.3.4] - 2026-03-28
 
 
