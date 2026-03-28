@@ -10,8 +10,6 @@
  */
 
 import { createEditor, UIManager } from '@paulpwo/super-grapes';
-
-// Import the editor styles (GrapesJS + Super Grapes theme)
 import '@paulpwo/super-grapes/style.css';
 
 const app = document.getElementById('app')!;
