@@ -22,6 +22,14 @@ export class UIManager {
   private destroyed = false;
 
   constructor(container: HTMLElement) {
+    // Ensure Font Awesome 6 is loaded (required for all UI icons)
+    if (!document.querySelector('link[href*="font-awesome"], link[href*="fontawesome"]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
+      document.head.appendChild(link);
+    }
+
     // Phase 1: Create the HTML shell (topbar, sidebar, canvas zone)
     this.shell = createEditorShell(container);
   }
