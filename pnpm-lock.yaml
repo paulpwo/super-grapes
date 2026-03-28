@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      grapesjs:
-        specifier: ^0.21.13
-        version: 0.21.13
       grapesjs-component-countdown:
         specifier: ^1.0.2
         version: 1.0.2
@@ -24,6 +21,9 @@ importers:
         specifier: ^6.27.0
         version: 6.27.0
     devDependencies:
+      grapesjs:
+        specifier: ^0.21.13
+        version: 0.21.13
       typescript:
         specifier: ^5.7.0
         version: 5.9.3

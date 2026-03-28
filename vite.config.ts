@@ -1,4 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
+import { resolve } from 'path';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -17,5 +18,24 @@ export default defineConfig(({ mode }) => {
   return {
     root: '.',
     server: { proxy },
+    build: {
+      lib: {
+        entry: resolve(__dirname, 'src/index.ts'),
+        name: 'SuperGrapes',
+        formats: ['es', 'cjs'],
+        fileName: (format) => `super-grapes.${format === 'es' ? 'mjs' : 'cjs'}`,
+      },
+      rollupOptions: {
+        external: ['grapesjs', 'openai'],
+        output: {
+          globals: {
+            grapesjs: 'grapesjs',
+            openai: 'OpenAI',
+          },
+        },
+      },
+      sourcemap: true,
+      cssFileName: 'style',
+    },
   };
 });
