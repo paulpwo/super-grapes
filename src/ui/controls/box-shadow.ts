@@ -37,7 +37,7 @@ export function renderBoxShadow(container: HTMLElement, editor: Editor): void {
 
   // Parse existing box-shadow
   if (selected) {
-    const existing = String(selected.getStyle('box-shadow') || '');
+    const existing = String((selected as any).getStyle('box-shadow') || '');
     if (existing && existing !== 'none') {
       const isInset = existing.includes('inset');
       const cleaned = existing.replace('inset', '').trim();

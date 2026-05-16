@@ -70,7 +70,7 @@ export function renderSpacingBox(container: HTMLElement, editor: Editor): void {
       mInput.style.transform = 'translateY(-50%)';
     }
 
-    const mVal = selected.getStyle(`margin-${side}`) || '0';
+    const mVal = (selected as any).getStyle(`margin-${side}`) || '0';
     mInput.value = String(parseInt(String(mVal)) || 0);
     mInput.addEventListener('change', () => {
       selected.addStyle({ [`margin-${side}`]: `${mInput.value}px` });
@@ -89,7 +89,7 @@ export function renderSpacingBox(container: HTMLElement, editor: Editor): void {
       pInput.style.transform = 'translateY(-50%)';
     }
 
-    const pVal = selected.getStyle(`padding-${side}`) || '0';
+    const pVal = (selected as any).getStyle(`padding-${side}`) || '0';
     pInput.value = String(parseInt(String(pVal)) || 0);
     pInput.addEventListener('change', () => {
       selected.addStyle({ [`padding-${side}`]: `${pInput.value}px` });

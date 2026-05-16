@@ -294,7 +294,7 @@ function renderBgControls(container: HTMLElement, editor: Editor): void {
         getValue: () => {
           const sel = editor.getSelected();
           if (!sel) return '';
-          return extractUrl(String(sel.getStyle('background-image') || ''));
+          return extractUrl(String((sel as any).getStyle('background-image') || ''));
         },
         upValue: (val: string) => {
           const sel = editor.getSelected();
@@ -325,7 +325,7 @@ function renderBgControls(container: HTMLElement, editor: Editor): void {
   let initialType: BgType = 'classic';
   const selected = editor.getSelected();
   if (selected) {
-    const bgImage = String(selected.getStyle('background-image') || '');
+    const bgImage = String((selected as any).getStyle('background-image') || '');
     if (bgImage.includes('gradient')) {
       initialType = 'gradient';
     }
