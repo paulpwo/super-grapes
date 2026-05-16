@@ -432,6 +432,9 @@ function Im(n) {
     deviceManager: { devices: e },
     // We handle storage separately via configureStorage()
     storageManager: !1,
+    // Preserve inline styles — GrapesJS strips style= by default (avoidInlineStyle + forceClass both must be false)
+    avoidInlineStyle: n.avoidInlineStyle ?? !1,
+    forceClass: n.avoidInlineStyle ?? !1,
     // Canvas styles — load Font Awesome 6 inside the iframe
     canvas: {
       styles: [
