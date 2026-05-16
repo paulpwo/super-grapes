@@ -388,12 +388,19 @@ function showCodeEditorModal(editor: Editor): void {
 	const rawHtml = editor.getHtml();
 	const rawCss = editor.getCss() ?? "";
 
-	const prettyHtml = html_beautify(rawHtml, {
-		indent_size: 2,
-		wrap_line_length: 0,
-		preserve_newlines: true,
-		max_preserve_newlines: 2,
-	});
+	function formatHtml(raw: string): string {
+		return html_beautify(raw, {
+			indent_size: 2,
+			wrap_line_length: 0,
+			preserve_newlines: true,
+			max_preserve_newlines: 2,
+		})
+			.replace(/([^\n])([ \t]*<!--)/g, "$1\n$2")
+			.replace(/(-->)([ \t]*)(?!\n)/g, "$1\n")
+			.replace(/\n{3,}/g, "\n\n");
+	}
+
+	const prettyHtml = formatHtml(rawHtml);
 	const prettyCss = css_beautify(rawCss, {
 		indent_size: 2,
 	});
@@ -443,8 +450,14 @@ function showCodeEditorModal(editor: Editor): void {
 
 	applyBtn.addEventListener("click", () => {
 		try {
-			editor.setComponents(htmlView.state.doc.toString());
+			const htmlContent = htmlView.state.doc.toString();
+			editor.setComponents(htmlContent);
 			editor.setStyle(cssView.state.doc.toString());
+			// Reformat in place so user sees clean output without reopening
+			const formatted = formatHtml(editor.getHtml());
+			htmlView.dispatch({
+				changes: { from: 0, to: htmlView.state.doc.length, insert: formatted },
+			});
 			status.textContent = "Applied";
 			status.className = "sg-code-status ok";
 			setTimeout(() => {
