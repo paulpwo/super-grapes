@@ -73,7 +73,8 @@ export interface SuperGrapesConfig {
   onReady?: (editor: Editor) => void;
   /** AI assistant configuration */
   ai?: AiConfig;
-  /** Preserve inline styles in output HTML (default: false — uses style= instead of CSS classes) */
+  /** Preserve inline styles in output HTML (default: false — uses style= instead of CSS classes).
+   * Sets both avoidInlineStyle and forceClass on GrapesJS — both must be false to round-trip style= correctly. */
   avoidInlineStyle?: boolean;
 }
 
