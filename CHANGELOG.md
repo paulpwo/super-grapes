@@ -1,3 +1,10 @@
+## [0.6.1] - 2026-05-16
+
+### Bug Fixes
+- ****: retrigger release after branch protection fix
+- ****: trigger v0.6.1 release
+
+
 ## [0.5.2] - 2026-05-16
 
 ### Other Changes
