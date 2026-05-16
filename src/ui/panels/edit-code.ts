@@ -28,13 +28,14 @@ export function renderCodeTab(el: HTMLElement, editor: Editor): void {
 	const prettyHtml = html_beautify(selected.toHTML(), {
 		indent_size: 2,
 		wrap_line_length: 0,
-		preserve_newlines: false,
+		preserve_newlines: true,
+		max_preserve_newlines: 2,
 	});
 
 	const view = new EditorView({
 		state: EditorState.create({
 			doc: prettyHtml,
-			extensions: [basicSetup, oneDark, html()],
+			extensions: [basicSetup, oneDark, html(), EditorView.lineWrapping],
 		}),
 		parent: editorContainer,
 	});
@@ -49,7 +50,8 @@ export function renderCodeTab(el: HTMLElement, editor: Editor): void {
 		const resetHtml = html_beautify(selected.toHTML(), {
 			indent_size: 2,
 			wrap_line_length: 0,
-			preserve_newlines: false,
+			preserve_newlines: true,
+			max_preserve_newlines: 2,
 		});
 		view.dispatch({
 			changes: { from: 0, to: view.state.doc.length, insert: resetHtml },
