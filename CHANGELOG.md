@@ -1,3 +1,9 @@
+## [0.5.2] - 2026-05-16
+
+### Other Changes
+- 📦 chore(dist): track dist/ for npm install from git
+
+
 ## [0.5.1] - 2026-03-28
 
 

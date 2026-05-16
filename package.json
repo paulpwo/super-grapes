@@ -1,6 +1,6 @@
 {
   "name": "@paulpwo/super-grapes",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Visual page builder powered by GrapesJS",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
