@@ -46,12 +46,12 @@ function ze() {
       };
       const m = function(p, g) {
         var h = p.Commands, C = g.textCleanCanvas;
-        (function(v, k) {
-          var S = v.getConfig("stylePrefix"), b = k.modalImportLabel, y = k.modalImportContent;
-          v.Commands.add(i, { codeViewer: null, container: null, run: function(L) {
-            var E = typeof y == "function" ? y(L) : y, N = this.getCodeViewer();
-            L.Modal.open({ title: k.modalImportTitle, content: this.getContainer() }).onceClose((function() {
-              return L.stopCommand(i);
+        (function(v, L) {
+          var S = v.getConfig("stylePrefix"), b = L.modalImportLabel, y = L.modalImportContent;
+          v.Commands.add(i, { codeViewer: null, container: null, run: function(k) {
+            var E = typeof y == "function" ? y(k) : y, N = this.getCodeViewer();
+            k.Modal.open({ title: L.modalImportTitle, content: this.getContainer() }).onceClose((function() {
+              return k.stopCommand(i);
             })), N.setContent(E ?? ""), N.refresh(), setTimeout((function() {
               return N.focus();
             }), 0);
@@ -59,20 +59,20 @@ function ze() {
             v.Modal.close();
           }, getContainer: function() {
             if (!this.container) {
-              var L = this.getCodeViewer(), E = document.createElement("div");
+              var k = this.getCodeViewer(), E = document.createElement("div");
               if (E.className = "".concat(S, "import-container"), b) {
                 var N = document.createElement("div");
                 N.className = "".concat(S, "import-label"), N.innerHTML = b, E.appendChild(N);
               }
-              E.appendChild(L.getElement());
+              E.appendChild(k.getElement());
               var A = document.createElement("button");
-              A.type = "button", A.innerHTML = k.modalImportButton, A.className = "".concat(S, "btn-prim ").concat(S, "btn-import"), A.onclick = function() {
-                v.Css.clear(), v.setComponents(L.getContent().trim()), v.Modal.close();
+              A.type = "button", A.innerHTML = L.modalImportButton, A.className = "".concat(S, "btn-prim ").concat(S, "btn-import"), A.onclick = function() {
+                v.Css.clear(), v.setComponents(k.getContent().trim()), v.Modal.close();
               }, E.appendChild(A), this.container = E;
             }
             return this.container;
           }, getCodeViewer: function() {
-            return this.codeViewer || (this.codeViewer = v.CodeManager.createViewer(f({ codeName: "htmlmixed", theme: "hopscotch", readOnly: !1 }, k.importViewerOptions))), this.codeViewer;
+            return this.codeViewer || (this.codeViewer = v.CodeManager.createViewer(f({ codeName: "htmlmixed", theme: "hopscotch", readOnly: !1 }, L.importViewerOptions))), this.codeViewer;
           } });
         })(p, g), h.add(n, { run: function(v) {
           return v.setDevice("Desktop");
@@ -116,12 +116,12 @@ function ze() {
         }
       `);
           }));
-          var k = document.createElement("style");
-          k.innerText = v, document.head.appendChild(k);
+          var L = document.createElement("style");
+          L.innerText = v, document.head.appendChild(L);
         }
         (function(S, b) {
-          var y = function(L, E) {
-            b.blocks.indexOf(L) >= 0 && S.Blocks.add(L, o(o({ select: !0, category: "Basic" }, E), b.block(L)));
+          var y = function(k, E) {
+            b.blocks.indexOf(k) >= 0 && S.Blocks.add(k, o(o({ select: !0, category: "Basic" }, E), b.block(k)));
           };
           y("link-block", { label: "Link Block", media: `<svg viewBox="0 0 24 24">
       <path fill="currentColor" d="M3.9,12C3.9,10.29 5.29,8.9 7,8.9H11V7H7A5,5 0 0,0 2,12A5,5 0 0,0 7,17H11V15.1H7C5.29,15.1 3.9,13.71 3.9,12M8,13H16V11H8V13M17,7H13V8.9H17C18.71,8.9 20.1,10.29 20.1,12C20.1,13.71 18.71,15.1 17,15.1H13V17H17A5,5 0 0,0 22,12A5,5 0 0,0 17,7Z"></path>
@@ -136,8 +136,8 @@ function ze() {
       <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
       </section>` });
         })(p, h), m(p, h), (function(S, b) {
-          var y = S.Panels, L = S.getConfig(), E = "sw-visibility", N = "export-template", A = "open-sm", M = "open-tm", x = "open-layers", H = "open-blocks", B = "fullscreen", w = "preview", T = 'style="display: block; max-width:22px"';
-          L.showDevices = !1, y.getPanels().reset([{ id: "commands", buttons: [{}] }, { id: "devices-c", buttons: [{ id: n, command: n, active: !0, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          var y = S.Panels, k = S.getConfig(), E = "sw-visibility", N = "export-template", A = "open-sm", M = "open-tm", x = "open-layers", H = "open-blocks", B = "fullscreen", w = "preview", T = 'style="display: block; max-width:22px"';
+          k.showDevices = !1, y.getPanels().reset([{ id: "commands", buttons: [{}] }, { id: "devices-c", buttons: [{ id: n, command: n, active: !0, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M21,16H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10V20H8V22H16V20H14V18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z" />
         </svg>`) }, { id: l, command: l, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M19,18H5V6H19M21,4H3C1.89,4 1,4.89 1,6V18A2,2 0 0,0 3,20H21A2,2 0 0,0 23,18V6C23,4.89 22.1,4 21,4Z" />
@@ -219,7 +219,7 @@ function Ge() {
         u && n.Blocks.add(c, o({ media: `<svg viewBox="0 0 24 24">
         <path fill="currentColor" d="M12 20C16.4 20 20 16.4 20 12S16.4 4 12 4 4 7.6 4 12 7.6 20 12 20M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M17 11.5V13H11V7H12.5V11.5H17Z" />
       </svg>`, label: d, category: "Extra", select: !0, content: { type: c } }, u)), n.Components.addType(c, { model: { defaults: o({ startfrom: r.startTime, classes: [p], endText: r.endText, droppable: !1, script: function(g) {
-          var h = g.startfrom, C = g.endText, v = this, k = new Date(h).getTime(), S = v.querySelector("[data-js=countdown]"), b = v.querySelector("[data-js=countdown-endtext]"), y = v.querySelector("[data-js=countdown-day]"), L = v.querySelector("[data-js=countdown-hour]"), E = v.querySelector("[data-js=countdown-minute]"), N = v.querySelector("[data-js=countdown-second]"), A = v.__gjsCountdownInterval;
+          var h = g.startfrom, C = g.endText, v = this, L = new Date(h).getTime(), S = v.querySelector("[data-js=countdown]"), b = v.querySelector("[data-js=countdown-endtext]"), y = v.querySelector("[data-js=countdown-day]"), k = v.querySelector("[data-js=countdown-hour]"), E = v.querySelector("[data-js=countdown-minute]"), N = v.querySelector("[data-js=countdown-second]"), A = v.__gjsCountdownInterval;
           A && clearInterval(A);
           var M = window.__gjsCountdownIntervals || [], x = [];
           M.forEach((function(w) {
@@ -228,12 +228,12 @@ function Ge() {
             return x.indexOf(w) < 0;
           }));
           var H = function(w, T, j, I) {
-            y.innerHTML = "".concat(w < 10 ? "0" + w : w), L.innerHTML = "".concat(T < 10 ? "0" + T : T), E.innerHTML = "".concat(j < 10 ? "0" + j : j), N.innerHTML = "".concat(I < 10 ? "0" + I : I);
+            y.innerHTML = "".concat(w < 10 ? "0" + w : w), k.innerHTML = "".concat(T < 10 ? "0" + T : T), E.innerHTML = "".concat(j < 10 ? "0" + j : j), N.innerHTML = "".concat(I < 10 ? "0" + I : I);
           }, B = function() {
-            var w = (/* @__PURE__ */ new Date()).getTime(), T = k - w, j = Math.floor(T / 864e5), I = Math.floor(T % 864e5 / 36e5), D = Math.floor(T % 36e5 / 6e4), P = Math.floor(T % 6e4 / 1e3);
+            var w = (/* @__PURE__ */ new Date()).getTime(), T = L - w, j = Math.floor(T / 864e5), I = Math.floor(T % 864e5 / 36e5), D = Math.floor(T % 36e5 / 6e4), P = Math.floor(T % 6e4 / 1e3);
             H(j, I, D, P), T < 0 && (clearInterval(v.__gjsCountdownInterval), b.innerHTML = C, S.style.display = "none", b.style.display = "");
           };
-          k ? (v.__gjsCountdownInterval = setInterval(B, 1e3), b.style.display = "none", S.style.display = "", B()) : H(0, 0, 0, 0);
+          L ? (v.__gjsCountdownInterval = setInterval(B, 1e3), b.style.display = "none", S.style.display = "", B()) : H(0, 0, 0, 0);
         }, "script-props": ["startfrom", "endText"], traits: [{ label: "Start", name: "startfrom", changeProp: !0, type: r.dateInputType }, { label: "End text", name: "endText", changeProp: !0 }], components: `
           <span data-js="countdown" class="`.concat(p, `-cont">
             <div class="`).concat(p, `-block">
@@ -329,7 +329,7 @@ function We() {
     </div>`, modalTitle: "Insert your code", codeViewOptions: {}, buttonLabel: "Save", commandCustomCode: {} }, d);
         (function(g, h) {
           h === void 0 && (h = {});
-          var C, v = g.Components, k = h.toolbarBtnCustomCode;
+          var C, v = g.Components, L = h.toolbarBtnCustomCode;
           v.addType("script", { view: { onRender: function() {
             var S = this.model, b = this.el;
             S.closestType(i) && (b.innerHTML = "");
@@ -338,11 +338,11 @@ function We() {
             var S = this.get(o);
             !this.components().length && this.components(S);
             var b = this.get("toolbar"), y = "custom-code";
-            k && !b.filter((function(L) {
-              return L.id === y;
+            L && !b.filter((function(k) {
+              return k.id === y;
             })).length && b.unshift(u({ id: y, command: n, label: `<svg viewBox="0 0 24 24">
               <path d="M14.6 16.6l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4m-5.2 0L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4z"></path>
-            </svg>` }, k));
+            </svg>` }, L));
           }, onCustomCodeChange: function() {
             this.components(this.get(o));
           } }, view: { events: { dblclick: "onActive" }, init: function() {
@@ -350,8 +350,8 @@ function We() {
           }, onComponentsChange: function() {
             var S = this;
             C && clearInterval(C), C = setTimeout((function() {
-              var b = S, y = b.model, L = b.el, E = !0;
-              (y.get(o) || "").indexOf("<script") >= 0 && h.placeholderScript && (L.innerHTML = h.placeholderScript, E = !1), y.set({ droppable: E });
+              var b = S, y = b.model, k = b.el, E = !0;
+              (y.get(o) || "").indexOf("<script") >= 0 && h.placeholderScript && (k.innerHTML = h.placeholderScript, E = !1), y.set({ droppable: E });
             }), 0);
           }, onActive: function() {
             var S = this.model;
@@ -366,32 +366,32 @@ function We() {
     `, category: "Extra", activate: !0, select: !0, content: { type: i } }, C));
         })(c, p), (function(g, h) {
           h === void 0 && (h = {});
-          var C = h.modalTitle, v = h.codeViewOptions, k = h.commandCustomCode, S = function(b, y) {
+          var C = h.modalTitle, v = h.codeViewOptions, L = h.commandCustomCode, S = function(b, y) {
             y instanceof HTMLElement ? b.appendChild(y) : y && b.insertAdjacentHTML("beforeend", y);
           };
-          g.Commands.add(n, r({ keyCustomCode: o, target: null, codeViewer: null, run: function(b, y, L) {
-            L === void 0 && (L = {});
-            var E = L.target || b.getSelected();
-            this.target = E, E != null && E.get("editable") && this.showCustomCode(E, L);
+          g.Commands.add(n, r({ keyCustomCode: o, target: null, codeViewer: null, run: function(b, y, k) {
+            k === void 0 && (k = {});
+            var E = k.target || b.getSelected();
+            this.target = E, E != null && E.get("editable") && this.showCustomCode(E, k);
           }, stop: function(b) {
             b.Modal.close();
           }, showCustomCode: function(b, y) {
-            var L = y.title || C, E = b.get(o) || "", N = this.getContent();
-            g.Modal.open({ title: L, content: N }).onceClose((function() {
+            var k = y.title || C, E = b.get(o) || "", N = this.getContent();
+            g.Modal.open({ title: k, content: N }).onceClose((function() {
               return g.stopCommand(n);
             })), this.getCodeViewer().setContent(E);
           }, getPreContent: function() {
           }, getPostContent: function() {
           }, getContent: function() {
-            var b = this.getCodeViewer(), y = document.createElement("div"), L = g.getConfig("stylePrefix");
-            return y.className = "".concat(L, "custom-code"), S(y, this.getPreContent()), y.appendChild(b.getElement()), S(y, this.getPostContent()), S(y, this.getContentActions()), b.refresh(), setTimeout((function() {
+            var b = this.getCodeViewer(), y = document.createElement("div"), k = g.getConfig("stylePrefix");
+            return y.className = "".concat(k, "custom-code"), S(y, this.getPreContent()), y.appendChild(b.getElement()), S(y, this.getPostContent()), S(y, this.getContentActions()), b.refresh(), setTimeout((function() {
               return b.focus();
             }), 0), y;
           }, getContentActions: function() {
             var b = this, y = document.createElement("button");
             y.setAttribute("type", "button");
-            var L = g.getConfig("stylePrefix");
-            return y.innerHTML = h.buttonLabel, y.className = "".concat(L, "btn-prim ").concat(L, "btn-import__custom-code"), y.onclick = function() {
+            var k = g.getConfig("stylePrefix");
+            return y.innerHTML = h.buttonLabel, y.className = "".concat(k, "btn-prim ").concat(k, "btn-import__custom-code"), y.onclick = function() {
               return b.handleSave();
             }, y;
           }, handleSave: function() {
@@ -399,7 +399,7 @@ function We() {
             b == null || b.set(o, y), g.Modal.close();
           }, getCodeViewer: function() {
             return this.codeViewer || (this.codeViewer = g.CodeManager.createViewer(r({ codeName: "htmlmixed", theme: "hopscotch", readOnly: 0 }, v))), this.codeViewer;
-          } }, k));
+          } }, L));
         })(c, p);
       };
       return a;
@@ -2150,19 +2150,19 @@ function Ht(t, e) {
         v.className = "sg-widget-card", v.dataset.blockId = C.id, v.innerHTML = `
           <i class="${Le(C.id)} sg-widget-card-icon"></i>
           <span class="sg-widget-card-label">${we(C.label)}</span>
-        `, v.addEventListener("pointerdown", (k) => {
-          if (k.button !== 0) return;
-          k.preventDefault();
+        `, v.addEventListener("pointerdown", (L) => {
+          if (L.button !== 0) return;
+          L.preventDefault(), v.setPointerCapture(L.pointerId);
           const S = e.Blocks.get(C.id);
           if (!S) return;
-          v.classList.add("dragging"), i.innerHTML = `<i class="${Le(C.id)}"></i> ${we(C.label)}`, i.style.display = "flex", i.style.left = k.clientX + "px", i.style.top = k.clientY + "px", e.Blocks.startDrag(S, k);
+          v.classList.add("dragging"), i.innerHTML = `<i class="${Le(C.id)}"></i> ${we(C.label)}`, i.style.display = "flex", i.style.left = L.clientX + "px", i.style.top = L.clientY + "px", e.Blocks.startDrag(S, L);
           const b = document.querySelector(".gjs-frame");
-          let y = !1, L = 0, E = 0;
+          let y = !1, k = 0, E = 0;
           const N = (M) => {
             if (i.style.left = M.clientX + "px", i.style.top = M.clientY + "px", b) {
               const x = b.getBoundingClientRect(), H = M.clientX >= x.left && M.clientX <= x.right && M.clientY >= x.top && M.clientY <= x.bottom, B = M.clientX - x.left, w = M.clientY - x.top;
               if (H) {
-                if (L = B, E = w, !y) {
+                if (k = B, E = w, !y) {
                   const j = new PointerEvent("pointerenter", {
                     clientX: B,
                     clientY: w,
@@ -2200,7 +2200,7 @@ function Ht(t, e) {
           }, A = () => {
             if (i.style.display = "none", n.style.display = "none", b) {
               const M = new PointerEvent("pointerup", {
-                clientX: L,
+                clientX: k,
                 clientY: E,
                 bubbles: !0,
                 cancelable: !0,
@@ -2275,11 +2275,11 @@ function Bt(t, e) {
     for (const [h, C] of Object.entries(i)) {
       const v = document.createElement("div");
       v.className = "sg-ctrl-section";
-      const k = document.createElement("div");
-      k.className = "sg-ctrl-section-header", k.innerHTML = `
+      const L = document.createElement("div");
+      L.className = "sg-ctrl-section-header", L.innerHTML = `
         <span class="sg-ctrl-section-title">${Mt(h)}</span>
         <i class="fa-solid fa-chevron-down sg-ctrl-section-arrow"></i>
-      `, k.addEventListener("click", () => {
+      `, L.addEventListener("click", () => {
         v.classList.toggle("collapsed");
       });
       const S = document.createElement("div");
@@ -2287,8 +2287,8 @@ function Bt(t, e) {
       for (const b of C) {
         const y = document.createElement("div");
         y.className = "sg-ctrl-row";
-        const L = document.createElement("label");
-        L.className = "sg-ctrl-label", L.textContent = ((n = b.getLabel) == null ? void 0 : n.call(b)) || b.get("label") || b.get("name") || "";
+        const k = document.createElement("label");
+        k.className = "sg-ctrl-label", k.textContent = ((n = b.getLabel) == null ? void 0 : n.call(b)) || b.get("label") || b.get("name") || "";
         const E = document.createElement("div");
         E.className = "sg-ctrl-field";
         const N = b.get("name") || "", A = ((l = b.getType) == null ? void 0 : l.call(b)) || b.get("type") || "text";
@@ -2380,9 +2380,9 @@ function Bt(t, e) {
             }), E.appendChild(x);
           }
         }
-        y.appendChild(L), y.appendChild(E), S.appendChild(y);
+        y.appendChild(k), y.appendChild(E), S.appendChild(y);
       }
-      v.appendChild(k), v.appendChild(S), t.appendChild(v);
+      v.appendChild(L), v.appendChild(S), t.appendChild(v);
     }
   }
   a();
@@ -2393,18 +2393,18 @@ function It(t) {
 }
 const Ot = ["px", "%", "em", "rem", "vw"], Vt = ["T", "R", "B", "L"];
 function te(t, e, s) {
-  var k, S;
+  var L, S;
   const a = document.createElement("div");
   a.className = "sg-edim-wrap";
   const o = document.createElement("div");
   o.className = "sg-edim-header", o.innerHTML = `<span class="sg-edim-label">${It(s)}</span>`, a.appendChild(o);
-  const i = ((k = e.getProperties) == null ? void 0 : k.call(e)) || [], n = [];
+  const i = ((L = e.getProperties) == null ? void 0 : L.call(e)) || [], n = [];
   let l = !1, r = "px";
   const u = document.createElement("div");
   u.className = "sg-edim-inputs";
   for (let b = 0; b < 4; b++) {
-    const y = i[b], L = document.createElement("div");
-    L.className = "sg-edim-input-wrap";
+    const y = i[b], k = document.createElement("div");
+    k.className = "sg-edim-input-wrap";
     const E = document.createElement("button");
     E.className = "sg-edim-inc", E.innerHTML = '<i class="fa-solid fa-chevron-up"></i>', E.addEventListener("click", () => {
       const x = parseInt(N.value) || 0;
@@ -2426,7 +2426,7 @@ function te(t, e, s) {
       C(b, x - 1);
     });
     const M = document.createElement("span");
-    M.className = "sg-edim-input-label", M.textContent = Vt[b], L.appendChild(E), L.appendChild(N), L.appendChild(A), L.appendChild(M), u.appendChild(L);
+    M.className = "sg-edim-input-label", M.textContent = Vt[b], k.appendChild(E), k.appendChild(N), k.appendChild(A), k.appendChild(M), u.appendChild(k);
   }
   const f = document.createElement("div");
   f.className = "sg-edim-tools";
@@ -2446,8 +2446,8 @@ function te(t, e, s) {
   const d = document.createElement("div");
   d.className = "sg-edim-unit-popup", d.style.display = "none", Ot.forEach((b) => {
     const y = document.createElement("button");
-    y.className = "sg-edim-unit-option", b === r && y.classList.add("active"), y.textContent = b, y.addEventListener("click", (L) => {
-      L.stopPropagation(), r = b, c.textContent = b, d.querySelectorAll(".sg-edim-unit-option").forEach(
+    y.className = "sg-edim-unit-option", b === r && y.classList.add("active"), y.textContent = b, y.addEventListener("click", (k) => {
+      k.stopPropagation(), r = b, c.textContent = b, d.querySelectorAll(".sg-edim-unit-option").forEach(
         (E) => E.classList.toggle("active", E.textContent === b)
       ), d.style.display = "none", v();
     }), d.appendChild(y);
@@ -2465,12 +2465,12 @@ function te(t, e, s) {
   h.observe(document.body, { childList: !0, subtree: !0 });
   function C(b, y) {
     if (n[b].value = String(y), l)
-      for (let L = 0; L < 4; L++)
-        n[L].value = String(y);
+      for (let k = 0; k < 4; k++)
+        n[k].value = String(y);
     v();
   }
   function v() {
-    var b, y, L;
+    var b, y, k;
     if (i.length >= 4)
       for (let E = 0; E < 4; E++) {
         const N = n[E].value, A = N === "0" || N === "" ? "0" : `${N}${r}`;
@@ -2481,20 +2481,20 @@ function te(t, e, s) {
         const A = N.value;
         return A === "0" || A === "" ? "0" : `${A}${r}`;
       });
-      (L = e.upValue) == null || L.call(e, E.join(" "));
+      (k = e.upValue) == null || k.call(e, E.join(" "));
     }
   }
   t.appendChild(a);
 }
 function ne(t, e, s) {
-  var k, S, b, y, L, E, N;
+  var L, S, b, y, k, E, N;
   const a = document.createElement("div");
   a.className = "sg-ctrl-row";
   const o = document.createElement("label");
   o.className = "sg-ctrl-label", o.textContent = s;
   const i = document.createElement("div");
   i.className = "sg-ctrl-field sg-slider-ctrl";
-  const n = ((k = e.get) == null ? void 0 : k.call(e, "min")) ?? 0, l = ((S = e.get) == null ? void 0 : S.call(e, "max")) ?? 100, r = ((b = e.get) == null ? void 0 : b.call(e, "step")) ?? 1, u = ((y = e.get) == null ? void 0 : y.call(e, "units")) || ((L = e.get) == null ? void 0 : L.call(e, "unit")) || ["px"], f = Array.isArray(u) ? u[0] || "px" : u || "px", m = ((E = e.getValue) == null ? void 0 : E.call(e)) ?? ((N = e.get) == null ? void 0 : N.call(e, "value")) ?? "", c = parseFloat(m) || 0, d = document.createElement("input");
+  const n = ((L = e.get) == null ? void 0 : L.call(e, "min")) ?? 0, l = ((S = e.get) == null ? void 0 : S.call(e, "max")) ?? 100, r = ((b = e.get) == null ? void 0 : b.call(e, "step")) ?? 1, u = ((y = e.get) == null ? void 0 : y.call(e, "units")) || ((k = e.get) == null ? void 0 : k.call(e, "unit")) || ["px"], f = Array.isArray(u) ? u[0] || "px" : u || "px", m = ((E = e.getValue) == null ? void 0 : E.call(e)) ?? ((N = e.get) == null ? void 0 : N.call(e, "value")) ?? "", c = parseFloat(m) || 0, d = document.createElement("input");
   d.className = "sg-slider-track", d.type = "range", d.min = String(n), d.max = String(l), d.step = String(r), d.value = String(c);
   const p = document.createElement("input");
   p.className = "sg-slider-value", p.type = "number", p.min = String(n), p.max = String(l), p.step = String(r), p.value = String(c);
@@ -2689,20 +2689,20 @@ function Pt(t, e) {
   C.className = "sg-ctrl-field";
   const v = document.createElement("div");
   v.className = "sg-color-swatch-wrap";
-  const k = document.createElement("div");
-  k.className = "sg-color-swatch", k.style.backgroundColor = f;
+  const L = document.createElement("div");
+  L.className = "sg-color-swatch", L.style.backgroundColor = f;
   const S = document.createElement("input");
-  S.type = "color", S.value = "#000000", k.appendChild(S);
+  S.type = "color", S.value = "#000000", L.appendChild(S);
   const b = document.createElement("input");
   b.className = "sg-color-hex-input", b.value = f, S.addEventListener("input", () => {
-    f = S.value, k.style.backgroundColor = f, b.value = f, c();
+    f = S.value, L.style.backgroundColor = f, b.value = f, c();
   }), b.addEventListener("change", () => {
-    f = b.value, k.style.backgroundColor = f, c();
-  }), v.appendChild(k), v.appendChild(b), C.appendChild(v), g.appendChild(h), g.appendChild(C), o.appendChild(g);
+    f = b.value, L.style.backgroundColor = f, c();
+  }), v.appendChild(L), v.appendChild(b), C.appendChild(v), g.appendChild(h), g.appendChild(C), o.appendChild(g);
   const y = document.createElement("div");
   y.className = "sg-ctrl-row";
-  const L = document.createElement("label");
-  L.className = "sg-ctrl-label", L.textContent = "Inset";
+  const k = document.createElement("label");
+  k.className = "sg-ctrl-label", k.textContent = "Inset";
   const E = document.createElement("div");
   E.className = "sg-ctrl-field";
   const N = document.createElement("label");
@@ -2714,7 +2714,7 @@ function Pt(t, e) {
   const x = document.createElement("span");
   x.className = "sg-toggle-switch-thumb", M.appendChild(x), N.appendChild(A), N.appendChild(M), A.addEventListener("change", () => {
     m = A.checked, c();
-  }), E.appendChild(N), y.appendChild(L), y.appendChild(E), o.appendChild(y);
+  }), E.appendChild(N), y.appendChild(k), y.appendChild(E), o.appendChild(y);
   const H = document.createElement("div");
   H.className = "sg-shadow-preview";
   const B = document.createElement("div");
@@ -2775,8 +2775,8 @@ function Ft(t, e) {
   const i = e.getSelected();
   let n = "to right", l = "#c0392b", r = 0, u = "#e04535", f = 100;
   if (i) {
-    const k = String(i.getStyle("background-image") || "").match(/linear-gradient\(([^,]+),\s*(#?\w+)\s+(\d+)%?,\s*(#?\w+)\s+(\d+)%?\)/);
-    k && (n = k[1].trim(), l = k[2], r = parseInt(k[3]) || 0, u = k[4], f = parseInt(k[5]) || 100);
+    const L = String(i.getStyle("background-image") || "").match(/linear-gradient\(([^,]+),\s*(#?\w+)\s+(\d+)%?,\s*(#?\w+)\s+(\d+)%?\)/);
+    L && (n = L[1].trim(), l = L[2], r = parseInt(L[3]) || 0, u = L[4], f = parseInt(L[5]) || 100);
   }
   function m() {
     if (!i) return;
@@ -2784,8 +2784,8 @@ function Ft(t, e) {
     i.addStyle({ "background-image": S }), c();
   }
   function c() {
-    const v = n === "circle" ? "radial-gradient" : "linear-gradient", k = n === "circle" ? "circle" : n;
-    C.style.background = `${v}(${k}, ${l} ${r}%, ${u} ${f}%)`;
+    const v = n === "circle" ? "radial-gradient" : "linear-gradient", L = n === "circle" ? "circle" : n;
+    C.style.background = `${v}(${L}, ${l} ${r}%, ${u} ${f}%)`;
   }
   const d = document.createElement("div");
   d.className = "sg-ctrl-row";
@@ -2795,14 +2795,14 @@ function Ft(t, e) {
   g.className = "sg-ctrl-field";
   const h = document.createElement("select");
   h.className = "sg-select", Rt.forEach((v) => {
-    const k = document.createElement("option");
-    k.value = v.value, k.textContent = v.label, h.appendChild(k);
+    const L = document.createElement("option");
+    L.value = v.value, L.textContent = v.label, h.appendChild(L);
   }), h.value = n, h.addEventListener("change", () => {
     n = h.value, m();
-  }), g.appendChild(h), d.appendChild(p), d.appendChild(g), o.appendChild(d), Se(o, "Color 1", l, r, (v, k) => {
-    l = v, r = k, m();
-  }), Se(o, "Color 2", u, f, (v, k) => {
-    u = v, f = k, m();
+  }), g.appendChild(h), d.appendChild(p), d.appendChild(g), o.appendChild(d), Se(o, "Color 1", l, r, (v, L) => {
+    l = v, r = L, m();
+  }), Se(o, "Color 2", u, f, (v, L) => {
+    u = v, f = L, m();
   });
   const C = document.createElement("div");
   C.className = "sg-gradient-preview", c(), o.appendChild(C), s.appendChild(a), s.appendChild(o), t.appendChild(s);
@@ -3400,7 +3400,7 @@ function un(t, e, s) {
   p.className = "sg-input", p.type = "text", p.placeholder = "e.g. my-class another-class";
   const g = ((C = s.getClasses) == null ? void 0 : C.call(s)) || [];
   p.value = g.join(" "), p.addEventListener("change", () => {
-    g.forEach((k) => s.removeClass(k)), p.value.trim().split(/\s+/).filter(Boolean).forEach((k) => s.addClass(k));
+    g.forEach((L) => s.removeClass(L)), p.value.trim().split(/\s+/).filter(Boolean).forEach((L) => s.addClass(L));
   }), d.appendChild(p), m.appendChild(c), m.appendChild(d), i.appendChild(m), a.appendChild(o), a.appendChild(i), t.appendChild(a);
 }
 function mn(t, e, s) {
@@ -3569,7 +3569,7 @@ function bn(t, e) {
   function l(r, u, f) {
     u.forEach((m) => {
       var N;
-      const c = m.getId(), d = m.get("type") || m.get("tagName") || "div", p = ((N = m.getName) == null ? void 0 : N.call(m)) || d, g = m.components(), h = g && g.length > 0, C = i.has(c), v = e.getSelected() === m, k = m.getStyle("display") !== "none", S = document.createElement("div");
+      const c = m.getId(), d = m.get("type") || m.get("tagName") || "div", p = ((N = m.getName) == null ? void 0 : N.call(m)) || d, g = m.components(), h = g && g.length > 0, C = i.has(c), v = e.getSelected() === m, L = m.getStyle("display") !== "none", S = document.createElement("div");
       S.className = "sg-layer-item", v && S.classList.add("selected"), S.style.paddingLeft = `${8 + f * 16}px`;
       const b = document.createElement("button");
       b.className = "sg-layer-toggle", h || b.classList.add("empty"), C && b.classList.add("collapsed"), b.innerHTML = '<i class="fa-solid fa-caret-down"></i>', b.addEventListener("click", (A) => {
@@ -3577,11 +3577,11 @@ function bn(t, e) {
       });
       const y = document.createElement("span");
       y.className = "sg-layer-icon", y.innerHTML = `<i class="${fn(d)}"></i>`;
-      const L = document.createElement("span");
-      L.className = "sg-layer-name", L.textContent = p, L.addEventListener("dblclick", (A) => {
+      const k = document.createElement("span");
+      k.className = "sg-layer-name", k.textContent = p, k.addEventListener("dblclick", (A) => {
         A.stopPropagation();
         const M = document.createElement("input");
-        M.className = "sg-layer-name-input", M.value = p, L.replaceWith(M), M.focus(), M.select();
+        M.className = "sg-layer-name-input", M.value = p, k.replaceWith(M), M.focus(), M.select();
         const x = () => {
           const H = M.value.trim();
           H && m.set("custom-name", H), n();
@@ -3591,11 +3591,11 @@ function bn(t, e) {
         });
       });
       const E = document.createElement("button");
-      if (E.className = "sg-layer-visibility", k || E.classList.add("hidden-layer"), E.innerHTML = k ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>', E.addEventListener("click", (A) => {
-        A.stopPropagation(), k ? m.addStyle({ display: "none" }) : m.removeStyle("display"), n();
+      if (E.className = "sg-layer-visibility", L || E.classList.add("hidden-layer"), E.innerHTML = L ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>', E.addEventListener("click", (A) => {
+        A.stopPropagation(), L ? m.addStyle({ display: "none" }) : m.removeStyle("display"), n();
       }), S.addEventListener("click", () => {
         e.select(m);
-      }), S.appendChild(b), S.appendChild(y), S.appendChild(L), S.appendChild(E), r.appendChild(S), h && !C) {
+      }), S.appendChild(b), S.appendChild(y), S.appendChild(k), S.appendChild(E), r.appendChild(S), h && !C) {
         const A = document.createElement("div");
         A.className = "sg-layer-children", l(A, g, f + 1), r.appendChild(A);
       }
@@ -4601,8 +4601,8 @@ function Nn(t) {
     C.className = "sg-aip-bar";
     const v = n.createElement("div");
     v.className = "sg-aip-img-preview";
-    const k = n.createElement("div");
-    k.className = "sg-aip-placeholder";
+    const L = n.createElement("div");
+    L.className = "sg-aip-placeholder";
     const S = [
       "A startup landing with dark hero and pricing cards...",
       "An online store with product grid and checkout...",
@@ -4611,16 +4611,16 @@ function Nn(t) {
     ];
     for (const V of S) {
       const O = n.createElement("span");
-      O.textContent = V, k.appendChild(O);
+      O.textContent = V, L.appendChild(O);
     }
     const b = n.createElement("textarea");
     b.className = "sg-aip-textarea", b.placeholder = "", b.rows = 1, b.addEventListener("input", () => {
-      b.style.height = "auto", b.style.height = Math.min(b.scrollHeight, 120) + "px", k.style.display = b.value ? "none" : "";
+      b.style.height = "auto", b.style.height = Math.min(b.scrollHeight, 120) + "px", L.style.display = b.value ? "none" : "";
     });
     const y = n.createElement("div");
     y.className = "sg-aip-bar-footer";
-    const L = n.createElement("div");
-    L.className = "sg-aip-bar-left";
+    const k = n.createElement("div");
+    k.className = "sg-aip-bar-left";
     const E = n.createElement("button");
     E.className = "sg-aip-icon-btn", E.title = "Attach reference image", E.innerHTML = '<i class="fa-solid fa-paperclip"></i>';
     const N = document.createElement("input");
@@ -4689,9 +4689,9 @@ function Nn(t) {
       }, c.onerror = () => {
         m = !1, w.classList.remove("sg-aip-icon-btn--recording"), c = null;
       }, c.start();
-    })), L.appendChild(E), L.appendChild(x), w && L.appendChild(w);
+    })), k.appendChild(E), k.appendChild(x), w && k.appendChild(w);
     const T = n.createElement("button");
-    T.className = "sg-aip-send-btn", T.title = "Generate (Enter)", T.innerHTML = '<i class="fa-solid fa-arrow-up"></i>', y.appendChild(L), y.appendChild(T), C.appendChild(v), C.appendChild(k), C.appendChild(b), C.appendChild(y);
+    T.className = "sg-aip-send-btn", T.title = "Generate (Enter)", T.innerHTML = '<i class="fa-solid fa-arrow-up"></i>', y.appendChild(k), y.appendChild(T), C.appendChild(v), C.appendChild(L), C.appendChild(b), C.appendChild(y);
     const j = n.createElement("div");
     j.className = "sg-aip-chips";
     for (const V of Sn) {

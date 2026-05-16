@@ -205,6 +205,9 @@ export function renderWidgetsPanel(sidebarEl: HTMLElement, editor: Editor): void
         card.addEventListener('pointerdown', (e: PointerEvent) => {
           if (e.button !== 0) return;
           e.preventDefault();
+          // Capture pointer so pointermove keeps firing on host document
+          // even when cursor moves into the canvas iframe
+          card.setPointerCapture(e.pointerId);
 
           const block = editor.Blocks.get(item.id);
           if (!block) return;
