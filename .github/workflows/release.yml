@@ -165,6 +165,11 @@ jobs:
       - name: Commit release
         if: steps.bump.outputs.skip != 'true'
         run: |
+          # Abort if tag already exists (concurrent run already released this version)
+          if git ls-remote --tags origin "refs/tags/v${{ steps.version.outputs.version }}" | grep -q .; then
+            echo "Tag v${{ steps.version.outputs.version }} already exists — skipping release"
+            exit 0
+          fi
           git add package.json CHANGELOG.md
           git commit -m "chore(release): v${{ steps.version.outputs.version }}"
           git tag "v${{ steps.version.outputs.version }}"
