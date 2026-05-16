@@ -27,3 +27,6 @@ example/pnpm-lock.yaml
 example/dist/
 
 .atl/
+
+.pi/
+.pi-lens/
