@@ -43,6 +43,17 @@ export function renderColorPicker(container: HTMLElement, property: any, label: 
   hexInput.type = 'text';
   hexInput.value = currentColor;
 
+  // Prevent panel re-render while picker is open (drag would destroy the element)
+  colorInput.addEventListener('focus', () => {
+    (window as any).__sgEditing.interacting = true;
+  });
+  colorInput.addEventListener('blur', () => {
+    (window as any).__sgEditing.interacting = false;
+  });
+  colorInput.addEventListener('change', () => {
+    (window as any).__sgEditing.interacting = false;
+  });
+
   // Color input change
   colorInput.addEventListener('input', () => {
     swatch.style.backgroundColor = colorInput.value;

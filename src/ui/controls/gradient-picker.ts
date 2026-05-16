@@ -153,6 +153,10 @@ function renderColorStop(
   let currentColor = initialColor;
   let currentPos = initialPos;
 
+  colorInput.addEventListener('focus', () => { (window as any).__sgEditing.interacting = true; });
+  colorInput.addEventListener('blur', () => { (window as any).__sgEditing.interacting = false; });
+  colorInput.addEventListener('change', () => { (window as any).__sgEditing.interacting = false; });
+
   colorInput.addEventListener('input', () => {
     currentColor = colorInput.value;
     swatch.style.backgroundColor = currentColor;

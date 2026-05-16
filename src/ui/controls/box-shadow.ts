@@ -151,6 +151,10 @@ export function renderBoxShadow(container: HTMLElement, editor: Editor): void {
   hexInput.className = 'sg-color-hex-input';
   hexInput.value = color;
 
+  colorInput.addEventListener('focus', () => { (window as any).__sgEditing.interacting = true; });
+  colorInput.addEventListener('blur', () => { (window as any).__sgEditing.interacting = false; });
+  colorInput.addEventListener('change', () => { (window as any).__sgEditing.interacting = false; });
+
   colorInput.addEventListener('input', () => {
     color = colorInput.value;
     swatch.style.backgroundColor = color;
