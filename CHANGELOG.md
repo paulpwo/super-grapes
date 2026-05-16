@@ -1,3 +1,9 @@
+## [0.7.2] - 2026-05-16
+
+### Bug Fixes
+- **(dist)**: rebuild with avoidInlineStyle + forceClass false by default
+
+
 ## [0.7.1] - 2026-05-16
 
 ### Bug Fixes
