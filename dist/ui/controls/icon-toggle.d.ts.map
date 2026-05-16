@@ -1,0 +1,1 @@
+{"version":3,"file":"icon-toggle.d.ts","sourceRoot":"","sources":["../../../src/ui/controls/icon-toggle.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAEH,MAAM,WAAW,UAAU;IACzB,KAAK,EAAE,MAAM,CAAC;IACd,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,CAAC,EAAE,MAAM,CAAC;CAChB;AAQD,wBAAgB,gBAAgB,CAC9B,SAAS,EAAE,WAAW,EACtB,QAAQ,EAAE,GAAG,EACb,KAAK,EAAE,MAAM,EACb,KAAK,EAAE,UAAU,EAAE,GAClB,IAAI,CAwCN"}
