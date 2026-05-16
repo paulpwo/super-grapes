@@ -2,7 +2,6 @@ import type { Editor } from 'grapesjs';
 import { renderContentTab } from './edit-content';
 import { renderStyleTab } from './edit-style';
 import { renderAdvancedTab } from './edit-advanced';
-import { renderCodeTab } from './edit-code';
 
 // Flag to prevent re-renders while the user is dragging a slider or interacting with a control
 let _isUserInteracting = false;
@@ -39,9 +38,6 @@ export function renderEditPanel(sidebarEl: HTMLElement, editor: Editor): void {
         break;
       case 'advanced':
         renderAdvancedTab(target, editor);
-        break;
-      case 'code':
-        renderCodeTab(target, editor);
         break;
     }
   }
