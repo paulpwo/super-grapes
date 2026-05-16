@@ -73,6 +73,8 @@ export interface SuperGrapesConfig {
   onReady?: (editor: Editor) => void;
   /** AI assistant configuration */
   ai?: AiConfig;
+  /** Preserve inline styles in output HTML (default: false — uses style= instead of CSS classes) */
+  avoidInlineStyle?: boolean;
 }
 
 export type { Editor };

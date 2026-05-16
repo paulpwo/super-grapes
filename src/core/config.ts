@@ -39,6 +39,9 @@ export function buildGrapesConfig(config: SuperGrapesConfig): Record<string, unk
     // We handle storage separately via configureStorage()
     storageManager: false,
 
+    // Preserve inline styles — GrapesJS by default converts style= to CSS rules/classes
+    avoidInlineStyle: config.avoidInlineStyle ?? false,
+
     // Canvas styles — load Font Awesome 6 inside the iframe
     canvas: {
       styles: [
