@@ -65,10 +65,10 @@ function ze() {
                 N.className = "".concat(S, "import-label"), N.innerHTML = b, E.appendChild(N);
               }
               E.appendChild(k.getElement());
-              var A = document.createElement("button");
-              A.type = "button", A.innerHTML = L.modalImportButton, A.className = "".concat(S, "btn-prim ").concat(S, "btn-import"), A.onclick = function() {
+              var T = document.createElement("button");
+              T.type = "button", T.innerHTML = L.modalImportButton, T.className = "".concat(S, "btn-prim ").concat(S, "btn-import"), T.onclick = function() {
                 v.Css.clear(), v.setComponents(k.getContent().trim()), v.Modal.close();
-              }, E.appendChild(A), this.container = E;
+              }, E.appendChild(T), this.container = E;
             }
             return this.container;
           }, getCodeViewer: function() {
@@ -136,54 +136,54 @@ function ze() {
       <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
       </section>` });
         })(p, h), m(p, h), (function(S, b) {
-          var y = S.Panels, k = S.getConfig(), E = "sw-visibility", N = "export-template", A = "open-sm", M = "open-tm", x = "open-layers", H = "open-blocks", B = "fullscreen", w = "preview", T = 'style="display: block; max-width:22px"';
-          k.showDevices = !1, y.getPanels().reset([{ id: "commands", buttons: [{}] }, { id: "devices-c", buttons: [{ id: n, command: n, active: !0, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          var y = S.Panels, k = S.getConfig(), E = "sw-visibility", N = "export-template", T = "open-sm", B = "open-tm", x = "open-layers", A = "open-blocks", M = "fullscreen", w = "preview", H = 'style="display: block; max-width:22px"';
+          k.showDevices = !1, y.getPanels().reset([{ id: "commands", buttons: [{}] }, { id: "devices-c", buttons: [{ id: n, command: n, active: !0, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M21,16H3V4H21M21,2H3C1.89,2 1,2.89 1,4V16A2,2 0 0,0 3,18H10V20H8V22H16V20H14V18H21A2,2 0 0,0 23,16V4C23,2.89 22.1,2 21,2Z" />
-        </svg>`) }, { id: l, command: l, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+        </svg>`) }, { id: l, command: l, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M19,18H5V6H19M21,4H3C1.89,4 1,4.89 1,6V18A2,2 0 0,0 3,20H21A2,2 0 0,0 23,18V6C23,4.89 22.1,4 21,4Z" />
-        </svg>`) }, { id: r, command: r, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+        </svg>`) }, { id: r, command: r, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
-        </svg>`) }] }, { id: "options", buttons: [{ id: E, command: E, context: E, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+        </svg>`) }] }, { id: "options", buttons: [{ id: E, command: E, context: E, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
         <path fill="currentColor" d="M15,5H17V3H15M15,21H17V19H15M11,5H13V3H11M19,5H21V3H19M19,9H21V7H19M19,21H21V19H19M19,13H21V11H19M19,17H21V15H19M3,5H5V3H3M3,9H5V7H3M3,13H5V11H3M3,17H5V15H3M3,21H5V19H3M11,21H13V19H11M7,21H9V19H7M7,5H9V3H7V5Z" />
     </svg>`) }, { id: w, context: w, command: function() {
             return S.runCommand(w);
-          }, label: "<svg ".concat(T, ' viewBox="0 0 24 24"><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg>') }, { id: B, command: B, context: B, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          }, label: "<svg ".concat(H, ' viewBox="0 0 24 24"><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg>') }, { id: M, command: M, context: M, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M5,5H10V7H7V10H5V5M14,5H19V10H17V7H14V5M17,14H19V19H14V17H17V14M10,17V19H5V14H7V17H10Z" />
         </svg>`) }, { id: N, command: function() {
             return S.runCommand(N);
-          }, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          }, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M12.89,3L14.85,3.4L11.11,21L9.15,20.6L12.89,3M19.59,12L16,8.41V5.58L22.42,12L16,18.41V15.58L19.59,12M1.58,12L8,5.58V8.41L4.41,12L8,15.58V18.41L1.58,12Z" />
         </svg>`) }, { id: "undo", command: function() {
             return S.runCommand("core:undo");
-          }, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          }, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M20 13.5C20 17.09 17.09 20 13.5 20H6V18H13.5C16 18 18 16 18 13.5S16 9 13.5 9H7.83L10.91 12.09L9.5 13.5L4 8L9.5 2.5L10.92 3.91L7.83 7H13.5C17.09 7 20 9.91 20 13.5Z" />
         </svg>`) }, { id: "redo", command: function() {
             return S.runCommand("core:redo");
-          }, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          }, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M10.5 18H18V20H10.5C6.91 20 4 17.09 4 13.5S6.91 7 10.5 7H16.17L13.08 3.91L14.5 2.5L20 8L14.5 13.5L13.09 12.09L16.17 9H10.5C8 9 6 11 6 13.5S8 18 10.5 18Z" />
         </svg>`) }, { id: i, command: function() {
             return S.runCommand(i);
-          }, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          }, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
         </svg>`) }, { id: u, command: function() {
             return S.runCommand(u);
-          }, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          }, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
               <path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
-          </svg>`) }] }, { id: "views", buttons: [{ id: A, command: A, active: !0, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+          </svg>`) }] }, { id: "views", buttons: [{ id: T, command: T, active: !0, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
             <path fill="currentColor" d="M20.71,4.63L19.37,3.29C19,2.9 18.35,2.9 17.96,3.29L9,12.25L11.75,15L20.71,6.04C21.1,5.65 21.1,5 20.71,4.63M7,14A3,3 0 0,0 4,17C4,18.31 2.84,19 2,19C2.92,20.22 4.5,21 6,21A4,4 0 0,0 10,17A3,3 0 0,0 7,14Z" />
-        </svg>`) }, { id: M, command: M, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+        </svg>`) }, { id: B, command: B, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
           <path fill="currentColor" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
-      </svg>`) }, { id: x, command: x, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+      </svg>`) }, { id: x, command: x, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
           <path fill="currentColor" d="M12,16L19.36,10.27L21,9L12,2L3,9L4.63,10.27M12,18.54L4.62,12.81L3,14.07L12,21.07L21,14.07L19.37,12.8L12,18.54Z" />
-      </svg>`) }, { id: H, command: H, label: "<svg ".concat(T, ` viewBox="0 0 24 24">
+      </svg>`) }, { id: A, command: A, label: "<svg ".concat(H, ` viewBox="0 0 24 24">
           <path fill="currentColor" d="M17,13H13V17H11V13H7V11H11V7H13V11H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
       </svg>`) }] }]);
-          var j = y.getButton("views", H);
+          var D = y.getButton("views", A);
           S.on("load", (function() {
-            return j == null ? void 0 : j.set("active", !0);
+            return D == null ? void 0 : D.set("active", !0);
           })), b.showStylesOnChange && S.on("component:selected", (function() {
-            var I = y.getButton("views", A), D = y.getButton("views", x);
-            D && D.get("active") || !S.getSelected() || I == null || I.set("active", !0);
+            var I = y.getButton("views", T), j = y.getButton("views", x);
+            j && j.get("active") || !S.getSelected() || I == null || I.set("active", !0);
           }));
         })(p, h);
       };
@@ -219,21 +219,21 @@ function Ge() {
         u && n.Blocks.add(c, o({ media: `<svg viewBox="0 0 24 24">
         <path fill="currentColor" d="M12 20C16.4 20 20 16.4 20 12S16.4 4 12 4 4 7.6 4 12 7.6 20 12 20M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M17 11.5V13H11V7H12.5V11.5H17Z" />
       </svg>`, label: d, category: "Extra", select: !0, content: { type: c } }, u)), n.Components.addType(c, { model: { defaults: o({ startfrom: r.startTime, classes: [p], endText: r.endText, droppable: !1, script: function(g) {
-          var h = g.startfrom, C = g.endText, v = this, L = new Date(h).getTime(), S = v.querySelector("[data-js=countdown]"), b = v.querySelector("[data-js=countdown-endtext]"), y = v.querySelector("[data-js=countdown-day]"), k = v.querySelector("[data-js=countdown-hour]"), E = v.querySelector("[data-js=countdown-minute]"), N = v.querySelector("[data-js=countdown-second]"), A = v.__gjsCountdownInterval;
-          A && clearInterval(A);
-          var M = window.__gjsCountdownIntervals || [], x = [];
-          M.forEach((function(w) {
+          var h = g.startfrom, C = g.endText, v = this, L = new Date(h).getTime(), S = v.querySelector("[data-js=countdown]"), b = v.querySelector("[data-js=countdown-endtext]"), y = v.querySelector("[data-js=countdown-day]"), k = v.querySelector("[data-js=countdown-hour]"), E = v.querySelector("[data-js=countdown-minute]"), N = v.querySelector("[data-js=countdown-second]"), T = v.__gjsCountdownInterval;
+          T && clearInterval(T);
+          var B = window.__gjsCountdownIntervals || [], x = [];
+          B.forEach((function(w) {
             w.isConnected || (clearInterval(w.__gjsCountdownInterval), x.push(w));
-          })), M.indexOf(v) < 0 && M.push(v), window.__gjsCountdownIntervals = M.filter((function(w) {
+          })), B.indexOf(v) < 0 && B.push(v), window.__gjsCountdownIntervals = B.filter((function(w) {
             return x.indexOf(w) < 0;
           }));
-          var H = function(w, T, j, I) {
-            y.innerHTML = "".concat(w < 10 ? "0" + w : w), k.innerHTML = "".concat(T < 10 ? "0" + T : T), E.innerHTML = "".concat(j < 10 ? "0" + j : j), N.innerHTML = "".concat(I < 10 ? "0" + I : I);
-          }, B = function() {
-            var w = (/* @__PURE__ */ new Date()).getTime(), T = L - w, j = Math.floor(T / 864e5), I = Math.floor(T % 864e5 / 36e5), D = Math.floor(T % 36e5 / 6e4), P = Math.floor(T % 6e4 / 1e3);
-            H(j, I, D, P), T < 0 && (clearInterval(v.__gjsCountdownInterval), b.innerHTML = C, S.style.display = "none", b.style.display = "");
+          var A = function(w, H, D, I) {
+            y.innerHTML = "".concat(w < 10 ? "0" + w : w), k.innerHTML = "".concat(H < 10 ? "0" + H : H), E.innerHTML = "".concat(D < 10 ? "0" + D : D), N.innerHTML = "".concat(I < 10 ? "0" + I : I);
+          }, M = function() {
+            var w = (/* @__PURE__ */ new Date()).getTime(), H = L - w, D = Math.floor(H / 864e5), I = Math.floor(H % 864e5 / 36e5), j = Math.floor(H % 36e5 / 6e4), P = Math.floor(H % 6e4 / 1e3);
+            A(D, I, j, P), H < 0 && (clearInterval(v.__gjsCountdownInterval), b.innerHTML = C, S.style.display = "none", b.style.display = "");
           };
-          L ? (v.__gjsCountdownInterval = setInterval(B, 1e3), b.style.display = "none", S.style.display = "", B()) : H(0, 0, 0, 0);
+          L ? (v.__gjsCountdownInterval = setInterval(M, 1e3), b.style.display = "none", S.style.display = "", M()) : A(0, 0, 0, 0);
         }, "script-props": ["startfrom", "endText"], traits: [{ label: "Start", name: "startfrom", changeProp: !0, type: r.dateInputType }, { label: "End text", name: "endText", changeProp: !0 }], components: `
           <span data-js="countdown" class="`.concat(p, `-cont">
             <div class="`).concat(p, `-block">
@@ -2157,61 +2157,33 @@ function Ht(t, e) {
           if (!S) return;
           v.classList.add("dragging"), i.innerHTML = `<i class="${Le(C.id)}"></i> ${we(C.label)}`, i.style.display = "flex", i.style.left = L.clientX + "px", i.style.top = L.clientY + "px", e.Blocks.startDrag(S, L);
           const b = document.querySelector(".gjs-frame");
-          let y = !1, k = 0, E = 0;
-          const N = (M) => {
-            if (i.style.left = M.clientX + "px", i.style.top = M.clientY + "px", b) {
-              const x = b.getBoundingClientRect(), H = M.clientX >= x.left && M.clientX <= x.right && M.clientY >= x.top && M.clientY <= x.bottom, B = M.clientX - x.left, w = M.clientY - x.top;
-              if (H) {
-                if (k = B, E = w, !y) {
-                  const j = new PointerEvent("pointerenter", {
-                    clientX: B,
-                    clientY: w,
-                    bubbles: !1,
-                    cancelable: !1,
-                    pointerId: 1,
-                    pointerType: "mouse"
-                  });
-                  b.dispatchEvent(j), y = !0;
-                }
-                const T = new PointerEvent("pointermove", {
-                  clientX: B,
-                  clientY: w,
-                  bubbles: !0,
-                  cancelable: !0,
-                  pointerId: 1,
-                  pointerType: "mouse"
-                });
-                b.dispatchEvent(T), r(b, x);
-              } else {
-                if (y) {
-                  const T = new PointerEvent("pointerleave", {
-                    clientX: B,
-                    clientY: w,
-                    bubbles: !1,
-                    cancelable: !1,
-                    pointerId: 1,
-                    pointerType: "mouse"
-                  });
-                  b.dispatchEvent(T), y = !1;
-                }
-                n.style.display = "none";
-              }
-            }
-          }, A = () => {
-            if (i.style.display = "none", n.style.display = "none", b) {
-              const M = new PointerEvent("pointerup", {
-                clientX: k,
-                clientY: E,
-                bubbles: !0,
-                cancelable: !0,
-                pointerId: 1,
+          let y = !1;
+          const k = (N) => {
+            var M;
+            if (i.style.left = N.clientX + "px", i.style.top = N.clientY + "px", !b) return;
+            const T = b.getBoundingClientRect(), B = N.clientX - T.left, x = N.clientY - T.top;
+            if (B >= 0 && B <= T.width && x >= 0 && x <= T.height) {
+              y || (b.dispatchEvent(new PointerEvent("pointerenter", {
+                clientX: N.clientX,
+                clientY: N.clientY,
+                bubbles: !1,
+                cancelable: !1,
+                pointerId: N.pointerId,
                 pointerType: "mouse"
-              });
-              b.dispatchEvent(M);
-            }
-            e.Blocks.endDrag(!1), v.classList.remove("dragging"), y = !1, document.removeEventListener("pointermove", N), document.removeEventListener("pointerup", A);
+              })), y = !0);
+              const w = (M = b.contentDocument) == null ? void 0 : M.elementFromPoint(B, x);
+              w == null || w.dispatchEvent(new MouseEvent("mousemove", {
+                clientX: B,
+                clientY: x,
+                bubbles: !0,
+                cancelable: !0
+              })), r(b, T);
+            } else
+              n.style.display = "none";
+          }, E = () => {
+            document.removeEventListener("pointermove", k), document.removeEventListener("pointerup", E), i.style.display = "none", n.style.display = "none", e.Blocks.endDrag(!1), v.classList.remove("dragging"), y = !1;
           };
-          document.addEventListener("pointermove", N), document.addEventListener("pointerup", A);
+          document.addEventListener("pointermove", k), document.addEventListener("pointerup", E);
         }), h.appendChild(v);
       }
       p.appendChild(h), s.appendChild(p);
@@ -2291,23 +2263,23 @@ function Bt(t, e) {
         k.className = "sg-ctrl-label", k.textContent = ((n = b.getLabel) == null ? void 0 : n.call(b)) || b.get("label") || b.get("name") || "";
         const E = document.createElement("div");
         E.className = "sg-ctrl-field";
-        const N = b.get("name") || "", A = ((l = b.getType) == null ? void 0 : l.call(b)) || b.get("type") || "text";
-        if (N === "startfrom" || A === "datetime-local" || A === "date") {
+        const N = b.get("name") || "", T = ((l = b.getType) == null ? void 0 : l.call(b)) || b.get("type") || "text";
+        if (N === "startfrom" || T === "datetime-local" || T === "date") {
           const x = document.createElement("input");
           x.className = "sg-input", x.type = "datetime-local";
-          const H = ((r = b.getValue) == null ? void 0 : r.call(b)) ?? b.get("value") ?? "";
-          if (H) {
-            const B = H.replace(/\//g, "-").replace(" ", "T").slice(0, 16);
-            x.value = B;
+          const A = ((r = b.getValue) == null ? void 0 : r.call(b)) ?? b.get("value") ?? "";
+          if (A) {
+            const M = A.replace(/\//g, "-").replace(" ", "T").slice(0, 16);
+            x.value = M;
           }
           x.addEventListener("change", () => {
-            const B = new Date(x.value);
-            if (!isNaN(B.getTime())) {
-              const w = B.getFullYear(), T = String(B.getMonth() + 1).padStart(2, "0"), j = String(B.getDate()).padStart(2, "0"), I = String(B.getHours()).padStart(2, "0"), D = String(B.getMinutes()).padStart(2, "0");
-              b.setValue(`${w}/${T}/${j} ${I}:${D}:00`);
+            const M = new Date(x.value);
+            if (!isNaN(M.getTime())) {
+              const w = M.getFullYear(), H = String(M.getMonth() + 1).padStart(2, "0"), D = String(M.getDate()).padStart(2, "0"), I = String(M.getHours()).padStart(2, "0"), j = String(M.getMinutes()).padStart(2, "0");
+              b.setValue(`${w}/${H}/${D} ${I}:${j}:00`);
             }
           }), E.appendChild(x);
-        } else switch (A) {
+        } else switch (T) {
           case "text":
           case "url": {
             const x = document.createElement("input");
@@ -2319,17 +2291,17 @@ function Bt(t, e) {
           case "number": {
             const x = document.createElement("input");
             x.className = "sg-input sg-input-number", x.type = "number", x.value = ((f = b.getValue) == null ? void 0 : f.call(b)) ?? b.get("value") ?? "";
-            const H = b.get("min"), B = b.get("max"), w = b.get("step");
-            H != null && (x.min = String(H)), B != null && (x.max = String(B)), w != null && (x.step = String(w)), x.addEventListener("change", () => {
+            const A = b.get("min"), M = b.get("max"), w = b.get("step");
+            A != null && (x.min = String(A)), M != null && (x.max = String(M)), w != null && (x.step = String(w)), x.addEventListener("change", () => {
               b.setValue(parseFloat(x.value));
             }), E.appendChild(x);
             break;
           }
           case "select": {
             const x = document.createElement("select");
-            x.className = "sg-select", (b.get("options") || []).forEach((B) => {
+            x.className = "sg-select", (b.get("options") || []).forEach((M) => {
               const w = document.createElement("option");
-              typeof B == "string" ? (w.value = B, w.textContent = B) : (w.value = B.id ?? B.value ?? "", w.textContent = B.label || B.name || w.value), x.appendChild(w);
+              typeof M == "string" ? (w.value = M, w.textContent = M) : (w.value = M.id ?? M.value ?? "", w.textContent = M.label || M.name || w.value), x.appendChild(w);
             }), x.value = ((m = b.getValue) == null ? void 0 : m.call(b)) ?? b.get("value") ?? "", x.addEventListener("change", () => {
               b.setValue(x.value);
             }), E.appendChild(x);
@@ -2338,38 +2310,38 @@ function Bt(t, e) {
           case "checkbox": {
             const x = document.createElement("label");
             x.className = "sg-toggle-switch";
-            const H = document.createElement("input");
-            H.type = "checkbox", H.checked = !!((c = b.getValue) != null && c.call(b)) || !!b.get("value");
-            const B = document.createElement("span");
-            B.className = "sg-toggle-switch-track";
+            const A = document.createElement("input");
+            A.type = "checkbox", A.checked = !!((c = b.getValue) != null && c.call(b)) || !!b.get("value");
+            const M = document.createElement("span");
+            M.className = "sg-toggle-switch-track";
             const w = document.createElement("span");
-            w.className = "sg-toggle-switch-thumb", B.appendChild(w), x.appendChild(H), x.appendChild(B), H.addEventListener("change", () => {
-              b.setValue(H.checked);
+            w.className = "sg-toggle-switch-thumb", M.appendChild(w), x.appendChild(A), x.appendChild(M), A.addEventListener("change", () => {
+              b.setValue(A.checked);
             }), E.appendChild(x);
             break;
           }
           case "color": {
             const x = document.createElement("div");
             x.className = "sg-color-swatch-wrap";
-            const H = document.createElement("div");
-            H.className = "sg-color-swatch";
-            const B = ((d = b.getValue) == null ? void 0 : d.call(b)) ?? b.get("value") ?? "#000000";
-            H.style.backgroundColor = B;
+            const A = document.createElement("div");
+            A.className = "sg-color-swatch";
+            const M = ((d = b.getValue) == null ? void 0 : d.call(b)) ?? b.get("value") ?? "#000000";
+            A.style.backgroundColor = M;
             const w = document.createElement("input");
-            w.type = "color", w.value = B, H.appendChild(w);
-            const T = document.createElement("input");
-            T.className = "sg-color-hex-input", T.value = B, w.addEventListener("input", () => {
-              H.style.backgroundColor = w.value, T.value = w.value, b.setValue(w.value);
-            }), T.addEventListener("change", () => {
-              H.style.backgroundColor = T.value, w.value = T.value, b.setValue(T.value);
-            }), x.appendChild(H), x.appendChild(T), E.appendChild(x);
+            w.type = "color", w.value = M, A.appendChild(w);
+            const H = document.createElement("input");
+            H.className = "sg-color-hex-input", H.value = M, w.addEventListener("input", () => {
+              A.style.backgroundColor = w.value, H.value = w.value, b.setValue(w.value);
+            }), H.addEventListener("change", () => {
+              A.style.backgroundColor = H.value, w.value = H.value, b.setValue(H.value);
+            }), x.appendChild(A), x.appendChild(H), E.appendChild(x);
             break;
           }
           case "button": {
             const x = document.createElement("button");
             x.className = "sg-action-btn", x.textContent = b.get("text") || ((p = b.getLabel) == null ? void 0 : p.call(b)) || "Action", x.addEventListener("click", () => {
-              const H = b.get("command");
-              H && e.runCommand(H);
+              const A = b.get("command");
+              A && e.runCommand(A);
             }), E.appendChild(x);
             break;
           }
@@ -2414,19 +2386,19 @@ function te(t, e, s) {
     if (N.className = "sg-edim-input", N.type = "number", y) {
       const x = ((S = y.getValue) == null ? void 0 : S.call(y)) ?? "";
       N.value = parseInt(x) ? String(parseInt(x)) : "0";
-      const H = String(x).match(/(px|%|em|rem|vw)/);
-      H && b === 0 && (r = H[1]);
+      const A = String(x).match(/(px|%|em|rem|vw)/);
+      A && b === 0 && (r = A[1]);
     }
     N.addEventListener("change", () => {
       C(b, parseInt(N.value) || 0);
     }), n.push(N);
-    const A = document.createElement("button");
-    A.className = "sg-edim-dec", A.innerHTML = '<i class="fa-solid fa-chevron-down"></i>', A.addEventListener("click", () => {
+    const T = document.createElement("button");
+    T.className = "sg-edim-dec", T.innerHTML = '<i class="fa-solid fa-chevron-down"></i>', T.addEventListener("click", () => {
       const x = parseInt(N.value) || 0;
       C(b, x - 1);
     });
-    const M = document.createElement("span");
-    M.className = "sg-edim-input-label", M.textContent = Vt[b], k.appendChild(E), k.appendChild(N), k.appendChild(A), k.appendChild(M), u.appendChild(k);
+    const B = document.createElement("span");
+    B.className = "sg-edim-input-label", B.textContent = Vt[b], k.appendChild(E), k.appendChild(N), k.appendChild(T), k.appendChild(B), u.appendChild(k);
   }
   const f = document.createElement("div");
   f.className = "sg-edim-tools";
@@ -2473,13 +2445,13 @@ function te(t, e, s) {
     var b, y, k;
     if (i.length >= 4)
       for (let E = 0; E < 4; E++) {
-        const N = n[E].value, A = N === "0" || N === "" ? "0" : `${N}${r}`;
-        (y = (b = i[E]) == null ? void 0 : b.upValue) == null || y.call(b, A);
+        const N = n[E].value, T = N === "0" || N === "" ? "0" : `${N}${r}`;
+        (y = (b = i[E]) == null ? void 0 : b.upValue) == null || y.call(b, T);
       }
     else {
       const E = n.map((N) => {
-        const A = N.value;
-        return A === "0" || A === "" ? "0" : `${A}${r}`;
+        const T = N.value;
+        return T === "0" || T === "" ? "0" : `${T}${r}`;
       });
       (k = e.upValue) == null || k.call(e, E.join(" "));
     }
@@ -2501,8 +2473,8 @@ function ne(t, e, s) {
   const g = document.createElement("span");
   g.className = "sg-slider-unit", g.textContent = f;
   function h() {
-    const A = parseFloat(d.value), M = parseFloat(d.min), x = parseFloat(d.max), H = x > M ? (A - M) / (x - M) * 100 : 0;
-    d.style.setProperty("--sg-slider-fill", `${H}%`);
+    const T = parseFloat(d.value), B = parseFloat(d.min), x = parseFloat(d.max), A = x > B ? (T - B) / (x - B) * 100 : 0;
+    d.style.setProperty("--sg-slider-fill", `${A}%`);
   }
   h(), d.addEventListener("pointerdown", () => {
     window.__sgEditing && (window.__sgEditing.interacting = !0);
@@ -2515,12 +2487,12 @@ function ne(t, e, s) {
   }), p.addEventListener("change", () => {
     d.value = p.value, h(), v(p.value);
   });
-  function v(A) {
-    var H;
-    const M = parseFloat(A);
-    if (isNaN(M)) return;
-    const x = f !== "" ? `${M}${f}` : `${M}`;
-    (H = e.upValue) == null || H.call(e, x);
+  function v(T) {
+    var A;
+    const B = parseFloat(T);
+    if (isNaN(B)) return;
+    const x = f !== "" ? `${B}${f}` : `${B}`;
+    (A = e.upValue) == null || A.call(e, x);
   }
   i.appendChild(d), i.appendChild(p), i.appendChild(g), a.appendChild(o), a.appendChild(i), t.appendChild(a);
 }
@@ -2633,22 +2605,22 @@ function Pt(t, e) {
   if (i) {
     const w = String(i.getStyle("box-shadow") || "");
     if (w && w !== "none") {
-      const T = w.includes("inset"), I = w.replace("inset", "").trim().split(/\s+/);
+      const H = w.includes("inset"), I = w.replace("inset", "").trim().split(/\s+/);
       if (I.length >= 3) {
         n = parseInt(I[0]) || 0, l = parseInt(I[1]) || 0, r = parseInt(I[2]) || 0, u = parseInt(I[3]) || 0;
-        const D = I.slice(4);
-        D.length > 0 && (f = D.join(" ")), m = T;
+        const j = I.slice(4);
+        j.length > 0 && (f = j.join(" ")), m = H;
       }
     }
   }
   function c() {
     if (!i) return;
-    const T = `${m ? "inset " : ""}${n}px ${l}px ${r}px ${u}px ${f}`;
-    i.addStyle({ "box-shadow": T }), d();
+    const H = `${m ? "inset " : ""}${n}px ${l}px ${r}px ${u}px ${f}`;
+    i.addStyle({ "box-shadow": H }), d();
   }
   function d() {
     const w = m ? "inset " : "";
-    B.style.boxShadow = `${w}${n}px ${l}px ${r}px ${u}px ${f}`;
+    M.style.boxShadow = `${w}${n}px ${l}px ${r}px ${u}px ${f}`;
   }
   [
     { label: "H Offset", getter: () => n, setter: (w) => {
@@ -2664,22 +2636,22 @@ function Pt(t, e) {
       u = w;
     }, min: -50, max: 50 }
   ].forEach((w) => {
-    const T = document.createElement("div");
-    T.className = "sg-ctrl-row";
-    const j = document.createElement("label");
-    j.className = "sg-ctrl-label", j.textContent = w.label;
+    const H = document.createElement("div");
+    H.className = "sg-ctrl-row";
+    const D = document.createElement("label");
+    D.className = "sg-ctrl-label", D.textContent = w.label;
     const I = document.createElement("div");
     I.className = "sg-ctrl-field sg-slider-ctrl";
-    const D = document.createElement("input");
-    D.className = "sg-slider-track", D.type = "range", D.min = String(w.min), D.max = String(w.max), D.value = String(w.getter());
+    const j = document.createElement("input");
+    j.className = "sg-slider-track", j.type = "range", j.min = String(w.min), j.max = String(w.max), j.value = String(w.getter());
     const P = document.createElement("input");
     P.className = "sg-slider-value", P.type = "number", P.min = String(w.min), P.max = String(w.max), P.value = String(w.getter());
     const q = document.createElement("span");
-    q.className = "sg-slider-unit", q.textContent = "px", D.addEventListener("input", () => {
-      P.value = D.value, w.setter(parseInt(D.value)), c();
+    q.className = "sg-slider-unit", q.textContent = "px", j.addEventListener("input", () => {
+      P.value = j.value, w.setter(parseInt(j.value)), c();
     }), P.addEventListener("change", () => {
-      D.value = P.value, w.setter(parseInt(P.value)), c();
-    }), I.appendChild(D), I.appendChild(P), I.appendChild(q), T.appendChild(j), T.appendChild(I), o.appendChild(T);
+      j.value = P.value, w.setter(parseInt(P.value)), c();
+    }), I.appendChild(j), I.appendChild(P), I.appendChild(q), H.appendChild(D), H.appendChild(I), o.appendChild(H);
   });
   const g = document.createElement("div");
   g.className = "sg-ctrl-row";
@@ -2707,18 +2679,18 @@ function Pt(t, e) {
   E.className = "sg-ctrl-field";
   const N = document.createElement("label");
   N.className = "sg-toggle-switch";
-  const A = document.createElement("input");
-  A.type = "checkbox", A.checked = m;
-  const M = document.createElement("span");
-  M.className = "sg-toggle-switch-track";
+  const T = document.createElement("input");
+  T.type = "checkbox", T.checked = m;
+  const B = document.createElement("span");
+  B.className = "sg-toggle-switch-track";
   const x = document.createElement("span");
-  x.className = "sg-toggle-switch-thumb", M.appendChild(x), N.appendChild(A), N.appendChild(M), A.addEventListener("change", () => {
-    m = A.checked, c();
+  x.className = "sg-toggle-switch-thumb", B.appendChild(x), N.appendChild(T), N.appendChild(B), T.addEventListener("change", () => {
+    m = T.checked, c();
   }), E.appendChild(N), y.appendChild(k), y.appendChild(E), o.appendChild(y);
-  const H = document.createElement("div");
-  H.className = "sg-shadow-preview";
-  const B = document.createElement("div");
-  B.className = "sg-shadow-preview-inner", H.appendChild(B), d(), o.appendChild(H), s.appendChild(a), s.appendChild(o), t.appendChild(s);
+  const A = document.createElement("div");
+  A.className = "sg-shadow-preview";
+  const M = document.createElement("div");
+  M.className = "sg-shadow-preview-inner", A.appendChild(M), d(), o.appendChild(A), s.appendChild(a), s.appendChild(o), t.appendChild(s);
 }
 function qt(t) {
   const e = document.createElement("div");
@@ -3572,32 +3544,32 @@ function bn(t, e) {
       const c = m.getId(), d = m.get("type") || m.get("tagName") || "div", p = ((N = m.getName) == null ? void 0 : N.call(m)) || d, g = m.components(), h = g && g.length > 0, C = i.has(c), v = e.getSelected() === m, L = m.getStyle("display") !== "none", S = document.createElement("div");
       S.className = "sg-layer-item", v && S.classList.add("selected"), S.style.paddingLeft = `${8 + f * 16}px`;
       const b = document.createElement("button");
-      b.className = "sg-layer-toggle", h || b.classList.add("empty"), C && b.classList.add("collapsed"), b.innerHTML = '<i class="fa-solid fa-caret-down"></i>', b.addEventListener("click", (A) => {
-        A.stopPropagation(), C ? i.delete(c) : i.add(c), n();
+      b.className = "sg-layer-toggle", h || b.classList.add("empty"), C && b.classList.add("collapsed"), b.innerHTML = '<i class="fa-solid fa-caret-down"></i>', b.addEventListener("click", (T) => {
+        T.stopPropagation(), C ? i.delete(c) : i.add(c), n();
       });
       const y = document.createElement("span");
       y.className = "sg-layer-icon", y.innerHTML = `<i class="${fn(d)}"></i>`;
       const k = document.createElement("span");
-      k.className = "sg-layer-name", k.textContent = p, k.addEventListener("dblclick", (A) => {
-        A.stopPropagation();
-        const M = document.createElement("input");
-        M.className = "sg-layer-name-input", M.value = p, k.replaceWith(M), M.focus(), M.select();
+      k.className = "sg-layer-name", k.textContent = p, k.addEventListener("dblclick", (T) => {
+        T.stopPropagation();
+        const B = document.createElement("input");
+        B.className = "sg-layer-name-input", B.value = p, k.replaceWith(B), B.focus(), B.select();
         const x = () => {
-          const H = M.value.trim();
-          H && m.set("custom-name", H), n();
+          const A = B.value.trim();
+          A && m.set("custom-name", A), n();
         };
-        M.addEventListener("blur", x), M.addEventListener("keydown", (H) => {
-          H.key === "Enter" && x(), H.key === "Escape" && n();
+        B.addEventListener("blur", x), B.addEventListener("keydown", (A) => {
+          A.key === "Enter" && x(), A.key === "Escape" && n();
         });
       });
       const E = document.createElement("button");
-      if (E.className = "sg-layer-visibility", L || E.classList.add("hidden-layer"), E.innerHTML = L ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>', E.addEventListener("click", (A) => {
-        A.stopPropagation(), L ? m.addStyle({ display: "none" }) : m.removeStyle("display"), n();
+      if (E.className = "sg-layer-visibility", L || E.classList.add("hidden-layer"), E.innerHTML = L ? '<i class="fa-solid fa-eye"></i>' : '<i class="fa-solid fa-eye-slash"></i>', E.addEventListener("click", (T) => {
+        T.stopPropagation(), L ? m.addStyle({ display: "none" }) : m.removeStyle("display"), n();
       }), S.addEventListener("click", () => {
         e.select(m);
       }), S.appendChild(b), S.appendChild(y), S.appendChild(k), S.appendChild(E), r.appendChild(S), h && !C) {
-        const A = document.createElement("div");
-        A.className = "sg-layer-children", l(A, g, f + 1), r.appendChild(A);
+        const T = document.createElement("div");
+        T.className = "sg-layer-children", l(T, g, f + 1), r.appendChild(T);
       }
     });
   }
@@ -4625,7 +4597,7 @@ function Nn(t) {
     E.className = "sg-aip-icon-btn", E.title = "Attach reference image", E.innerHTML = '<i class="fa-solid fa-paperclip"></i>';
     const N = document.createElement("input");
     N.type = "file", N.accept = "image/*", N.style.display = "none", document.body.appendChild(N);
-    const A = [
+    const T = [
       "gpt-4o",
       "gpt-4-turbo",
       "gpt-4-vision",
@@ -4638,13 +4610,13 @@ function Nn(t) {
       "llava",
       "pixtral"
     ];
-    function M() {
+    function B() {
       const V = (l.model || "").toLowerCase();
-      return A.some((O) => V.startsWith(O));
+      return T.some((O) => V.startsWith(O));
     }
     const x = n.createElement("div");
     x.className = "sg-aip-tooltip", x.textContent = `Model "${l.model}" may not support image inputs`, E.addEventListener("click", () => {
-      if (!M()) {
+      if (!B()) {
         x.classList.add("sg-aip-tooltip--visible"), setTimeout(() => x.classList.remove("sg-aip-tooltip--visible"), 3e3);
         return;
       }
@@ -4655,10 +4627,10 @@ function Nn(t) {
       if (!V) return;
       const O = new FileReader();
       O.onload = () => {
-        u = O.result, H();
+        u = O.result, A();
       }, O.readAsDataURL(V), N.value = "";
     });
-    function H() {
+    function A() {
       if (!u) {
         v.className = "sg-aip-img-preview", v.innerHTML = "";
         return;
@@ -4668,17 +4640,17 @@ function Nn(t) {
       V.src = u;
       const O = n.createElement("button");
       O.className = "sg-aip-img-remove", O.innerHTML = '<i class="fa-solid fa-xmark"></i>', O.addEventListener("click", () => {
-        u = null, H();
+        u = null, A();
       }), v.appendChild(V), v.appendChild(O);
     }
-    const B = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const M = window.SpeechRecognition || window.webkitSpeechRecognition;
     let w = null;
-    B && (w = n.createElement("button"), w.className = "sg-aip-icon-btn", w.title = "Voice to text", w.innerHTML = '<i class="fa-solid fa-microphone"></i>', w.addEventListener("click", () => {
+    M && (w = n.createElement("button"), w.className = "sg-aip-icon-btn", w.title = "Voice to text", w.innerHTML = '<i class="fa-solid fa-microphone"></i>', w.addEventListener("click", () => {
       if (m && c) {
         c.stop();
         return;
       }
-      c = new B(), c.continuous = !1, c.interimResults = !1, c.lang = "en-US", c.onstart = () => {
+      c = new M(), c.continuous = !1, c.interimResults = !1, c.lang = "en-US", c.onstart = () => {
         m = !0, w.classList.add("sg-aip-icon-btn--recording");
       }, c.onresult = (V) => {
         var U, G;
@@ -4690,20 +4662,20 @@ function Nn(t) {
         m = !1, w.classList.remove("sg-aip-icon-btn--recording"), c = null;
       }, c.start();
     })), k.appendChild(E), k.appendChild(x), w && k.appendChild(w);
-    const T = n.createElement("button");
-    T.className = "sg-aip-send-btn", T.title = "Generate (Enter)", T.innerHTML = '<i class="fa-solid fa-arrow-up"></i>', y.appendChild(k), y.appendChild(T), C.appendChild(v), C.appendChild(L), C.appendChild(b), C.appendChild(y);
-    const j = n.createElement("div");
-    j.className = "sg-aip-chips";
+    const H = n.createElement("button");
+    H.className = "sg-aip-send-btn", H.title = "Generate (Enter)", H.innerHTML = '<i class="fa-solid fa-arrow-up"></i>', y.appendChild(k), y.appendChild(H), C.appendChild(v), C.appendChild(L), C.appendChild(b), C.appendChild(y);
+    const D = n.createElement("div");
+    D.className = "sg-aip-chips";
     for (const V of Sn) {
       const O = n.createElement("button");
       O.className = "sg-aip-chip", O.innerHTML = '<i class="' + V.icon + '"></i> ' + V.label, O.addEventListener("click", () => {
         b.value = V.prompt, b.dispatchEvent(new Event("input")), b.focus();
-      }), j.appendChild(O);
+      }), D.appendChild(O);
     }
     const I = n.createElement("div");
     I.className = "sg-aip-manual-cta", I.innerHTML = "or <a>start from scratch</a> by dragging widgets", I.querySelector("a").addEventListener("click", () => {
       s();
-    }), p.appendChild(g), p.appendChild(h), p.appendChild(C), p.appendChild(j), p.appendChild(I);
+    }), p.appendChild(g), p.appendChild(h), p.appendChild(C), p.appendChild(D), p.appendChild(I);
     const P = n.createElement("div");
     P.className = "sg-aip-loading", P.innerHTML = `
       <div class="sg-aip-loading-dots"><span></span><span></span><span></span></div>
@@ -4746,7 +4718,7 @@ function Nn(t) {
     }
     b.addEventListener("keydown", (V) => {
       V.key === "Enter" && !V.shiftKey && (V.preventDefault(), de());
-    }), T.addEventListener("click", de);
+    }), H.addEventListener("click", de);
   };
   function s() {
     const i = document.querySelector(".gjs-frame");

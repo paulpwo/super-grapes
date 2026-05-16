@@ -25,3 +25,5 @@ pnpm-debug.log*
 # Example
 example/pnpm-lock.yaml
 example/dist/
+
+.atl/
