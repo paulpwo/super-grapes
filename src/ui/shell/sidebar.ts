@@ -135,6 +135,9 @@ export function initSidebar(el: HTMLElement, editor: Editor): SidebarController 
       <button class="sg-edit-tab" data-tab="advanced">
         <i class="fa-solid fa-cog"></i> Advanced
       </button>
+      <button class="sg-edit-tab" data-tab="code">
+        <i class="fa-solid fa-code"></i> Code
+      </button>
     `;
 
     editTabs.querySelectorAll('.sg-edit-tab').forEach(tab => {
