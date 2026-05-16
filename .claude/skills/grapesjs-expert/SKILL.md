@@ -658,3 +658,44 @@ In this project, ALL managers use `custom: true`. Key patterns:
 Style values are applied via `property.upValue(value)`, trait values via `trait.setValue(value)`.
 
 Component types registered as GrapesJS plugin inside `createEditor()` so they exist before HTML parsing. Types use `data-gjs-type` for resolution (no `isComponent` overrides).
+
+---
+
+## ⚠️ Dependency Upgrade Warning
+
+**Before upgrading GrapesJS or any plugin: do a deep audit of internal APIs — minor versions can silently break custom drag-and-drop, event routing, and sorter internals.**
+
+### Real incident: GrapesJS v0.22 broke block drag from sidebar
+
+GrapesJS v0.22 rewrote the drag system (`ComponentSorter` / `DropLocationDeterminer`). The old sorter listened for `pointermove` on `frameEl`. The new one registers `mousemove` on the **canvas wrapper element** (`wrapper.el` inside the iframe). Code that dispatched `pointermove` to `frameEl` stopped working silently.
+
+**Correct drag flow for custom block panel (v0.22+):**
+
+```
+1. setPointerCapture(pointerId) on card
+   → ensures native pointermove fires on host document even when cursor is in iframe
+
+2. pointerenter → frameEl (host coords, bubbles: false)
+   → Droppable.handleDragEnter fires
+   → creates ComponentSorter
+   → bindDragEventHandlers: registers 'mousemove' on wrapper.el (inside iframe)
+
+3. mousemove → iframe.contentDocument.elementFromPoint(localX, localY) (bubbles: true)
+   → bubbles up to wrapper.el
+   → DropLocationDeterminer.onMove fires
+   → positions placer / shows drop indicator
+
+4. native pointerup bubbles to host document (via setPointerCapture)
+   → Droppable.handleDrop fires (registered before our listener via startDrag → startCustom)
+   → reads dragSource.content (set by Blocks.startDrag)
+   → sorter.endDrag() → finalizeMove() → inserts block at last tracked position
+
+5. our onUp fires: removeEventListeners, hide ghost, call editor.Blocks.endDrag(false)
+   → BlockManager cleans up state, handles activate/select behavior
+```
+
+**Key coords rule:**
+- `pointerenter` to `frameEl`: host viewport coords
+- `mousemove` inside iframe: **iframe-local coords** (`clientX - iframeRect.left`)
+
+**All deps are pinned exactly (no `^`) in `package.json` to prevent silent breakage.**

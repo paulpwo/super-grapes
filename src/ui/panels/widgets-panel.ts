@@ -234,87 +234,56 @@ export function renderWidgetsPanel(sidebarEl: HTMLElement, editor: Editor): void
             ghost.style.left = moveEv.clientX + 'px';
             ghost.style.top = moveEv.clientY + 'px';
 
-            if (iframe) {
-              const iframeRect = iframe.getBoundingClientRect();
-              const isOverCanvas = (
-                moveEv.clientX >= iframeRect.left &&
-                moveEv.clientX <= iframeRect.right &&
-                moveEv.clientY >= iframeRect.top &&
-                moveEv.clientY <= iframeRect.bottom
-              );
+            if (!iframe) return;
+            const iframeRect = iframe.getBoundingClientRect();
+            const localX = moveEv.clientX - iframeRect.left;
+            const localY = moveEv.clientY - iframeRect.top;
+            const isOverCanvas = localX >= 0 && localX <= iframeRect.width && localY >= 0 && localY <= iframeRect.height;
 
-              const localX = moveEv.clientX - iframeRect.left;
-              const localY = moveEv.clientY - iframeRect.top;
-
-              if (isOverCanvas) {
-                lastLocalX = localX;
-                lastLocalY = localY;
-
-                if (!enteredCanvas) {
-                  const enterEvent = new PointerEvent('pointerenter', {
-                    clientX: localX,
-                    clientY: localY,
-                    bubbles: false,
-                    cancelable: false,
-                    pointerId: 1,
-                    pointerType: 'mouse',
-                  });
-                  iframe.dispatchEvent(enterEvent);
-                  enteredCanvas = true;
-                }
-
-                const iframeEvent = new PointerEvent('pointermove', {
-                  clientX: localX,
-                  clientY: localY,
-                  bubbles: true,
-                  cancelable: true,
-                  pointerId: 1,
-                  pointerType: 'mouse',
-                });
-                iframe.dispatchEvent(iframeEvent);
-
-                updateDropIndicator(iframe, iframeRect);
-              } else {
-                if (enteredCanvas) {
-                  const leaveEvent = new PointerEvent('pointerleave', {
-                    clientX: localX,
-                    clientY: localY,
-                    bubbles: false,
-                    cancelable: false,
-                    pointerId: 1,
-                    pointerType: 'mouse',
-                  });
-                  iframe.dispatchEvent(leaveEvent);
-                  enteredCanvas = false;
-                }
-                dropIndicator.style.display = 'none';
+            if (isOverCanvas) {
+              if (!enteredCanvas) {
+                // Triggers Droppable.handleDragEnter → creates ComponentSorter,
+                // which calls bindDragEventHandlers registering 'mousemove' on canvas wrapper el
+                iframe.dispatchEvent(new PointerEvent('pointerenter', {
+                  clientX: moveEv.clientX, clientY: moveEv.clientY,
+                  bubbles: false, cancelable: false,
+                  pointerId: moveEv.pointerId, pointerType: 'mouse',
+                }));
+                enteredCanvas = true;
               }
+
+              // ComponentSorter.DropLocationDeterminer listens 'mousemove' on the canvas
+              // wrapper element (this.el). Dispatch to element under cursor so it bubbles
+              // up to the wrapper. Must use iframe-local coords for elementFromPoint and
+              // for the sorter's getMousePositionRelativeToContainer calculation.
+              const el = iframe.contentDocument?.elementFromPoint(localX, localY);
+              el?.dispatchEvent(new MouseEvent('mousemove', {
+                clientX: localX, clientY: localY,
+                bubbles: true, cancelable: true,
+              }));
+
+              updateDropIndicator(iframe, iframeRect);
+            } else {
+              dropIndicator.style.display = 'none';
             }
           };
 
           const onUp = () => {
+            document.removeEventListener('pointermove', onMove);
+            document.removeEventListener('pointerup', onUp);
+
             ghost.style.display = 'none';
             dropIndicator.style.display = 'none';
 
-            if (iframe) {
-              const upEvent = new PointerEvent('pointerup', {
-                clientX: lastLocalX,
-                clientY: lastLocalY,
-                bubbles: true,
-                cancelable: true,
-                pointerId: 1,
-                pointerType: 'mouse',
-              });
-              iframe.dispatchEvent(upEvent);
-            }
-
+            // Native pointerup (from setPointerCapture) bubbles to document.
+            // Droppable.handleDrop fires first (registered in startCustom before our listener):
+            //   → getContentByData reads dragSource.content (set by startDrag)
+            //   → sorter.endDrag() → finalizeMove() → places block at last mousemove position
+            // Then this handler runs — endDrag cleans up BlockManager state (activate/select).
             editor.Blocks.endDrag(false);
-
             card.classList.remove('dragging');
             isDragging = false;
             enteredCanvas = false;
-            document.removeEventListener('pointermove', onMove);
-            document.removeEventListener('pointerup', onUp);
           };
 
           document.addEventListener('pointermove', onMove);

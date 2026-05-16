@@ -1,6 +1,6 @@
 {
   "name": "@paulpwo/super-grapes",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Visual page builder powered by GrapesJS",
   "author": "Paul Osinga <paulpwo@gmail.com>",
   "license": "Apache-2.0",
@@ -38,18 +38,18 @@
     "prepublishOnly": "pnpm run build:lib"
   },
   "peerDependencies": {
-    "grapesjs": "^0.22.16"
+    "grapesjs": "0.22.16"
   },
   "dependencies": {
-    "grapesjs-component-countdown": "^1.0.2",
-    "grapesjs-custom-code": "^1.0.2",
-    "grapesjs-preset-webpage": "^1.0.3",
-    "openai": "^6.27.0"
+    "grapesjs-component-countdown": "1.0.2",
+    "grapesjs-custom-code": "1.0.2",
+    "grapesjs-preset-webpage": "1.0.3",
+    "openai": "6.27.0"
   },
   "devDependencies": {
-    "grapesjs": "^0.22.16",
-    "typescript": "^5.7.0",
-    "vite": "^6.2.0"
+    "grapesjs": "0.22.16",
+    "typescript": "6.0.3",
+    "vite": "6.2.0"
   },
   "engines": {
     "node": ">=18"
