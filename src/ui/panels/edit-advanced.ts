@@ -130,7 +130,7 @@ function renderManualSpacingControl(container: HTMLElement, editor: Editor, cssP
     const input = document.createElement('input');
     input.className = 'sg-edim-input';
     input.type = 'number';
-    const currentStyle = selected?.getStyle(`${cssProperty}-${side}`) || '';
+    const currentStyle = (selected as any)?.getStyle(`${cssProperty}-${side}`) || '';
     input.value = parseInt(currentStyle as string) ? String(parseInt(currentStyle as string)) : '0';
 
     input.addEventListener('change', () => {
@@ -187,7 +187,7 @@ function renderPositionSection(el: HTMLElement, editor: Editor, selected: any): 
     select.appendChild(o);
   });
 
-  const currentPosition = selected.getStyle('position') || 'static';
+  const currentPosition = (selected as any).getStyle('position') || 'static';
   select.value = currentPosition as string;
   select.addEventListener('change', () => {
     selected.addStyle({ position: select.value });
@@ -213,7 +213,7 @@ function renderPositionSection(el: HTMLElement, editor: Editor, selected: any): 
     const input = document.createElement('input');
     input.className = 'sg-input sg-input-number';
     input.type = 'number';
-    const val = selected.getStyle(prop) || '';
+    const val = (selected as any).getStyle(prop) || '';
     input.value = parseInt(val as string) ? String(parseInt(val as string)) : '';
     input.placeholder = 'auto';
 

@@ -46,7 +46,7 @@ export function renderGradientPicker(container: HTMLElement, editor: Editor): vo
 
   // Parse existing gradient
   if (selected) {
-    const bgImage = String(selected.getStyle('background-image') || '');
+    const bgImage = String((selected as any).getStyle('background-image') || '');
     const linearMatch = bgImage.match(/linear-gradient\(([^,]+),\s*(#?\w+)\s+(\d+)%?,\s*(#?\w+)\s+(\d+)%?\)/);
     if (linearMatch) {
       direction = linearMatch[1]!.trim();

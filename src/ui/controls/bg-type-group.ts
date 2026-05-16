@@ -43,7 +43,7 @@ export function renderBgTypeGroup(
   if (!initialType) {
     const selected = editor.getSelected();
     if (selected) {
-      const bgImage = String(selected.getStyle('background-image') || '');
+      const bgImage = String((selected as any).getStyle('background-image') || '');
       if (bgImage.includes('gradient')) {
         activeType = 'gradient';
       }
