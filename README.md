@@ -156,10 +156,10 @@ pnpm build      # Build to dist/
 
 ## Tech Stack
 
-[GrapesJS](https://grapesjs.com) v0.21 | [Vite](https://vitejs.dev) | [TypeScript](https://www.typescriptlang.org) | [OpenAI SDK](https://github.com/openai/openai-node) | [Font Awesome 6](https://fontawesome.com)
+[GrapesJS](https://grapesjs.com) v0.22 | [Vite](https://vitejs.dev) | [TypeScript](https://www.typescriptlang.org) | [OpenAI SDK](https://github.com/openai/openai-node) | [Font Awesome 6](https://fontawesome.com)
 
 ---
 
 ## License
 
-Proprietary. See [LICENSE](LICENSE) for details.
+Apache 2.0 — © 2026 [Paul Osinga](https://github.com/paulpwo). See [LICENSE](LICENSE) for details.
