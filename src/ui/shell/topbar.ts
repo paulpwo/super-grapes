@@ -391,7 +391,8 @@ function showCodeEditorModal(editor: Editor): void {
 	const prettyHtml = html_beautify(rawHtml, {
 		indent_size: 2,
 		wrap_line_length: 0,
-		preserve_newlines: false,
+		preserve_newlines: true,
+		max_preserve_newlines: 2,
 	});
 	const prettyCss = css_beautify(rawCss, {
 		indent_size: 2,
@@ -400,7 +401,7 @@ function showCodeEditorModal(editor: Editor): void {
 	const htmlView = new EditorView({
 		state: EditorState.create({
 			doc: prettyHtml,
-			extensions: [basicSetup, oneDark, html()],
+			extensions: [basicSetup, oneDark, html(), EditorView.lineWrapping],
 		}),
 		parent: htmlPane,
 	});
@@ -408,7 +409,7 @@ function showCodeEditorModal(editor: Editor): void {
 	const cssView = new EditorView({
 		state: EditorState.create({
 			doc: prettyCss,
-			extensions: [basicSetup, oneDark, css()],
+			extensions: [basicSetup, oneDark, css(), EditorView.lineWrapping],
 		}),
 		parent: cssPane,
 	});
