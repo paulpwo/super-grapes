@@ -164,25 +164,28 @@ jobs:
 
       - name: Commit release
         if: steps.bump.outputs.skip != 'true'
+        id: commit
         run: |
           # Abort if tag already exists (concurrent run already released this version)
           if git ls-remote --tags origin "refs/tags/v${{ steps.version.outputs.version }}" | grep -q .; then
             echo "Tag v${{ steps.version.outputs.version }} already exists — skipping release"
+            echo "skipped=true" >> $GITHUB_OUTPUT
             exit 0
           fi
           git add package.json CHANGELOG.md
           git commit -m "chore(release): v${{ steps.version.outputs.version }}"
           git tag "v${{ steps.version.outputs.version }}"
           git push origin main --tags
+          echo "skipped=false" >> $GITHUB_OUTPUT
 
       - name: Publish to GitHub Packages
-        if: steps.bump.outputs.skip != 'true'
+        if: steps.bump.outputs.skip != 'true' && steps.commit.outputs.skipped != 'true'
         run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
-        if: steps.bump.outputs.skip != 'true'
+        if: steps.bump.outputs.skip != 'true' && steps.commit.outputs.skipped != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.version }}
