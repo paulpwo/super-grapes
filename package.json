@@ -34,8 +34,7 @@
     "build": "vite build",
     "build:lib": "vite build && tsc --emitDeclarationOnly --outDir dist",
     "preview": "vite preview",
-    "clean": "rm -rf dist",
-    "prepublishOnly": "pnpm run build:lib"
+    "clean": "rm -rf dist"
   },
   "peerDependencies": {
     "grapesjs": "0.22.16"

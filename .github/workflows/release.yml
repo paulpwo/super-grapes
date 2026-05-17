@@ -172,7 +172,7 @@ jobs:
             echo "skipped=true" >> $GITHUB_OUTPUT
             exit 0
           fi
-          git add package.json CHANGELOG.md
+          git add package.json CHANGELOG.md dist
           git commit -m "chore(release): v${{ steps.version.outputs.version }}"
           git tag "v${{ steps.version.outputs.version }}"
           git push origin main --tags

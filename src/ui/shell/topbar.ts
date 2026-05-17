@@ -1,4 +1,6 @@
 import type { Editor } from "grapesjs";
+import { openTemplateModal } from "../canvas/template-modal";
+import { getExternalTemplates } from "../canvas/canvas-add-bar";
 import logoSrc from "../../assets/logo-small.png";
 import { EditorView, basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
@@ -52,6 +54,9 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
         <i class="fa-solid fa-layer-group"></i>
       </button>
       <div class="sg-topbar-sep"></div>
+      <button class="sg-topbar-icon-btn" data-cmd="templates" title="Templates">
+        <i class="fa-solid fa-folder"></i>
+      </button>
       <button class="sg-topbar-icon-btn" data-cmd="code-editor" title="Edit page HTML / CSS">
         <i class="fa-solid fa-code"></i>
       </button>
@@ -202,6 +207,11 @@ export function initTopbar(el: HTMLElement, editor: Editor): void {
 			const isOpen = navEl.classList.toggle("open");
 			navBtn.classList.toggle("active", isOpen);
 		}
+	});
+
+	// Templates
+	el.querySelector('[data-cmd="templates"]')!.addEventListener("click", () => {
+		openTemplateModal(editor, getExternalTemplates());
 	});
 
 	// Code editor (full page HTML + CSS, editable)
