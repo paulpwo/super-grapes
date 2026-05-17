@@ -1,3 +1,9 @@
+## [0.8.0] - 2026-05-17
+
+### Features
+- **(code-editor)**: build dist with lineWrapping and comment formatting
+
+
 ## [0.7.4] - 2026-05-16
 
 ### Bug Fixes
