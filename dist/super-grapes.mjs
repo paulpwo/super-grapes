@@ -24827,22 +24827,31 @@ function QS(n) {
   r.className = "sg-code-modal-pane active";
   const a = document.createElement("div");
   a.className = "sg-code-modal-pane";
-  const o = n.getHtml(), l = n.getCss() ?? "", c = Cu.html_beautify(o, {
-    indent_size: 2,
-    wrap_line_length: 0,
-    preserve_newlines: !1
-  }), h = Cu.css_beautify(l, {
+  const o = n.getHtml(), l = n.getCss() ?? "";
+  function c(y) {
+    return Cu.html_beautify(y, {
+      indent_size: 2,
+      wrap_line_length: 0,
+      preserve_newlines: !0,
+      max_preserve_newlines: 2
+    }).replace(/([^\n])([ \t]*<!--)/g, `$1
+$2`).replace(/(-->)([ \t]*)(?!\n)/g, `$1
+`).replace(/\n{3,}/g, `
+
+`);
+  }
+  const h = c(o), u = Cu.css_beautify(l, {
     indent_size: 2
-  }), u = new Z({
-    state: G.create({
-      doc: c,
-      extensions: [wh, tu, tS()]
-    }),
-    parent: r
   }), d = new Z({
     state: G.create({
       doc: h,
-      extensions: [wh, tu, tm()]
+      extensions: [wh, tu, tS(), Z.lineWrapping]
+    }),
+    parent: r
+  }), f = new Z({
+    state: G.create({
+      doc: u,
+      extensions: [wh, tu, tm(), Z.lineWrapping]
     }),
     parent: a
   });
@@ -24851,22 +24860,27 @@ function QS(n) {
   }), s.addEventListener("click", () => {
     s.classList.add("active"), i.classList.remove("active"), a.classList.add("active"), r.classList.remove("active");
   });
-  const f = document.createElement("div");
-  f.className = "sg-modal-actions";
-  const p = document.createElement("span");
-  p.className = "sg-code-status", p.style.marginRight = "auto";
-  const O = document.createElement("button");
-  O.className = "sg-modal-btn sg-modal-btn-primary", O.innerHTML = '<i class="fa-solid fa-check"></i> Apply', O.addEventListener("click", () => {
+  const p = document.createElement("div");
+  p.className = "sg-modal-actions";
+  const O = document.createElement("span");
+  O.className = "sg-code-status", O.style.marginRight = "auto";
+  const m = document.createElement("button");
+  m.className = "sg-modal-btn sg-modal-btn-primary", m.innerHTML = '<i class="fa-solid fa-check"></i> Apply', m.addEventListener("click", () => {
     try {
-      n.setComponents(u.state.doc.toString()), n.setStyle(d.state.doc.toString()), p.textContent = "Applied", p.className = "sg-code-status ok", setTimeout(() => {
-        p.textContent = "";
+      const y = d.state.doc.toString();
+      n.setComponents(y), n.setStyle(f.state.doc.toString());
+      const Q = c(n.getHtml());
+      d.dispatch({
+        changes: { from: 0, to: d.state.doc.length, insert: Q }
+      }), O.textContent = "Applied", O.className = "sg-code-status ok", setTimeout(() => {
+        O.textContent = "";
       }, 2e3);
-    } catch (g) {
-      p.textContent = (g == null ? void 0 : g.message) ?? "Error", p.className = "sg-code-status err";
+    } catch (y) {
+      O.textContent = (y == null ? void 0 : y.message) ?? "Error", O.className = "sg-code-status err";
     }
-  }), f.appendChild(p), f.appendChild(O);
-  const m = document.createElement("div");
-  m.className = "sg-code-modal-pane-wrap", m.appendChild(r), m.appendChild(a), e.appendChild(t), e.appendChild(m), e.appendChild(f), Qm("Page HTML / CSS", e);
+  }), p.appendChild(O), p.appendChild(m);
+  const g = document.createElement("div");
+  g.className = "sg-code-modal-pane-wrap", g.appendChild(r), g.appendChild(a), e.appendChild(t), e.appendChild(g), e.appendChild(p), Qm("Page HTML / CSS", e);
 }
 function CS(n) {
   const e = document.createElement("input");
