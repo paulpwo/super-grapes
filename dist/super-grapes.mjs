@@ -1717,11 +1717,7 @@ function Nk(n) {
   var r;
   const e = qm(n), t = e.plugins || [];
   e.plugins = [mg, ...t];
-  const i = Lm.init(e), s = (r = n.ai) != null && r.apiKey ? n.ai : {
-    apiKey: "AIzaSyBzGa3yCqbFJo-ciwuLda50NYKUPOUquAM",
-    model: "gemini-2.5-flash",
-    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai"
-  };
+  const i = Lm.init(e), s = (r = n.ai) != null && r.apiKey ? n.ai : void 0;
   return s && (i.__sgAiConfig = s), n.plugins && n.plugins.length > 0 && Hm(i, n.plugins, n), n.storage && Um(i, n.storage), i.on("component:selected", (a) => {
     i.trigger(Or.COMPONENT_SELECTED, a);
   }), i.on("component:deselected", (a) => {
