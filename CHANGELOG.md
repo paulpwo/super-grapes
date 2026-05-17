@@ -1,3 +1,9 @@
+## [0.9.0] - 2026-05-17
+
+### Features
+- **(topbar)**: add templates button; fix release dist inclusion
+
+
 ## [0.8.0] - 2026-05-17
 
 ### Features
