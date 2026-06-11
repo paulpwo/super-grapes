@@ -11,7 +11,7 @@ export type { SuperGrapesConfig, AiConfig, GenerationConfig, TailwindConfig, Bra
 
 // Tailwind canvas runtime (core styling technique). The constants let host apps
 // replicate the exact runtime + cascade strategy on published pages.
-export { DEFAULT_TAILWIND_SCRIPT_URL, TAILWIND_CANVAS_CSS, resolveTailwindConfig, injectTailwindRuntime } from './core/tailwind';
+export { DEFAULT_TAILWIND_SCRIPT_URL, TAILWIND_CANVAS_CSS, resolveTailwindConfig, injectTailwindRuntime, getTailwindBootstrapScript } from './core/tailwind';
 export type { ResolvedTailwindConfig } from './core/tailwind';
 
 // AI generation backend (pluggable: direct provider call or host endpoint)

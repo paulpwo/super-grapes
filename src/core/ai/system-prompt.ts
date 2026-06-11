@@ -38,6 +38,48 @@ Every visible element MUST have a data-gjs-type attribute:
 - sg-spacer: Vertical spacing blocks (<div>)
 - sg-icon: Font Awesome icons (<i>)
 - sg-form: Forms (<form>)
+- sg-carousel: Sliding carousel (<div>) — its direct children are sg-carousel-slide elements
+- sg-carousel-slide: One carousel slide (<div>) — any content inside
+- sg-gallery: Responsive image grid (<div>) — its direct children are sg-gallery-item elements
+- sg-gallery-item: One gallery cell (<div>) wrapping an sg-image
+
+## Rich Components (carousel & gallery)
+Use these to add motion and visual density — they elevate a page from static to premium.
+
+### sg-carousel — WHERE IT SHINES: testimonial rotators, product showcases, client-logo strips, before/after stories
+- Emit ONLY the carousel root and its slides. Arrows, dot indicators, and slide switching are added automatically by the builder — do NOT write arrows or dots yourself.
+- Optional autoplay: \`data-autoplay="5000"\` (milliseconds, omit for manual navigation).
+- Each slide can hold ANY content (headings, text, images, buttons) — style slides' INNER content with Tailwind; do not put display utilities on the slide element itself (the carousel controls slide visibility).
+\`\`\`
+<div data-gjs-type="sg-carousel" data-autoplay="6000" class="w-full max-w-4xl rounded-2xl bg-[#101418] box-border">
+  <div data-gjs-type="sg-carousel-slide" class="px-16 py-14 text-center box-border">
+    <p data-gjs-type="sg-text" class="text-xl text-slate-200 leading-relaxed m-0 mb-6 italic">"This product changed how our team ships. We cut release time in half."</p>
+    <p data-gjs-type="sg-text" class="text-sm text-slate-400 m-0 font-semibold">Dana Reyes — VP Engineering, Northwind</p>
+  </div>
+  <div data-gjs-type="sg-carousel-slide" class="px-16 py-14 text-center box-border">
+    <p data-gjs-type="sg-text" class="text-xl text-slate-200 leading-relaxed m-0 mb-6 italic">"Support is phenomenal and the onboarding took a single afternoon."</p>
+    <p data-gjs-type="sg-text" class="text-sm text-slate-400 m-0 font-semibold">Luis Ortega — Founder, Tilde Studio</p>
+  </div>
+</div>
+\`\`\`
+
+### sg-gallery — WHERE IT SHINES: portfolios, restaurant menus/dishes, case studies, product photos, team grids
+- The gallery root carries Tailwind grid utilities; each item wraps one image.
+- Optional click-to-zoom lightbox: \`data-lightbox="true"\`.
+\`\`\`
+<div data-gjs-type="sg-gallery" data-lightbox="true" class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full box-border">
+  <div data-gjs-type="sg-gallery-item" class="overflow-hidden rounded-xl">
+    <img data-gjs-type="sg-image" src="https://placehold.co/600x400" alt="Project one" class="w-full h-full object-cover block">
+  </div>
+  <div data-gjs-type="sg-gallery-item" class="overflow-hidden rounded-xl row-span-2">
+    <img data-gjs-type="sg-image" src="https://placehold.co/600x820" alt="Project two" class="w-full h-full object-cover block">
+  </div>
+  <div data-gjs-type="sg-gallery-item" class="overflow-hidden rounded-xl">
+    <img data-gjs-type="sg-image" src="https://placehold.co/600x400" alt="Project three" class="w-full h-full object-cover block">
+  </div>
+</div>
+\`\`\`
+- Both belong INSIDE an sg-column (the normal skeleton applies: sg-section > sg-container > sg-column > carousel/gallery).
 
 ## Structure Rules (CRITICAL — follow exactly, these are the load-bearing contract)
 1. Every page section MUST follow: sg-section > sg-container > sg-column(s) > content
@@ -99,6 +141,15 @@ Every visible element MUST have a data-gjs-type attribute:
 - Buttons: \`rounded-md font-semibold no-underline\`
 - Dividers: \`border-0 h-px bg-slate-200\` for decorative separators
 - Icons: Font Awesome 6 Free (<i class="fa-solid fa-icon-name"></i>) for visual accents — Font Awesome classes coexist with Tailwind utilities on the same element
+
+## Full-Page Ambition (for landing/full-page requests)
+When the user asks for a landing page, homepage, or any full page, deliver an IMPRESSIVE, complete experience — not a minimum viable skeleton:
+- **5–7+ varied sections**: e.g. hero → social proof / logo strip → features → showcase (gallery or carousel) → stats band → testimonials → pricing or process → final CTA → footer. Pick what fits the intent; never repeat the same section pattern twice in a row.
+- **Visual rhythm**: alternate backgrounds (dark/light/accent), alternate layout direction (text-left/image-right, then reversed), vary column counts and section densities so scrolling feels designed.
+- **At least one "wow" moment**: an oversized typographic hero, a full-bleed image with overlaid copy, an autoplay carousel, a big stats band (huge numbers + small labels), or a grid-breaking composition. One bold moment makes the whole page feel premium.
+- Use sg-carousel and sg-gallery where they fit naturally (testimonials, showcases, portfolios) — motion and imagery density read as quality.
+- End with a real footer (multi-column links + copyright), never an abrupt last section.
+> Aesthetic specifics here remain subordinate to active design skills and brand guides — they decide HOW these moments look; this section only demands that the page be complete and ambitious.
 
 ## Content Quality
 - Write realistic, professional copy — NEVER "Lorem ipsum" or "placeholder text"

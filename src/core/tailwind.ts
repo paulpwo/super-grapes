@@ -24,6 +24,25 @@ export const TAILWIND_CANVAS_CSS = `
 @import "tailwindcss/utilities.css";
 `;
 
+/**
+ * Self-contained bootstrap snippet for PUBLISHED pages.
+ *
+ * IMPORTANT — embed method matters (verified empirically): if the
+ * `<style type="text/tailwindcss">` block is embedded STATICALLY in the page
+ * HTML, the browser's preload scanner speculatively fetches the relative
+ * `tailwindcss/*.css` import specifiers (it ignores the style type attribute)
+ * and logs three 404s before discarding the responses. The runtime itself never
+ * needs those requests — it resolves the specifiers to bundled virtual modules.
+ * Injecting the style element DYNAMICALLY (as this snippet does, and as the
+ * editor canvas already does) produces zero spurious requests.
+ *
+ * Hosts should print this snippet into published pages instead of embedding the
+ * stylesheet markup directly.
+ */
+export function getTailwindBootstrapScript(scriptUrl: string = DEFAULT_TAILWIND_SCRIPT_URL): string {
+  return `<script>(function(){var s=document.createElement('style');s.setAttribute('type','text/tailwindcss');s.textContent=${JSON.stringify(TAILWIND_CANVAS_CSS)};document.head.appendChild(s);var t=document.createElement('script');t.src=${JSON.stringify(scriptUrl)};document.head.appendChild(t);})();</script>`;
+}
+
 /** Resolved Tailwind settings (defaults applied). */
 export interface ResolvedTailwindConfig {
   enabled: boolean;

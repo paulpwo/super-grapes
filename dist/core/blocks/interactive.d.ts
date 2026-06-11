@@ -8,6 +8,21 @@ export declare function getInteractiveBlocks(): ({
     media: string;
     content: {
         type: string;
+        attributes?: undefined;
+        style?: undefined;
+        components?: undefined;
+    };
+} | {
+    id: string;
+    label: string;
+    category: string;
+    media: string;
+    content: {
+        type: string;
+        attributes: {
+            'data-sg-type': string;
+            'data-lightbox': string;
+        };
         style?: undefined;
         components?: undefined;
     };
@@ -43,6 +58,7 @@ export declare function getInteractiveBlocks(): ({
             content: string;
             tagName?: undefined;
         })[];
+        attributes?: undefined;
     };
 })[];
 //# sourceMappingURL=interactive.d.ts.map

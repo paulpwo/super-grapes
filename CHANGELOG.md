@@ -1,3 +1,17 @@
+## [0.12.0] - 2026-06-11
+
+### Features
+- **(components)**: new `sg-carousel` + `sg-carousel-slide` — slides container with auto-generated prev/next arrows and dot indicators, optional autoplay via `data-autoplay="<ms>"`; vanilla-JS GrapesJS component script (no external deps) that runs both inside the canvas and on published pages
+- **(components)**: new `sg-gallery` + `sg-gallery-item` — responsive image grid (Tailwind grid classes, auto-fit defaults) with optional vanilla dialog-based lightbox gated by `data-lightbox="true"`; both widgets registered in the Widgets panel (Interactive)
+- **(ai)**: carousel/gallery vocabulary in the system prompt with Tailwind-style markup shapes and placement guidance (carousel → testimonials/showcases/logos, gallery → portfolios/menus/cases)
+- **(ai)**: "Full-Page Ambition" guidance — landing/full-page intents now demand 5–7+ varied sections, visual rhythm (alternating backgrounds/layout direction), and at least one "wow" moment; tiered under the skills-override priority statement
+- **(tailwind)**: new `getTailwindBootstrapScript()` export — self-contained `<script>` snippet hosts print into published pages to inject the Tailwind runtime dynamically
+
+### Bug Fixes
+- **(ai)**: reference-image upload is no longer blocked by the vision-model allowlist when `generation.mode === 'endpoint'` — the server owns model choice and the endpoint contract already carries the image
+- **(tailwind)**: documented and fixed the `tailwindcss/*.css` 404 console noise on published pages — the browser preload scanner speculatively fetches the `@import` specifiers when the stylesheet is embedded statically (the runtime itself resolves them to bundled virtual modules); `TAILWIND_CANVAS_CSS` is unchanged, the fix is dynamic injection via `getTailwindBootstrapScript()` (the editor canvas already injects dynamically and was never affected)
+
+
 ## [0.11.0] - 2026-06-11
 
 ### Features
