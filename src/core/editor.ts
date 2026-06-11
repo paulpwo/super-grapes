@@ -20,6 +20,8 @@ import { registerIconComponent } from './components/icon';
 import { registerFormComponent } from './components/form';
 import { registerAccordionComponent } from './components/accordion';
 import { registerTabsComponent } from './components/tabs';
+import { registerCarouselComponent } from './components/carousel';
+import { registerGalleryComponent } from './components/gallery';
 
 import { getLayoutBlocks } from './blocks/layout';
 import { getBasicBlocks } from './blocks/basic';
@@ -46,6 +48,8 @@ function sgCorePlugin(editor: Editor): void {
   registerFormComponent(editor);
   registerAccordionComponent(editor);
   registerTabsComponent(editor);
+  registerCarouselComponent(editor);
+  registerGalleryComponent(editor);
 
   // Register all blocks
   const allBlocks = [

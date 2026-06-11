@@ -18,6 +18,20 @@ export function getInteractiveBlocks() {
       content: { type: 'sg-tabs' },
     },
     {
+      id: 'sg-carousel',
+      label: 'Carousel',
+      category: 'Interactive',
+      media: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="13" rx="1"/><polyline points="2 8 2 13"/><polyline points="22 8 22 13"/><circle cx="9" cy="20" r="0.6"/><circle cx="12" cy="20" r="0.6"/><circle cx="15" cy="20" r="0.6"/></svg>`,
+      content: { type: 'sg-carousel' },
+    },
+    {
+      id: 'sg-gallery',
+      label: 'Gallery',
+      category: 'Interactive',
+      media: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>`,
+      content: { type: 'sg-gallery', attributes: { 'data-sg-type': 'gallery', 'data-lightbox': 'true' } },
+    },
+    {
       id: 'sg-icon-box',
       label: 'Icon Box',
       category: 'Interactive',

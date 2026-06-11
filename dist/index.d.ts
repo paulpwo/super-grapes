@@ -3,7 +3,7 @@ import './ui/theme/index.css';
 export { createEditor } from './core/editor';
 export { UIManager } from './ui/ui-manager';
 export type { SuperGrapesConfig, AiConfig, GenerationConfig, TailwindConfig, BrandColors, DeviceConfig, StorageConfig, SuperGrapesPlugin, Editor } from './core/types';
-export { DEFAULT_TAILWIND_SCRIPT_URL, TAILWIND_CANVAS_CSS, resolveTailwindConfig, injectTailwindRuntime } from './core/tailwind';
+export { DEFAULT_TAILWIND_SCRIPT_URL, TAILWIND_CANVAS_CSS, resolveTailwindConfig, injectTailwindRuntime, getTailwindBootstrapScript } from './core/tailwind';
 export type { ResolvedTailwindConfig } from './core/tailwind';
 export { createGenerationBackend, DirectBackend, EndpointBackend, isEndpointMode } from './core/ai';
 export type { GenerationBackend, GenerationMode, GenerationContext, GenerationRequest, QualityMode, QualityResult } from './core/ai';

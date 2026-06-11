@@ -16,6 +16,22 @@ export declare const DEFAULT_TAILWIND_SCRIPT_URL = "https://cdn.jsdelivr.net/npm
  *   - inline styles (GrapesJS Style Manager edits) still beat utilities.
  */
 export declare const TAILWIND_CANVAS_CSS = "\n@layer theme, base;\n@import \"tailwindcss/theme.css\" layer(theme);\n@import \"tailwindcss/preflight.css\" layer(base);\n@import \"tailwindcss/utilities.css\";\n";
+/**
+ * Self-contained bootstrap snippet for PUBLISHED pages.
+ *
+ * IMPORTANT — embed method matters (verified empirically): if the
+ * `<style type="text/tailwindcss">` block is embedded STATICALLY in the page
+ * HTML, the browser's preload scanner speculatively fetches the relative
+ * `tailwindcss/*.css` import specifiers (it ignores the style type attribute)
+ * and logs three 404s before discarding the responses. The runtime itself never
+ * needs those requests — it resolves the specifiers to bundled virtual modules.
+ * Injecting the style element DYNAMICALLY (as this snippet does, and as the
+ * editor canvas already does) produces zero spurious requests.
+ *
+ * Hosts should print this snippet into published pages instead of embedding the
+ * stylesheet markup directly.
+ */
+export declare function getTailwindBootstrapScript(scriptUrl?: string): string;
 /** Resolved Tailwind settings (defaults applied). */
 export interface ResolvedTailwindConfig {
     enabled: boolean;

@@ -714,6 +714,9 @@ export function initCanvasAiPrompt(editor: Editor): void {
     ];
 
     function modelSupportsVision(): boolean {
+      // In endpoint mode the SERVER owns model choice — never block the upload UI.
+      // The endpoint contract carries the image; the server decides how to use it.
+      if (config.generation?.mode === 'endpoint') return true;
       const m = (config.model || '').toLowerCase();
       return VISION_MODELS.some(prefix => m.startsWith(prefix));
     }
