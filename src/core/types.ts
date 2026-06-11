@@ -27,18 +27,42 @@ export interface StorageConfig {
 /** Plugin function signature */
 export type SuperGrapesPlugin = (editor: Editor, config: SuperGrapesConfig) => void;
 
+/**
+ * Pluggable generation backend configuration.
+ *
+ * - `direct` (default): the editor calls the OpenAI-compatible provider directly
+ *   (single-shot chat completion). This is the original, backwards-compatible path.
+ * - `endpoint`: the editor POSTs an intent + context payload to a host-provided
+ *   endpoint that owns the generation loop (e.g. a server-side agentic pipeline)
+ *   and returns finished HTML.
+ */
+export interface GenerationConfig {
+  /** Generation strategy. Default: 'direct'. */
+  mode?: 'direct' | 'endpoint';
+  /** Absolute or relative URL to POST to. Required when mode === 'endpoint'. */
+  endpoint?: string;
+  /** Extra headers sent with the endpoint request (e.g. CSRF token). */
+  headers?: Record<string, string>;
+}
+
 /** AI provider configuration (OpenAI-compatible) */
 export interface AiConfig {
   apiKey: string;
   model: string;
   baseURL?: string;
   systemPrompt?: string;
+  /** Max completion tokens passed to the provider. Default: 8192. */
+  maxTokens?: number;
+  /** Sampling temperature passed to the provider. Default: 0.7. */
+  temperature?: number;
   /** Brand color palette for AI-generated pages. Colors are used by default unless the user prompt specifies otherwise. */
   brandColors?: BrandColors;
   /** Additional design skills (markdown strings) appended to the system prompt. Built-in skills are always included. */
   skills?: string[];
   /** Set to false to disable built-in skills (only your custom skills will be used). Default: true */
   builtinSkills?: boolean;
+  /** Pluggable generation backend. When omitted, the direct single-shot provider call is used. */
+  generation?: GenerationConfig;
 }
 
 /** Brand color palette passed to AI for consistent page generation */

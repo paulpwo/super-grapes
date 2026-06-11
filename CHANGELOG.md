@@ -1,3 +1,14 @@
+## [0.10.0] - 2026-06-11
+
+### Features
+- **(ai)**: pluggable generation backend — `AiConfig.generation` selects `direct` (default, single-shot provider call) or `endpoint` (POSTs intent + context to a host-owned generation loop and expects `{ html }`); new `GenerationBackend` / `DirectBackend` / `EndpointBackend` exported from the package
+- **(ai)**: tunable generation params — `AiConfig.maxTokens` (default 8192) and `AiConfig.temperature` (default 0.7) now passed to the provider, fixing provider-default truncation on full pages
+- **(ai)**: quality gate with one auto-retry — detects truncated output and too-few-section full pages, and re-requests once with a corrective prompt before surfacing an error (direct mode only; the endpoint owns its own quality loop)
+
+### Changed
+- **(ai)**: system-prompt overhaul — the fixed "Design System" block is now fallback-only guidance that the design skill and brand guides explicitly OVERRIDE; Google Fonts `<link>`, a single leading `<style>` block, and CSS Grid inside columns are now permitted; the single cookie-cutter example was replaced with two structurally different examples. The load-bearing `data-gjs-type` + `sg-section > sg-container > sg-column` contract is unchanged.
+
+
 ## [0.9.0] - 2026-05-17
 
 ### Features

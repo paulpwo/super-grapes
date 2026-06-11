@@ -5,7 +5,6 @@
  */
 import type { Editor } from 'grapesjs';
 import type { AiConfig } from '../../core/types';
-import type { ChatMessage, ContentPart } from '../../core/ai';
 
 const PROMPT_ID = 'sg-canvas-ai-prompt';
 
@@ -917,30 +916,37 @@ export function initCanvasAiPrompt(editor: Editor): void {
 
       try {
         // Dynamic import to keep bundle small when AI not used
-        const { AiClient, extractHtmlFromResponse, validateHtml } = await import('../../core/ai');
+        const { createGenerationBackend, isEndpointMode, extractHtmlFromResponse, checkHtmlQuality } = await import('../../core/ai');
 
-        const client = new AiClient(config);
-        const history: ChatMessage[] = [];
+        const backend = createGenerationBackend(config);
+        const endpointMode = isEndpointMode(config);
+        const request = {
+          intent: text,
+          context: { mode: 'generate' as const, currentHtml: null, currentCss: null },
+          image: attachedImage,
+        };
 
-        let content: string | ContentPart[];
-        if (attachedImage) {
-          content = [
-            { type: 'text', text },
-            { type: 'image_url', image_url: { url: attachedImage } },
-          ];
-        } else {
-          content = text;
+        // First attempt
+        let response = await backend.generate(request);
+        let extracted = extractHtmlFromResponse(response);
+        let quality = checkHtmlQuality(extracted, 'generate');
+
+        // Quality gate + one auto-retry (direct mode only — the endpoint owns its own loop)
+        if (!quality.ok && !endpointMode) {
+          response = await backend.generate({
+            ...request,
+            intent: `${text}\n\n[SYSTEM NOTE] Your previous output was incomplete or truncated (${quality.message}). Produce the COMPLETE page with multiple full sections, ending in a footer. Close every tag.`,
+          });
+          extracted = extractHtmlFromResponse(response);
+          quality = checkHtmlQuality(extracted, 'generate');
         }
-        history.push({ role: 'user', content });
 
-        const response = await client.chat(history);
-        const extracted = extractHtmlFromResponse(response);
-
-        if (validateHtml(extracted)) {
+        // In endpoint mode, still run a basic parse check before inserting.
+        if (quality.ok || (endpointMode && checkHtmlQuality(extracted, 'append').ok)) {
           // Apply to canvas — this triggers component:add which removes the prompt
           editor.setComponents(extracted);
         } else {
-          throw new Error('The AI response did not contain valid HTML. Please try a more specific description.');
+          throw new Error(quality.message || 'The AI response did not contain valid HTML. Please try a more specific description.');
         }
       } catch (err: any) {
         // Show error state

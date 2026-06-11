@@ -1,2 +1,0 @@
-"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const a=require("./ai-chat-modal-DrRMu4zq.cjs");function o(e,n,s){const t=document.createElement("button");t.className="sg-ai-btn",t.title="AI Assistant",t.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i> AI Assistant',t.addEventListener("click",()=>{a.openAiChatModal(n,s)});const i=e.querySelector('[data-cmd="sw-visibility"]');i?e.insertBefore(t,i):e.prepend(t)}exports.initAiButton=o;
-//# sourceMappingURL=ai-button-T0tACg2s.cjs.map

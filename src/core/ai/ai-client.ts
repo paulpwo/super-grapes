@@ -37,10 +37,18 @@ function buildSystemPrompt(config: AiConfig): string {
   return prompt;
 }
 
+/** Default max completion tokens — prevents provider-default truncation on full pages. */
+export const DEFAULT_MAX_TOKENS = 8192;
+/** Default sampling temperature. */
+export const DEFAULT_TEMPERATURE = 0.7;
+
 export class AiClient {
   private client: OpenAI;
   private model: string;
-  private systemPrompt: string;
+  private maxTokens: number;
+  private temperature: number;
+  /** The fully-assembled system prompt (base + skills + brand). Exposed for reuse by generation backends. */
+  readonly systemPrompt: string;
 
   constructor(config: AiConfig) {
     // In dev mode, use Vite proxy to avoid CORS issues with providers
@@ -56,6 +64,8 @@ export class AiClient {
       dangerouslyAllowBrowser: true,
     });
     this.model = config.model;
+    this.maxTokens = config.maxTokens ?? DEFAULT_MAX_TOKENS;
+    this.temperature = config.temperature ?? DEFAULT_TEMPERATURE;
     this.systemPrompt = buildSystemPrompt(config);
   }
 
@@ -68,6 +78,8 @@ export class AiClient {
     const response = await this.client.chat.completions.create({
       model: this.model,
       messages: fullMessages as any,
+      max_tokens: this.maxTokens,
+      temperature: this.temperature,
     });
 
     return response.choices[0]?.message?.content || '';
