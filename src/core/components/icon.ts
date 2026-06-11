@@ -13,7 +13,7 @@ export function registerIconComponent(editor: Editor): void {
         attributes: { 'data-sg-type': 'icon' },
         content: '<i class="fa-solid fa-star"></i>',
         styles: `
-          [data-sg-type="icon"] {
+          :where([data-sg-type="icon"]) {
             font-size: 40px;
             color: #c0392b;
             text-align: center;

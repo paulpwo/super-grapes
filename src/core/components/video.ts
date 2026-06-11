@@ -12,7 +12,7 @@ export function registerVideoComponent(editor: Editor): void {
         attributes: { 'data-sg-type': 'video' },
         provider: 'so', // HTML5 source
         styles: `
-          [data-sg-type="video"] {
+          :where([data-sg-type="video"]) {
             width: 100%;
             max-width: 100%;
           }

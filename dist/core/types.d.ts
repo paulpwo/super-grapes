@@ -74,6 +74,19 @@ export interface BrandColors {
     /** Any additional named colors */
     [key: string]: string | undefined;
 }
+/**
+ * Tailwind CSS canvas runtime configuration.
+ *
+ * Tailwind utility classes are the core styling technique of SuperGrapes-generated
+ * pages. For those classes to render inside the GrapesJS canvas iframe, the
+ * Tailwind v4 browser runtime is injected into the canvas document. Enabled by default.
+ */
+export interface TailwindConfig {
+    /** Inject the Tailwind runtime into the canvas. Default: true. */
+    enabled?: boolean;
+    /** Tailwind v4 browser runtime script URL. Default: 'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4'. */
+    scriptUrl?: string;
+}
 /** Main configuration for SuperGrapes editor */
 export interface SuperGrapesConfig {
     /** Container element or selector */
@@ -90,6 +103,8 @@ export interface SuperGrapesConfig {
     onReady?: (editor: Editor) => void;
     /** AI assistant configuration */
     ai?: AiConfig;
+    /** Tailwind canvas runtime. Tailwind utilities are the core styling technique — enabled by default. */
+    tailwind?: TailwindConfig;
     /** Preserve inline styles in output HTML (default: false — uses style= instead of CSS classes).
      * Sets both avoidInlineStyle and forceClass on GrapesJS — both must be false to round-trip style= correctly. */
     avoidInlineStyle?: boolean;

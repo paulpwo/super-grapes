@@ -12,7 +12,7 @@ export function registerContainerComponent(editor: Editor): void {
         droppable: true,
         attributes: { 'data-sg-type': 'container' },
         styles: `
-          [data-sg-type="container"] {
+          :where([data-sg-type="container"]) {
             max-width: 1200px;
             width: 100%;
             margin: 0 auto;

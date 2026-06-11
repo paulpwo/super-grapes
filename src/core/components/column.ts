@@ -12,7 +12,7 @@ export function registerColumnComponent(editor: Editor): void {
         droppable: true,
         attributes: { 'data-sg-type': 'column' },
         styles: `
-          [data-sg-type="column"] {
+          :where([data-sg-type="column"]) {
             flex: 1;
             padding: 10px;
             display: flex;

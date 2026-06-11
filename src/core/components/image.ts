@@ -17,7 +17,7 @@ export function registerImageComponent(editor: Editor): void {
           alt: 'Placeholder image',
         },
         styles: `
-          [data-sg-type="image"] {
+          :where([data-sg-type="image"]) {
             width: 100%;
             height: auto;
             display: block;

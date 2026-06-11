@@ -12,7 +12,7 @@ export function registerSectionComponent(editor: Editor): void {
         droppable: true,
         attributes: { 'data-sg-type': 'section' },
         styles: `
-          [data-sg-type="section"] {
+          :where([data-sg-type="section"]) {
             width: 100%;
             padding: 60px 0;
             display: flex;
