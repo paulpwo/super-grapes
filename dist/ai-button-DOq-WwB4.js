@@ -1,4 +1,4 @@
-import { openAiChatModal as a } from "./ai-chat-modal-lx7mxcPS.js";
+import { openAiChatModal as a } from "./ai-chat-modal-Bz_mPcJn.js";
 function o(e, n, s) {
   const t = document.createElement("button");
   t.className = "sg-ai-btn", t.title = "AI Assistant", t.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> AI Assistant', t.addEventListener("click", () => {
@@ -10,4 +10,4 @@ function o(e, n, s) {
 export {
   o as initAiButton
 };
-//# sourceMappingURL=ai-button-Cwt18xty.js.map
+//# sourceMappingURL=ai-button-DOq-WwB4.js.map

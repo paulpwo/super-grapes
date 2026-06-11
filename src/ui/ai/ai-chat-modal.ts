@@ -1,7 +1,12 @@
 import type { Editor } from 'grapesjs';
 import type { AiConfig } from '../../core/types';
-import { AiClient, extractHtmlFromResponse, validateHtml } from '../../core/ai';
-import type { ChatMessage, ContentPart } from '../../core/ai';
+import {
+  createGenerationBackend,
+  isEndpointMode,
+  extractHtmlFromResponse,
+  checkHtmlQuality,
+} from '../../core/ai';
+import type { GenerationMode, GenerationRequest } from '../../core/ai';
 
 export type AiModalMode = 'replace' | 'append' | 'edit';
 
@@ -15,8 +20,10 @@ export function openAiChatModal(editor: Editor, config: AiConfig, modeOrOpts: Ai
   const opts: AiModalOptions = typeof modeOrOpts === 'string' ? { mode: modeOrOpts } : modeOrOpts;
   const mode = opts.mode || 'replace';
   const targetComponent = opts.targetComponent || null;
-  const client = new AiClient(config);
-  const history: ChatMessage[] = [];
+  const backend = createGenerationBackend(config);
+  const endpointMode = isEndpointMode(config);
+  // The backend generation mode maps directly from the modal mode.
+  const genMode: GenerationMode = mode === 'append' ? 'append' : mode === 'edit' ? 'edit' : 'replace';
   let attachedImage: string | null = null;
   let isLoading = false;
 
@@ -217,28 +224,24 @@ export function openAiChatModal(editor: Editor, config: AiConfig, modeOrOpts: Ai
     // Hide empty state on first message
     if (emptyState.parentNode) emptyState.remove();
 
-    // Build context
-    let contextPrefix = '';
+    // Build generation context from the current canvas / target component.
+    let currentHtml: string | null = null;
+    let currentCss: string | null = null;
     if (isEdit && targetComponent) {
-      const compHtml = targetComponent.toHTML();
-      contextPrefix = `[Component to edit — "${targetName}"]\n${compHtml}\n\n[User request]\nModify the component above based on this instruction. Return ONLY the modified HTML for this component, not a full page:\n`;
+      currentHtml = targetComponent.toHTML();
     } else if (contextCheckbox.checked) {
-      contextPrefix = `[Current template HTML]\n${editor.getHtml()}\n\n[Current template CSS]\n${editor.getCss()}\n\n[User request]\n`;
-    }
-    const fullText = contextPrefix + text;
-
-    let content: string | ContentPart[];
-    if (attachedImage) {
-      content = [
-        { type: 'text', text: fullText },
-        { type: 'image_url', image_url: { url: attachedImage } },
-      ];
-    } else {
-      content = fullText;
+      currentHtml = editor.getHtml();
+      currentCss = editor.getCss() || null;
     }
 
-    addMessage('user', text + (attachedImage ? ' [image attached]' : ''));
-    history.push({ role: 'user', content });
+    const requestImage = attachedImage;
+    const request: GenerationRequest = {
+      intent: text,
+      context: { mode: genMode, currentHtml, currentCss },
+      image: requestImage,
+    };
+
+    addMessage('user', text + (requestImage ? ' [image attached]' : ''));
 
     textarea.value = '';
     textarea.style.height = 'auto';
@@ -257,12 +260,25 @@ export function openAiChatModal(editor: Editor, config: AiConfig, modeOrOpts: Ai
     scrollToBottom();
 
     try {
-      const response = await client.chat(history);
-      thinkingEl.remove();
-      history.push({ role: 'assistant', content: response });
+      // First attempt
+      let response = await backend.generate(request);
+      let extracted = extractHtmlFromResponse(response);
+      let quality = checkHtmlQuality(extracted, genMode);
 
-      const extracted = extractHtmlFromResponse(response);
-      const hasValidHtml = validateHtml(extracted);
+      // Quality gate + one auto-retry (direct mode only — the endpoint owns its own loop)
+      if (!quality.ok && !endpointMode) {
+        response = await backend.generate({
+          ...request,
+          intent: `${text}\n\n[SYSTEM NOTE] Your previous output was incomplete or truncated (${quality.message}). Produce the COMPLETE result with every tag closed.`,
+        });
+        extracted = extractHtmlFromResponse(response);
+        quality = checkHtmlQuality(extracted, genMode);
+      }
+
+      thinkingEl.remove();
+
+      // In endpoint mode, still require a basic parse before previewing.
+      const hasValidHtml = quality.ok || (endpointMode && checkHtmlQuality(extracted, 'append').ok);
 
       if (hasValidHtml) {
         const msgEl = addMessage('assistant', 'Here\'s a preview of the generated page:');
@@ -308,7 +324,7 @@ export function openAiChatModal(editor: Editor, config: AiConfig, modeOrOpts: Ai
         actionsRow.appendChild(retryBtn);
         msgEl.appendChild(actionsRow);
       } else {
-        addMessage('assistant', response);
+        addMessage('assistant', quality.message || response);
       }
     } catch (err: any) {
       thinkingEl.remove();
