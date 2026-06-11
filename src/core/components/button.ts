@@ -18,7 +18,7 @@ export function registerButtonComponent(editor: Editor): void {
         },
         content: 'Click Here',
         styles: `
-          [data-sg-type="button"] {
+          :where([data-sg-type="button"]) {
             display: inline-block;
             padding: 12px 24px;
             background-color: #c0392b;

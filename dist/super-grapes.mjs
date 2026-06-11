@@ -1,12 +1,16 @@
-import { d as n, E as s, U as r, e as d, c as i, i as o, s as c } from "./index-Cl8S943t.js";
+import { e as s, d as i, E as t, T as r, U as d, f as o, c, g as T, i as E, r as I, s as l } from "./index-CbghMJr5.js";
 import "openai";
 export {
-  n as DirectBackend,
-  s as EndpointBackend,
-  r as UIManager,
-  d as createEditor,
-  i as createGenerationBackend,
-  o as isEndpointMode,
-  c as setExternalTemplates
+  s as DEFAULT_TAILWIND_SCRIPT_URL,
+  i as DirectBackend,
+  t as EndpointBackend,
+  r as TAILWIND_CANVAS_CSS,
+  d as UIManager,
+  o as createEditor,
+  c as createGenerationBackend,
+  T as injectTailwindRuntime,
+  E as isEndpointMode,
+  I as resolveTailwindConfig,
+  l as setExternalTemplates
 };
 //# sourceMappingURL=super-grapes.mjs.map

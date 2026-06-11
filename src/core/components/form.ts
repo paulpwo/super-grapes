@@ -12,7 +12,7 @@ export function registerFormComponent(editor: Editor): void {
         droppable: true,
         attributes: { 'data-sg-type': 'form' },
         styles: `
-          [data-sg-type="form"] {
+          :where([data-sg-type="form"]) {
             display: flex;
             flex-direction: column;
             gap: 12px;

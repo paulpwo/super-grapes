@@ -1,3 +1,15 @@
+## [0.11.0] - 2026-06-11
+
+### Features
+- **(tailwind)**: Tailwind CSS is now the CORE styling technique of generated pages — the AI styles with Tailwind v4 utility classes (arbitrary values for brand hexes like `bg-[#c0392b]`, arbitrary font families like `font-[Syne,sans-serif]`, responsive `md:`/`lg:` variants); inline `style=` is demoted to a fallback for multi-stop gradients, one-off clip-paths, and background-image URLs
+- **(tailwind)**: Tailwind v4 browser runtime injected into the GrapesJS canvas iframe so utility classes render live in the editor; configurable via `SuperGrapesConfig.tailwind` (`enabled` default true, `scriptUrl` default `https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4`); new `TailwindConfig` type plus `DEFAULT_TAILWIND_SCRIPT_URL`, `TAILWIND_CANVAS_CSS`, `resolveTailwindConfig`, `injectTailwindRuntime` exports so hosts can replicate the runtime on published pages
+- **(tailwind)**: AI chat-modal preview iframe now runs the Tailwind runtime (in an isolated opaque origin) so generated pages preview correctly
+
+### Changed
+- **(components)**: component default styles wrapped in `:where(...)` (zero specificity) and the canvas Tailwind stylesheet imports `utilities.css` unlayered — utility classes now beat component defaults, while class-less manually-built elements keep their defaults and Style Manager inline edits still win over everything
+- **(ai)**: `frontend-design` skill now speaks Tailwind — grid composition via `grid-cols-*`/`col-span-*`, glass-morphism via `backdrop-blur-md bg-white/10 border border-white/20`, arbitrary-value hexes and shadows. The `data-gjs-type` + `sg-section > sg-container > sg-column` structural contract is unchanged.
+
+
 ## [0.10.0] - 2026-06-11
 
 ### Features

@@ -13,7 +13,7 @@ export function registerDividerComponent(editor: Editor): void {
         droppable: false,
         attributes: { 'data-sg-type': 'divider' },
         styles: `
-          [data-sg-type="divider"] {
+          :where([data-sg-type="divider"]) {
             border: none;
             border-top: 2px solid #3a3c3f;
             margin: 20px 0;

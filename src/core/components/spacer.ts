@@ -13,7 +13,7 @@ export function registerSpacerComponent(editor: Editor): void {
         content: '',
         attributes: { 'data-sg-type': 'spacer' },
         styles: `
-          [data-sg-type="spacer"] {
+          :where([data-sg-type="spacer"]) {
             height: 50px;
             width: 100%;
           }

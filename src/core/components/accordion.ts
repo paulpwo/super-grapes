@@ -12,7 +12,7 @@ export function registerAccordionComponent(editor: Editor): void {
         droppable: false,
         attributes: { 'data-sg-type': 'accordion' },
         styles: `
-          [data-sg-type="accordion"] {
+          :where([data-sg-type="accordion"]) {
             width: 100%;
           }
           .sg-accordion-item {

@@ -3,6 +3,7 @@ import { buildGrapesConfig } from './config';
 import { SG_EVENTS } from './events';
 import { configureStorage } from './storage';
 import { registerPlugins } from './plugins/index';
+import { resolveTailwindConfig, injectTailwindRuntime } from './tailwind';
 import type { SuperGrapesConfig, AiConfig } from './types';
 
 import { registerSectionComponent } from './components/section';
@@ -85,6 +86,24 @@ export function createEditor(config: SuperGrapesConfig): Editor {
 
   if (aiConfig) {
     (editor as any).__sgAiConfig = aiConfig;
+  }
+
+  // Tailwind canvas runtime — utility classes are the core styling technique of
+  // generated pages, so the v4 browser runtime is injected into the canvas iframe
+  // (default ON; configurable via config.tailwind).
+  const tailwind = resolveTailwindConfig(config.tailwind);
+  (editor as any).__sgTailwind = tailwind;
+  if (tailwind.enabled) {
+    const injectIntoCanvas = () => {
+      const doc = editor.Canvas.getDocument();
+      if (doc) injectTailwindRuntime(doc, tailwind.scriptUrl);
+    };
+    // canvas:frame:load covers the main frame and any frame re-creation
+    editor.on('canvas:frame:load', ({ window: frameWindow }: { window?: Window }) => {
+      if (frameWindow?.document) injectTailwindRuntime(frameWindow.document, tailwind.scriptUrl);
+    });
+    // Fallback for the initial load (injection is idempotent)
+    editor.on('load', injectIntoCanvas);
   }
 
   // Register user-provided plugins

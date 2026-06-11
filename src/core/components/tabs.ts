@@ -12,7 +12,7 @@ export function registerTabsComponent(editor: Editor): void {
         droppable: false,
         attributes: { 'data-sg-type': 'tabs' },
         styles: `
-          [data-sg-type="tabs"] {
+          :where([data-sg-type="tabs"]) {
             width: 100%;
           }
           .sg-tabs-nav {

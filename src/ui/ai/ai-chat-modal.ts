@@ -7,6 +7,7 @@ import {
   checkHtmlQuality,
 } from '../../core/ai';
 import type { GenerationMode, GenerationRequest } from '../../core/ai';
+import { TAILWIND_CANVAS_CSS, DEFAULT_TAILWIND_SCRIPT_URL } from '../../core/tailwind';
 
 export type AiModalMode = 'replace' | 'append' | 'edit';
 
@@ -283,12 +284,23 @@ export function openAiChatModal(editor: Editor, config: AiConfig, modeOrOpts: Ai
       if (hasValidHtml) {
         const msgEl = addMessage('assistant', 'Here\'s a preview of the generated page:');
 
-        // Iframe preview
+        // Iframe preview. Generated pages are styled with Tailwind utilities, so the
+        // preview needs the Tailwind browser runtime. Scripts run in an OPAQUE origin
+        // (allow-scripts without allow-same-origin) so AI-generated content stays
+        // isolated from the host document.
+        const tailwind = (editor as any).__sgTailwind as { enabled: boolean; scriptUrl: string } | undefined;
+        const tailwindHead = tailwind?.enabled !== false
+          ? `<style type="text/tailwindcss">${TAILWIND_CANVAS_CSS}</style><script src="${tailwind?.scriptUrl || DEFAULT_TAILWIND_SCRIPT_URL}"></script>`
+          : '';
         const previewWrap = document.createElement('div');
         previewWrap.className = 'sg-ai-preview-wrap';
         const iframe = document.createElement('iframe');
-        iframe.sandbox.add('allow-same-origin');
-        iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>body{margin:0;font-family:system-ui,-apple-system,sans-serif;}html{overflow:hidden;}</style></head><body>${extracted}</body></html>`;
+        if (tailwindHead) {
+          iframe.sandbox.add('allow-scripts');
+        } else {
+          iframe.sandbox.add('allow-same-origin');
+        }
+        iframe.srcdoc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">${tailwindHead}<style>body{margin:0;font-family:system-ui,-apple-system,sans-serif;}html{overflow:hidden;}</style></head><body>${extracted}</body></html>`;
         previewWrap.appendChild(iframe);
         msgEl.appendChild(previewWrap);
 
