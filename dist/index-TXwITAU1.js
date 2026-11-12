@@ -2026,11 +2026,7 @@ function uQ(n) {
   var a;
   const e = tm(n), t = e.plugins || [];
   e.plugins = [Tm, ...t];
-  const i = zg.init(e), s = (a = n.ai) != null && a.apiKey ? n.ai : {
-    apiKey: "REMOVED_API_KEY",
-    model: "gemini-2.5-flash",
-    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai"
-  };
+  const i = zg.init(e), s = (a = n.ai) != null && a.apiKey ? n.ai : void 0;
   s && (i.__sgAiConfig = s);
   const r = am(n.tailwind);
   if (i.__sgTailwind = r, r.enabled) {
@@ -2809,7 +2805,7 @@ function Mm(n) {
       if (!(!re && !c) && !h) {
         h = !0, p.style.display = "none", ie.classList.remove("sg-aip-error--visible"), Y.classList.add("sg-aip-loading--visible");
         try {
-          const { createGenerationBackend: F, isEndpointMode: gt, extractHtmlFromResponse: Ai, checkHtmlQuality: br } = await import("./index-Hsj4MB0n.js"), Tl = F(o), $l = gt(o), El = {
+          const { createGenerationBackend: F, isEndpointMode: gt, extractHtmlFromResponse: Ai, checkHtmlQuality: br } = await import("./index-CtTIDUcl.js"), Tl = F(o), $l = gt(o), El = {
             intent: re,
             context: { mode: "generate", currentHtml: null, currentCss: null },
             image: c
@@ -2980,7 +2976,7 @@ function Zm(n) {
         Hu(n, Po);
       else if (c === "ai") {
         const h = n.__sgAiConfig;
-        h ? import("./ai-chat-modal-H__2sjQB.js").then(({ openAiChatModal: u }) => {
+        h ? import("./ai-chat-modal-BElEjZGj.js").then(({ openAiChatModal: u }) => {
           u(n, h, "append");
         }) : Xm(n);
       }
@@ -26240,7 +26236,7 @@ function HS(n, e) {
     e.store();
   });
   const p = e.__sgAiConfig;
-  p != null && p.apiKey && import("./ai-button-B081wQ7j.js").then(({ initAiButton: O }) => {
+  p != null && p.apiKey && import("./ai-button-BgiWdE9b.js").then(({ initAiButton: O }) => {
     O(n.querySelector(".sg-topbar-right"), e, p);
   });
 }
@@ -28140,7 +28136,7 @@ const qk = [
     icon: "fa-solid fa-wand-magic-sparkles",
     action: (n, e) => {
       const t = n.__sgAiConfig;
-      t && (n.select(e), import("./ai-chat-modal-H__2sjQB.js").then(({ openAiChatModal: i }) => {
+      t && (n.select(e), import("./ai-chat-modal-BElEjZGj.js").then(({ openAiChatModal: i }) => {
         i(n, t, { mode: "edit", targetComponent: e });
       }));
     },
@@ -28265,7 +28261,7 @@ function Hk(n) {
   e && (n.Commands.add(Sa, {
     run(t) {
       const i = t.getSelected();
-      i && import("./ai-chat-modal-H__2sjQB.js").then(({ openAiChatModal: s }) => {
+      i && import("./ai-chat-modal-BElEjZGj.js").then(({ openAiChatModal: s }) => {
         s(t, e, {
           mode: "edit",
           targetComponent: i
@@ -28739,4 +28735,4 @@ export {
   am as r,
   dQ as s
 };
-//# sourceMappingURL=index-BlQnvSd0.js.map
+//# sourceMappingURL=index-TXwITAU1.js.map

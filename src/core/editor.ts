@@ -77,16 +77,10 @@ export function createEditor(config: SuperGrapesConfig): Editor {
 
   const editor = grapesjs.init(gjsConfig as Parameters<typeof grapesjs.init>[0]);
 
-  // Resolve AI config: explicit config > env vars
-  const aiConfig: AiConfig | undefined = config.ai?.apiKey
-    ? config.ai
-    : (import.meta.env.VITE_SG_AI_API_KEY
-      ? {
-          apiKey: import.meta.env.VITE_SG_AI_API_KEY as string,
-          model: (import.meta.env.VITE_SG_AI_MODEL as string) || 'gpt-4o',
-          baseURL: (import.meta.env.VITE_SG_AI_BASE_URL as string) || undefined,
-        }
-      : undefined);
+  // AI config comes only from the consumer. Never read import.meta.env here:
+  // Vite inlines it at build time, which would bake the builder's local key
+  // into the published bundle. The standalone demo maps env vars in main.ts.
+  const aiConfig: AiConfig | undefined = config.ai?.apiKey ? config.ai : undefined;
 
   if (aiConfig) {
     (editor as any).__sgAiConfig = aiConfig;
