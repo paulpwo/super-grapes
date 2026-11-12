@@ -1,3 +1,9 @@
+## [0.12.1] - 2026-11-12
+
+### Bug Fixes
+- **(ai)**: stop inlining build-time env key into library bundle
+
+
 ## [0.12.0] - 2026-06-11
 
 ### Features
